@@ -1,0 +1,24 @@
+{
+  "name": "default",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite --host 0.0.0.0 --port 5678",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "pinia": "^2.1.4",
+    "vue": "^3.3.4",
+    "vue-router": "^4.2.2"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^0.39.6",
+    "@vitejs/plugin-vue": "^4.2.3",
+    "@vue/tsconfig": "^0.4.0",
+    "eslint": "^8.43.0",
+    "typescript": "^5.1.5",
+    "unocss": "^0.53.4",
+    "vite": "^4.3.9",
+    "vite-plugin-pages": "^0.31.0"
+  }
+}

@@ -1,0 +1,97 @@
+html,
+body,
+#app,
+.el-container {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  overflow-y: hidden;
+  font-family: 'Courier New', Courier, monospace;
+
+}
+
+.el-main {
+  background: #e7ebf0;
+  margin: 0;
+  width: 80%;
+  height: 100%;
+}
+
+.all_box {
+  width: 18.75rem;
+  height: auto;
+  margin: auto;
+  background-color: #FFF;
+  padding: 1%;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1)
+}
+
+.el-input .el-input__inner {
+  border: none !important;
+  border-bottom: 1px solid #ddd !important;
+
+}
+
+.el-textarea {
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1) !important;
+
+}
+
+.el-textarea::after {
+  content: "";
+  position: absolute;
+  bottom: -0.1125rem;
+  left: 0;
+  border: .017rem solid transparent;
+  width: 99.8%;
+  background: rgba(0, 0, 0, 0.1);
+  box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.1) !important;
+
+}
+
+.title_box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 3.875rem;
+}
+
+.title {
+  font-size: .4125rem;
+  color: #000;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+.title_E {
+  font-size: .25rem;
+  color: blue;
+}
+
+.form {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 1% auto;
+}
+
+.left {
+  width: 50%;
+}
+
+.el-form-item__content {
+  width: 65%;
+}
+
+.el-form-item {
+  width: 100% ;
+}
+
+.demo-form-inline span {
+  font-size: .2625rem;
+  color: #000;
+}
+
+.foot .el-form-item__content {
+  width: 100%;
+}
