@@ -6,10 +6,10 @@ import { useState } from './store'
 
 const state = useState()
 
-function daochu() {
+function save() {
   const data = JSON.stringify(state)
   const blob = new Blob([data], { type: 'application/json' })
-  const fileName = 'myData.AKF'
+  const fileName = 'operator.akf'
   saveFile(blob, fileName)
 }
 
@@ -28,14 +28,8 @@ function daochuform() {
         <img src="./assets/img/logo.png" alt="">
       </div>
 
-      <div class="flex nav_name">
-        <p>当前</p>
-        <span> 你是一个菲林啊 </span>
-      </div>
-
-      <div class="nav_time">
-        <p>上次保存</p>
-        <div>YYYY/MM/DD HH:MM:SS</div>
+      <div class="flex text-white">
+        <span>正在编辑的干员：<span>{{ state.state.formzcda.dh }}</span></span>
       </div>
       <!-- 按钮 -->
       <div class="flex nav_an">
@@ -47,7 +41,7 @@ function daochuform() {
         <i
           class="el-icon-folder-add"
           style="font-size: 0.5rem; color: #fff; cursor: pointer"
-          @click="daochu()"
+          @click="save()"
         />
         <!-- <div class="qxbc">请先<br />保存</div> -->
         <router-link to="/main">
