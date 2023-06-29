@@ -10,6 +10,10 @@ body,
 
 }
 
+a {
+  text-decoration: none;
+}
+
 .el-main {
   background: #e7ebf0;
   margin: 0;
@@ -19,10 +23,10 @@ body,
 
 .all_box {
   width: 18.75rem;
-  height: auto;
-  margin: auto;
+  height: 100%;
+  margin: 24px auto;
   background-color: #FFF;
-  padding: 1%;
+  padding: 0.5rem;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1)
 }
 
@@ -94,4 +98,16 @@ body,
 
 .foot .el-form-item__content {
   width: 100%;
+}
+
+input, textarea {
+  border-top: none;
+  border-right: none;
+  border-bottom: 1px solid #ddd;
+  border-left: none;
+  
+
+  &:focus {
+    outline: none;
+  }
 }

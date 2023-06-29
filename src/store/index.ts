@@ -436,5 +436,7 @@ export const useState = defineStore('state', () => {
     imgscl: 0,
   })
 
-  return state
+  return {
+    state,
+  }
 })
