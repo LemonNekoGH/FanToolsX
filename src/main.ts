@@ -18,3 +18,8 @@ createApp(App)
   .use(createPinia())
   .use(router)
   .mount('#app')
+
+window.onbeforeunload = (e) => {
+  e.preventDefault()
+  return false
+}

@@ -13,7 +13,7 @@ const nav = [
   {
     id: 2,
     modname: '综合记录',
-    subroutername: '/zhjl',
+    subroutername: '/comprehensive_record_file',
     funicon: 'el-icon-star-off',
   },
   {
@@ -81,7 +81,7 @@ const nav = [
       :index="item.subroutername"
     >
       <i :class="item.funicon" />
-      <span class="text-[#303133]">{{ item.modname }}</span>
+      <span class="text-[#303133] text-16px">{{ item.modname }}</span>
     </RouterLink>
   </div>
 </template>

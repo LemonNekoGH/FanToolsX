@@ -7,6 +7,8 @@
     "build": "vite build"
   },
   "dependencies": {
+    "@vueuse/core": "^10.2.1",
+    "dayjs": "^1.11.8",
     "pinia": "^2.1.4",
     "vue": "^3.3.4",
     "vue-router": "^4.2.2"

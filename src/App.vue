@@ -1,59 +1,69 @@
 <script lang="ts" setup>
+import { useRouter } from 'vue-router'
+import { onMounted, ref } from 'vue'
+import { useIntervalFn } from '@vueuse/core'
+import dayjs from 'dayjs'
 import NavMenu from './components/menu.vue'
 
-import { saveFile } from './utils/file'
+import { loadFile, saveFile } from './utils/file'
 import { useState } from './store'
 
 const state = useState()
+const router = useRouter()
+const lastCacheTime = ref(Date.now())
 
-function save() {
-  const data = JSON.stringify(state)
+type State = typeof state.state
+
+function save(cache = false) {
+  const data = JSON.stringify(state.state)
+  if (cache) {
+    localStorage.setItem('cache', data)
+    lastCacheTime.value = Date.now()
+    return
+  }
+
   const blob = new Blob([data], { type: 'application/json' })
   const fileName = 'operator.akf'
   saveFile(blob, fileName)
 }
 
-function daochuform() {
-  const data = JSON.stringify(state)
-  const blob = new Blob([data], { type: 'application/json' })
-  const fileName = 'myData.json'
-  saveFile(blob, fileName)
+async function load() {
+  const data = await loadFile('save')
+  state.state = JSON.parse(data) as State
 }
+
+// 每 5 秒缓存一次到 localStorage
+useIntervalFn(() => save(true), 5000)
+
+onMounted(() => {
+  router.push('/basic_data')
+  const cached = localStorage.getItem('cache')
+  // 缓存
+  if (cached)
+    state.state = JSON.parse(cached) as State
+})
 </script>
 
 <template>
   <header class="h-90px bg-[#0072ff] fixed w-full">
-    <div class="flex nav_box">
-      <div class="nav_logo">
-        <img src="./assets/img/logo.png" alt="">
+    <div class="flex justify-between h-full items-center">
+      <div class="flex justify-center items-center ml-1">
+        <img src="./assets/img/logo.png" width="159" height="49" alt="" class="">
       </div>
 
       <div class="flex text-white">
-        <span>正在编辑的干员：<span>{{ state.state.formzcda.dh }}</span></span>
+        <span>当前编辑：<span>{{ state.state.formzcda.dh || '新干员' }}</span></span>
+      </div>
+
+      <div class="nav_time">
+        <p>上次缓存</p>
+        <div>{{ dayjs(lastCacheTime).format('YYYY-MM-DD HH:mm:ss') }}</div>
       </div>
       <!-- 按钮 -->
-      <div class="flex nav_an">
-        <i class="el-icon-success" style="font-size: 0.5rem; color: #fff" />
-        <i
-          class="el-icon-success" style="font-size: 0.5rem; color: #fff; cursor: pointer"
-          @click="daochuform()"
-        />
-        <i
-          class="el-icon-folder-add"
-          style="font-size: 0.5rem; color: #fff; cursor: pointer"
-          @click="save()"
-        />
-        <!-- <div class="qxbc">请先<br />保存</div> -->
-        <router-link to="/main">
-          <i
-            class="el-icon-camera"
-            style="font-size: 0.5rem; color: #fff; cursor: pointer"
-          />
-        </router-link>
-        <i
-          class="el-icon-question"
-          style="font-size: 0.5rem; color: #fff"
-        />
+      <div class="flex nav_an gap-x-1 mr-1">
+        <img class="cursor-pointer" src="./assets/img/folder_open.svg" width="24" height="24" @click="load()">
+        <img class="cursor-pointer" src="./assets/img/download.svg" width="24" height="24" @click="save()">
+        <img class="cursor-pointer" src="./assets/img/help.svg" width="24" height="24">
       </div>
     </div>
   </header>
