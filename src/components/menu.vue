@@ -22,7 +22,7 @@ const nav = [
   {
     id: 4,
     name: '晋升记录',
-    path: '/jsjl',
+    path: '/elevate_record',
   },
   {
     id: 5,

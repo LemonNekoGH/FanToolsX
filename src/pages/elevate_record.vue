@@ -6,7 +6,7 @@ const state = useState()
 
 <template>
   <div class="w-full h-full bg-white box-shadow box-border p-4">
-    <div class="title_box title_box_dazl">
+    <div>
       <div class="title">
         晋升记录
       </div>
@@ -15,22 +15,8 @@ const state = useState()
       </div>
     </div>
     <div class="form_box jsjl_from">
-      <div class="formdata">
-        <el-form
-          :inline="true"
-          :model="formjsjl"
-          class="demo-form-inline"
-          label-width="135px"
-          label-position="left"
-        >
-          <el-form-item>
-            <span slot="label">
-              <span>晋升记录：</span>
-            </span>
-            <el-input v-model="formjsjl.jsjl" type="textarea" :rows="5" />
-          </el-form-item>
-        </el-form>
-      </div>
+      <div>晋升记录：</div>
+      <textarea v-model="state.state.formjsjl" class="w-full" rows="15" />
     </div>
   </div>
 </template>

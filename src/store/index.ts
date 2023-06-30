@@ -3,6 +3,7 @@ import { ref } from 'vue'
 
 export const useState = defineStore('state', () => {
   const state = ref({
+    formjsjl: '',
     formzcda: {
       imgdata: 'null',
       dh: '',
