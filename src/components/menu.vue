@@ -38,7 +38,7 @@ const nav = [
   {
     id: 7,
     name: '悖论模拟',
-    path: '/blmn',
+    path: '/paradox_simulation',
   },
   {
     id: 8,
@@ -61,7 +61,7 @@ const nav = [
 <template>
   <VNavigationDrawer>
     <VList nav color="primary">
-      <VListItem v-for="item in nav" :key="item.id" nav :title="item.name" :to="item.path" density="compact" />
+      <VListItem v-for="item in nav" :key="item.id" nav :title="item.name" :to="item.path" density="compact" prepend-icon="mdi-star-outline" />
     </VList>
   </VNavigationDrawer>
 </template>
