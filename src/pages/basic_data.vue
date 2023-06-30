@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { storeToRefs } from 'pinia'
+import { VTextField, VTextarea } from 'vuetify/components'
 import { useState } from '../store'
 import defaultImg from '../assets/img/方舟干员_一图流模板-bkg.png'
 import SelectImage from '../components/select-image.vue'
@@ -8,7 +9,7 @@ const { state } = storeToRefs(useState())
 </script>
 
 <template>
-  <div class="w-full h-full bg-white box-shadow box-border p-4">
+  <div class="p-4">
     <div class="title_box">
       <div class="text-16px">
         基础档案
@@ -17,68 +18,25 @@ const { state } = storeToRefs(useState())
         <span>&nbsp;&nbsp;///Basic Data</span>
       </div>
     </div>
-    <div class="form_box">
-      <div class="form gap-1rem">
-        <form class="flex flex-1 flex-col justify-between h-360px">
-          <div class="flex">
-            <span class="w-120px text-16px">代号：</span>
-            <input v-model="state.formzcda.dh" class="flex-1">
-          </div>
-          <div class="flex">
-            <span class="w-120px text-16px">英文代号：</span>
-            <input v-model="state.formzcda.ywdh" class="flex-1">
-          </div>
-          <div class="flex">
-            <span class="w-120px text-16px">性别：</span>
-            <input v-model="state.formzcda.sex" class="flex-1">
-          </div>
-          <div class="flex">
-            <span class="w-120px text-16px">战斗经验：</span>
-            <input v-model="state.formzcda.zdjy" class="flex-1">
-          </div>
-          <div class="flex">
-            <span class="w-120px text-16px">出生地：</span>
-            <input v-model="state.formzcda.csd" class="flex-1">
-          </div>
-          <div class="flex">
-            <span class="w-120px text-16px">生日：</span>
-            <input v-model="state.formzcda.sr" class="flex-1">
-          </div>
-          <div class="flex">
-            <span class="w-120px text-16px">种族：</span>
-            <input v-model="state.formzcda.zz" class="flex-1">
-          </div>
-          <div class="flex">
-            <span class="w-120px text-16px">身高：</span>
-            <input v-model="state.formzcda.sg" class="flex-1">
-          </div>
-          <div class="flex">
-            <span class="w-120px text-16px">画师：</span>
-            <input v-model="state.formzcda.hs" class="flex-1">
-          </div>
-        </form>
-        <SelectImage
-          class="h-360px flex-shrink-0 w-240px"
-          hint="选择立绘"
-          :img="state.zcdaimgdata || defaultImg"
-          @image-cleared="state.zcdaimgdata = '';state.formzcda.imgdata = ''"
-          @image-loaded="(data, base64) => { state.zcdaimgdata = data; state.formzcda.imgdata = base64 }"
-        />
-      </div>
-      <div class="foot">
-        <div>
-          <div class="text-16px">
-            矿石感染情况：
-          </div>
-          <textarea v-model="state.formzcda.ksgr" class="w-full" />
-        </div>
-        <div>
-          <div class="text-16px">
-            附加数据：
-          </div>
-          <textarea v-model="state.formzcda.fjsj" type="textarea" :rows="5" class="w-full" />
-        </div>
-      </div>
+    <SelectImage
+      class="h-360px flex-shrink-0 w-240px mt-4"
+      hint="选择立绘"
+      :img="state.zcdaimgdata || defaultImg"
+      @image-cleared="state.zcdaimgdata = '';state.formzcda.imgdata = ''"
+      @image-loaded="(data, base64) => { state.zcdaimgdata = data; state.formzcda.imgdata = base64 }"
+    />
+    <div class="mt-4">
+      <VTextField v-model="state.formzcda.dh" variant="outlined" label="代号" density="compact" />
+      <VTextField v-model="state.formzcda.dh" variant="outlined" label="英文代号" density="compact" />
+      <VTextField v-model="state.formzcda.dh" variant="outlined" label="性别" density="compact" />
+      <VTextField v-model="state.formzcda.dh" variant="outlined" label="战斗经验" density="compact" />
+      <VTextField v-model="state.formzcda.dh" variant="outlined" label="出生地" density="compact" />
+      <VTextField v-model="state.formzcda.dh" variant="outlined" label="生日" density="compact" />
+      <VTextField v-model="state.formzcda.dh" variant="outlined" label="种族" density="compact" />
+      <VTextField v-model="state.formzcda.dh" variant="outlined" label="身高" density="compact" />
+      <VTextField v-model="state.formzcda.dh" variant="outlined" label="画师" density="compact" />
+      <VTextarea v-model="state.formzcda.ksgr" variant="outlined" label="矿石感染情况" density="compact" />
+      <VTextarea v-model="state.formzcda.fjsj" variant="outlined" label="附加数据" density="compact" />
     </div>
   </div>
 </template>

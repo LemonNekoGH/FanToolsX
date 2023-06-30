@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { VBtn, VCard } from 'vuetify/lib/components/index.mjs'
 import { loadFile, removeBase64DataUrlPrefix } from '../utils/file'
 import defaultImg from '../assets/img/方舟干员_一图流模板-bkg.png'
 
@@ -25,29 +26,28 @@ function clearImg(e: MouseEvent) {
 </script>
 
 <template>
-  <div
-    class="hover-to-reselect border-1px border-black/10 border-solid text-center cursor-pointer !bg-center !bg-contain !bg-no-repeat"
-    :style="{ backgroundImage: `url(${img})` }"
-    @click="loadImg"
-  >
+  <VCard variant="outlined" color="#bbb" class="w-full">
     <div
-      class="flex gap-y-16px justify-center reselect items-center flex-col w-full h-full" :class="{
-        'bg-black/50': img && img !== defaultImg,
-        'text-white': img && img !== defaultImg,
-        'opacity-0': img && img !== defaultImg,
-      }"
+      class="hover-to-reselect text-center cursor-pointer !bg-center !bg-contain !bg-no-repeat w-full h-full"
+      :style="{ backgroundImage: `url(${img})` }"
+      @click="loadImg"
     >
-      <div v-if="!img || img === defaultImg">
-        {{ hint }}
+      <div
+        class="flex gap-y-16px justify-center reselect items-center flex-col w-full h-full" :class="{
+          'bg-black/50': img && img !== defaultImg,
+          'text-white': img && img !== defaultImg,
+          'opacity-0': img && img !== defaultImg,
+        }"
+      >
+        <VBtn class="bg-white outline-none border-1px pointer-events-none border-black/10 border-solid" @click="clearImg">
+          {{ hint }}
+        </VBtn>
+        <VBtn v-if="img && img !== defaultImg" class="bg-white outline-none border-1px cursor-pointer border-black/10 border-solid" @click="clearImg">
+          移除
+        </VBtn>
       </div>
-      <button v-if="img && img !== defaultImg" class="bg-white outline-none border-1px pointer-events-none border-black/10 border-solid" @click="clearImg">
-        {{ hint }}
-      </button>
-      <button v-if="img && img !== defaultImg" class="bg-white outline-none border-1px cursor-pointer border-black/10 border-solid" @click="clearImg">
-        移除
-      </button>
     </div>
-  </div>
+  </VCard>
 </template>
 
 <style lang="less">

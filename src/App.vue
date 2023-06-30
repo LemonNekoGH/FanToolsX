@@ -3,6 +3,7 @@ import { useRouter } from 'vue-router'
 import { onMounted, ref } from 'vue'
 import { useIntervalFn } from '@vueuse/core'
 import dayjs from 'dayjs'
+import { VApp, VAppBar, VLayout, VMain, VThemeProvider, VToolbar, VToolbarItems, VToolbarTitle } from 'vuetify/components'
 import NavMenu from './components/menu.vue'
 
 import { loadFile, saveFile } from './utils/file'
@@ -45,38 +46,41 @@ onMounted(() => {
 </script>
 
 <template>
-  <header class="h-90px bg-[#0072ff] fixed w-full">
-    <div class="flex justify-between h-full items-center">
-      <div class="flex justify-center items-center ml-1">
-        <img src="./assets/img/logo.png" width="159" height="49" alt="" class="">
-      </div>
+  <VThemeProvider theme="default">
+    <VApp full-height>
+      <VLayout>
+        <VAppBar class="w-full" elevation="0">
+          <VToolbar color="primary">
+            <div class="flex justify-center items-center ml-1">
+              <img src="./assets/img/logo.png" width="159" height="49" alt="" class="">
+            </div>
+            <VToolbarTitle class="ml-4">
+              当前编辑：{{ state.state.formzcda.dh || '新干员' }}
+            </VToolbarTitle>
+            <VSpacer />
 
-      <div class="flex text-white">
-        <span>当前编辑：<span>{{ state.state.formzcda.dh || '新干员' }}</span></span>
-      </div>
+            <div>
+              <p>上次缓存</p>
+              <div>{{ dayjs(lastCacheTime).format('YYYY-MM-DD HH:mm:ss') }}</div>
+            </div>
+            <!-- 按钮 -->
 
-      <div class="nav_time">
-        <p>上次缓存</p>
-        <div>{{ dayjs(lastCacheTime).format('YYYY-MM-DD HH:mm:ss') }}</div>
-      </div>
-      <!-- 按钮 -->
-      <div class="flex nav_an gap-x-1 mr-1">
-        <img class="cursor-pointer" src="./assets/img/folder_open.svg" width="24" height="24" @click="load()">
-        <img class="cursor-pointer" src="./assets/img/download.svg" width="24" height="24" @click="save()">
-        <img class="cursor-pointer" src="./assets/img/help.svg" width="24" height="24">
-      </div>
-    </div>
-  </header>
+            <VToolbarItems>
+              <VBtn icon="mdi-folder-open" @click="load()" />
+              <VBtn icon="mdi-download" @click="save()" />
+              <VBtn icon="mdi-preview" />
+            </VToolbarItems>
+          </VToolbar>
+        </VAppBar>
 
-  <div class="mt-90px flex h-full w-full">
-    <div class="w-180px">
-      <NavMenu />
-    </div>
+        <NavMenu />
 
-    <div class="bg-[#e7ebf0] flex-1 p-24px">
-      <router-view />
-    </div>
-  </div>
+        <VMain class="overflow-y-scroll">
+          <router-view />
+        </VMain>
+      </VLayout>
+    </VApp>
+  </VThemeProvider>
 </template>
 
 <style>

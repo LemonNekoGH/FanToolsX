@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-import { RouterLink, useRoute } from 'vue-router'
+import { useRoute } from 'vue-router'
+import { VList, VListItem, VNavigationDrawer } from 'vuetify/components'
 
 const route = useRoute()
 
@@ -58,21 +59,11 @@ const nav = [
 </script>
 
 <template>
-  <div
-    v-for="item in nav"
-    :key="item.id"
-    class="h-65px flex justify-center items-center cursor-pointer hover:bg-[#ecf5ff] transition-colors duration-250ms"
-    :class="{
-      'bg-[#ecf5ff]': route.path === item.path,
-    }"
-  >
-    <RouterLink
-      :to="item.path"
-      :index="item.path"
-    >
-      <span class="text-[#303133] text-16px">{{ item.name }}</span>
-    </RouterLink>
-  </div>
+  <VNavigationDrawer>
+    <VList nav>
+      <VListItem v-for="item in nav" :key="item.id" nav :title="item.name" :to="item.path" density="compact" />
+    </VList>
+  </VNavigationDrawer>
 </template>
 
 <style>
