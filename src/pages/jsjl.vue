@@ -5,7 +5,7 @@ const state = useState()
 </script>
 
 <template>
-  <div class="all_box">
+  <div class="w-full h-full bg-white box-shadow box-border p-4">
     <div class="title_box title_box_dazl">
       <div class="title">
         晋升记录

@@ -68,21 +68,18 @@ onMounted(() => {
     </div>
   </header>
 
-  <div class="mt-90px flex h-full">
+  <div class="mt-90px flex h-full w-full">
     <div class="w-180px">
       <NavMenu />
     </div>
 
-    <div class="bg-[#e7ebf0] flex-1">
+    <div class="bg-[#e7ebf0] flex-1 p-24px">
       <router-view />
     </div>
   </div>
 </template>
 
 <style>
-.flex {
-  display: flex;
-}
 .nav_logo {
   padding: 0 0.1875rem;
   width: 3.75rem;

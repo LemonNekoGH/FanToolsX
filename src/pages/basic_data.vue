@@ -15,7 +15,7 @@ async function upload() {
 </script>
 
 <template>
-  <div class="all_box">
+  <div class="w-full h-full bg-white box-shadow box-border p-4">
     <div class="title_box">
       <div class="text-16px">
         基础档案
@@ -26,7 +26,7 @@ async function upload() {
     </div>
     <div class="form_box">
       <div class="form gap-1rem">
-        <form class="flex flex-1 flex-col justify-between h-6.25rem">
+        <form class="flex flex-1 flex-col justify-between h-360px">
           <div class="flex">
             <span class="w-120px text-16px">代号：</span>
             <input v-model="state.formzcda.dh" class="flex-1">
@@ -70,7 +70,7 @@ async function upload() {
             backgroundImage: `url(${state.zcdaimgdata})`,
           }"
           alt="" title="点击重新选择立绘"
-          class="h-6.25rem cursor-pointer border-1px border-[#ddd] border-solid flex-1 hover-to-reselect !bg-cover !bg-no-repeat !bg-center"
+          class="h-360px w-240px flex-shrink-0 cursor-pointer border-1px border-[#ddd] border-solid hover-to-reselect !bg-contain !bg-no-repeat !bg-center"
           @click="upload"
         >
           <div class="w-full h-full reselect bg-black/50 text-white transition-opacity flex justify-center items-center duration-250ms">
@@ -79,7 +79,7 @@ async function upload() {
         </div>
         <div
           v-else
-          class="!bg-no-repeat cursor-pointer !bg-cover !bg-center flex justify-center items-center flex-1 h-6.25rem"
+          class="h-360px flex-shrink-0 w-640px !bg-no-repeat cursor-pointer !bg-cover !bg-center flex justify-center items-center"
           :style="{
             backgroundImage: `url(${defaultImg})`,
           }" @click="upload"
