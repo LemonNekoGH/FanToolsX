@@ -2,6 +2,7 @@
 import { storeToRefs } from 'pinia'
 import { useState } from '../store'
 import { loadFile, removeBase64DataUrlPrefix } from '../utils/file'
+import SelectImage from '../components/select-image.vue'
 
 const { state } = storeToRefs(useState())
 
@@ -21,7 +22,7 @@ async function loadImg(type: 'logo' | 'avatar') {
 
 <template>
   <div class="w-full h-full bg-white box-shadow box-border p-4">
-    <div class="title_box title_box_dazl">
+    <div class="title_box">
       <div class="title">
         档案资料
       </div>
@@ -32,62 +33,59 @@ async function loadImg(type: 'logo' | 'avatar') {
     <div class="form_box">
       <div class="upload_da">
         <div class="top_upload_da">
-          <div class="upload_img_box">
-            <div class="upload_img" @click="loadImg('logo')">
-              <img v-if="state.formdazl.imgdata" :src="state.formdazl.imgdata" alt="">
-            </div>
-            <span>//请使用长宽比1:1并带有ALPHA的png图标//</span>
-          </div>
-        </div>
-        <div class="top_upload_da">
-          <div class="upload_img_box">
-            <div class="upload_img" @click="loadImg('avatar')">
-              <img v-if="state.formdazl.imgdata_t" :src="state.formdazl.imgdata_t" alt="">
-            </div>
-            <span class="upload_img_tx">//请使用长宽比1:1的头像//</span>
+          <div class="flex">
+            <SelectImage
+              class="w-360px h-360px"
+              hint="加载图标，请使用长宽比 1:1 并带有透明的的图标"
+              :img="state.dazlimgdata"
+              @image-loaded="(data, base64) => { state.dazlimgdata = data; state.formdazl.imgdata = base64 }"
+              @image-cleared="state.dazlimgdata = '';state.formdazl.imgdata = ''"
+            />
+            <SelectImage
+              class="w-360px h-360px"
+              hint="加载头像，请使用长宽比 1:1 的头像"
+              :img="state.dazlimgdata_t"
+              @image-loaded="(data, base64) => { state.dazlimgdata_t = data; state.formdazl.imgdata_t = base64 }"
+              @image-cleared="state.dazlimgdata_t = '';state.formdazl.imgdata_t = ''"
+            />
           </div>
         </div>
       </div>
       <div class="formdata">
         <div>
-          <span>档案资料1：</span>
-          <input
+          <div>档案资料1：</div>
+          <textarea
             v-model="state.formdazl.dazl1"
-            type="textarea"
-            :rows="4"
-          >
+            class="w-full"
+          />
         </div>
         <div>
-          <span>档案资料2：</span>
-          <input
+          <div>档案资料2：</div>
+          <textarea
             v-model="state.formdazl.dazl2"
-            type="textarea"
-            :rows="4"
-          >
+            class="w-full"
+          />
         </div>
         <div>
-          <span>档案资料3：</span>
-          <input
+          <div>档案资料3：</div>
+          <textarea
             v-model="state.formdazl.dazl3"
-            type="textarea"
-            :rows="4"
-          >
+            class="w-full"
+          />
         </div>
         <div>
-          <span>档案资料4：</span>
-          <input
+          <div>档案资料4：</div>
+          <textarea
             v-model="state.formdazl.dazl4"
-            type="textarea"
-            :rows="4"
-          >
+            class="w-full"
+          />
         </div>
         <div>
-          <span>附加资料：</span>
-          <input
+          <div>附加资料：</div>
+          <textarea
             v-model="state.formdazl.fjzl"
-            type="textarea"
-            :rows="4"
-          >
+            class="w-full"
+          />
         </div>
       </div>
     </div>

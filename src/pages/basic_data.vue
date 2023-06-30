@@ -2,16 +2,9 @@
 import { storeToRefs } from 'pinia'
 import { useState } from '../store'
 import defaultImg from '../assets/img/方舟干员_一图流模板-bkg.png'
-import { loadFile } from '../utils/file'
+import SelectImage from '../components/select-image.vue'
 
 const { state } = storeToRefs(useState())
-
-async function upload() {
-  const base64Str = await loadFile('image/png,image/jpg,image/jpeg,image/webp,image/svg')
-  const base64Data = base64Str.replace(/^data:image\/\w+;base64,/, '')
-  state.value.zcdaimgdata = base64Str
-  state.value.formzcda.imgdata = base64Data
-}
 </script>
 
 <template>
@@ -64,28 +57,13 @@ async function upload() {
             <input v-model="state.formzcda.hs" class="flex-1">
           </div>
         </form>
-        <div
-          v-if="state.zcdaimgdata"
-          :style="{
-            backgroundImage: `url(${state.zcdaimgdata})`,
-          }"
-          alt="" title="点击重新选择立绘"
-          class="h-360px w-240px flex-shrink-0 cursor-pointer border-1px border-[#ddd] border-solid hover-to-reselect !bg-contain !bg-no-repeat !bg-center"
-          @click="upload"
-        >
-          <div class="w-full h-full reselect bg-black/50 text-white transition-opacity flex justify-center items-center duration-250ms">
-            重新载入立绘
-          </div>
-        </div>
-        <div
-          v-else
-          class="h-360px flex-shrink-0 w-640px !bg-no-repeat cursor-pointer !bg-cover !bg-center flex justify-center items-center"
-          :style="{
-            backgroundImage: `url(${defaultImg})`,
-          }" @click="upload"
-        >
-          载入立绘
-        </div>
+        <SelectImage
+          class="h-360px flex-shrink-0 w-240px"
+          hint="选择立绘"
+          :img="state.zcdaimgdata || defaultImg"
+          @image-cleared="state.zcdaimgdata = '';state.formzcda.imgdata = ''"
+          @image-loaded="(data, base64) => { state.zcdaimgdata = data; state.formzcda.imgdata = base64 }"
+        />
       </div>
       <div class="foot">
         <div>
@@ -127,17 +105,5 @@ async function upload() {
 .right_jcda {
   display: flex;
   justify-content: space-between;
-}
-
-.hover-to-reselect {
-  .reselect {
-    opacity: 0;
-  }
-
-  &:hover {
-    .reselect {
-      opacity: 1;
-    }
-  }
 }
 </style>
