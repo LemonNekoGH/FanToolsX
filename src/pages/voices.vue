@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { storeToRefs } from 'pinia'
-import { VCard, VCardItem, VCardTitle, VTextField } from 'vuetify/lib/components/index.mjs'
+import { VCard, VCardItem, VCardTitle, VTextField } from 'vuetify/components'
 import { useState } from '../store'
 
 const { state } = storeToRefs(useState())

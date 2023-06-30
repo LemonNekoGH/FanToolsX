@@ -1,16 +1,14 @@
 <script lang="ts" setup>
-import { useRouter } from 'vue-router'
 import { onMounted, ref } from 'vue'
 import { useIntervalFn } from '@vueuse/core'
 import dayjs from 'dayjs'
-import { VApp, VAppBar, VLayout, VMain, VThemeProvider, VToolbar, VToolbarItems, VToolbarTitle } from 'vuetify/components'
+import { VApp, VAppBar, VBtn, VLayout, VMain, VSpacer, VThemeProvider, VToolbar, VToolbarTitle } from 'vuetify/components'
 import NavMenu from './components/menu.vue'
 
 import { loadFile, saveFile } from './utils/file'
 import { useState } from './store'
 
 const state = useState()
-const router = useRouter()
 const lastCacheTime = ref(Date.now())
 
 type State = typeof state.state
@@ -37,7 +35,6 @@ async function load() {
 useIntervalFn(() => save(true), 5000)
 
 onMounted(() => {
-  // router.push('/basic_data')
   const cached = localStorage.getItem('cache')
   // 缓存
   if (cached)
@@ -51,7 +48,7 @@ onMounted(() => {
       <VLayout>
         <VAppBar class="w-full" elevation="0">
           <VToolbar color="primary">
-            <div class="flex justify-center items-center ml-1">
+            <div class="flex justify-center items-center ml-4">
               <img src="./assets/img/logo.png" width="159" height="49" alt="" class="">
             </div>
             <VToolbarTitle class="ml-4">
@@ -59,17 +56,15 @@ onMounted(() => {
             </VToolbarTitle>
             <VSpacer />
 
-            <div>
+            <div class="mr-4">
               <p>上次缓存</p>
               <div>{{ dayjs(lastCacheTime).format('YYYY-MM-DD HH:mm:ss') }}</div>
             </div>
             <!-- 按钮 -->
 
-            <VToolbarItems>
-              <VBtn icon="mdi-folder-open" @click="load()" />
-              <VBtn icon="mdi-download" @click="save()" />
-              <VBtn icon="mdi-preview" />
-            </VToolbarItems>
+            <VBtn icon="mdi-folder-open" @click="load()" />
+            <VBtn icon="mdi-download" @click="save()" />
+            <VBtn icon="mdi-camera" />
           </VToolbar>
         </VAppBar>
 

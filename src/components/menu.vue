@@ -33,7 +33,7 @@ const nav = [
   {
     id: 6,
     name: '干员密录',
-    path: '/gyml',
+    path: '/story',
   },
   {
     id: 7,
@@ -60,7 +60,7 @@ const nav = [
 
 <template>
   <VNavigationDrawer>
-    <VList nav>
+    <VList nav color="primary">
       <VListItem v-for="item in nav" :key="item.id" nav :title="item.name" :to="item.path" density="compact" />
     </VList>
   </VNavigationDrawer>

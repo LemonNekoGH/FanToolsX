@@ -28,6 +28,9 @@ devDependencies:
   '@antfu/eslint-config':
     specifier: ^0.39.6
     version: 0.39.6(eslint@8.43.0)(typescript@5.1.5)
+  '@mdi/font':
+    specifier: ^7.2.96
+    version: 7.2.96
   '@vitejs/plugin-vue':
     specifier: ^4.2.3
     version: 4.2.3(vite@4.3.9)(vue@3.3.4)
@@ -517,6 +520,10 @@ packages:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.0
       '@jridgewell/sourcemap-codec': 1.4.14
+    dev: true
+
+  /@mdi/font@7.2.96:
+    resolution: {integrity: sha512-e//lmkmpFUMZKhmCY9zdjRe4zNXfbOIJnn6xveHbaV2kSw5aJ5dLXUxcRt1Gxfi7ZYpFLUWlkG2MGSFAiqAu7w==}
     dev: true
 
   /@nodelib/fs.scandir@2.1.5:

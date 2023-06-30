@@ -3,12 +3,14 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import { createPinia } from 'pinia'
 
 import { createVuetify } from 'vuetify'
+import { aliases, mdi } from 'vuetify/iconsets/mdi'
 
 import App from './App.vue'
 
 import 'vuetify/styles'
 import './assets/css/style.less'
 import 'uno.css'
+import '@mdi/font/css/materialdesignicons.css'
 
 import routes from '~pages'
 
@@ -26,6 +28,13 @@ const vuetify = createVuetify({
           primary: '#0072ff',
         },
       },
+    },
+  },
+  icons: {
+    defaultSet: 'mdi',
+    aliases,
+    sets: {
+      mdi,
     },
   },
 })

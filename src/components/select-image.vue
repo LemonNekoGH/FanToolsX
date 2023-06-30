@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import { VBtn, VCard, VCardItem, VCardSubtitle, VCardTitle } from 'vuetify/lib/components/index.mjs'
+import { VBtn, VCard, VCardActions, VCardItem, VCardSubtitle, VCardTitle } from 'vuetify/lib/components/index.mjs'
 import { loadFile, removeBase64DataUrlPrefix } from '../utils/file'
 import defaultImg from '../assets/img/方舟干员_一图流模板-bkg.png'
 
 defineProps<{
   img: string
-  hint: string
   title: string
   subtitle?: string
   width: string
@@ -46,34 +45,19 @@ function clearImg(e: MouseEvent) {
       @click="loadImg"
     >
       <div
-        class="flex gap-y-16px justify-center reselect items-center flex-col w-full h-full" :class="{
-          'bg-black/50': img && img !== defaultImg,
-          'text-white': img && img !== defaultImg,
-          'opacity-0': img && img !== defaultImg,
-        }"
+        class="flex gap-y-16px justify-center reselect items-center flex-col w-full h-full text-black"
       >
-        <VBtn variant="text" color="primary" class="bg-white outline-none border-1px pointer-events-none border-black/10 border-solid" @click="clearImg">
-          {{ hint }}
-        </VBtn>
-        <VBtn v-if="img && img !== defaultImg" variant="text" color="primary" class="bg-white outline-none border-1px cursor-pointer border-black/10 border-solid" @click="clearImg">
-          移除
-        </VBtn>
+        {{ img && img !== defaultImg ? '' : '未选择' }}
       </div>
     </div>
+    <div class="h-1px w-full bg-[#bbb]" />
+    <VCardActions>
+      <VBtn variant="text" color="primary" class="bg-white outline-none border-1px border-black/10 border-solid" @click="loadImg">
+        选择
+      </VBtn>
+      <VBtn v-if="img && img !== defaultImg" variant="text" color="primary" class="bg-white outline-none border-1px cursor-pointer border-black/10 border-solid" @click="clearImg">
+        移除
+      </VBtn>
+    </VCardActions>
   </VCard>
 </template>
-
-<style lang="less">
-.hover-to-reselect {
-  .reselect {
-    transition-property: opacity;
-    transition-duration: 250ms;
-  }
-
-  &:hover {
-    .reselect {
-      opacity: 1;
-    }
-  }
-}
-</style>
