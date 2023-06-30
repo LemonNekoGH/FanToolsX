@@ -30,3 +30,7 @@ export async function loadFile(accept: 'image/png,image/jpg,image/jpeg,image/web
     input.click()
   })
 }
+
+export function removeBase64DataUrlPrefix(dataUrl: string) {
+  return dataUrl.replace(/^data:image\/\w+;base64,/, '')
+}

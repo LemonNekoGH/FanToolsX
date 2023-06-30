@@ -3,7 +3,6 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import { createPinia } from 'pinia'
 import App from './App.vue'
 import './assets/css/style.less'
-import './assets/js/rem.js'
 
 import 'uno.css'
 
