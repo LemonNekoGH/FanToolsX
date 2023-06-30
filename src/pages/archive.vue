@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { storeToRefs } from 'pinia'
+import { VTextarea } from 'vuetify/lib/components/index.mjs'
 import { useState } from '../store'
 import { loadFile, removeBase64DataUrlPrefix } from '../utils/file'
 import SelectImage from '../components/select-image.vue'
@@ -21,7 +22,7 @@ async function loadImg(type: 'logo' | 'avatar') {
 </script>
 
 <template>
-  <div class="w-full h-full bg-white box-shadow box-border p-4">
+  <div class="w-full h-full bg-white box-border p-4">
     <div class="title_box">
       <div class="title">
         档案资料
@@ -30,117 +31,34 @@ async function loadImg(type: 'logo' | 'avatar') {
         <span>///Profile Data</span>
       </div>
     </div>
-    <div class="form_box">
-      <div class="upload_da">
-        <div class="top_upload_da">
-          <div class="flex">
-            <SelectImage
-              class="w-360px h-360px"
-              hint="加载图标，请使用长宽比 1:1 并带有透明的的图标"
-              :img="state.dazlimgdata"
-              @image-loaded="(data, base64) => { state.dazlimgdata = data; state.formdazl.imgdata = base64 }"
-              @image-cleared="state.dazlimgdata = '';state.formdazl.imgdata = ''"
-            />
-            <SelectImage
-              class="w-360px h-360px"
-              hint="加载头像，请使用长宽比 1:1 的头像"
-              :img="state.dazlimgdata_t"
-              @image-loaded="(data, base64) => { state.dazlimgdata_t = data; state.formdazl.imgdata_t = base64 }"
-              @image-cleared="state.dazlimgdata_t = '';state.formdazl.imgdata_t = ''"
-            />
-          </div>
-        </div>
-      </div>
-      <div class="formdata">
-        <div>
-          <div>档案资料1：</div>
-          <textarea
-            v-model="state.formdazl.dazl1"
-            class="w-full"
-          />
-        </div>
-        <div>
-          <div>档案资料2：</div>
-          <textarea
-            v-model="state.formdazl.dazl2"
-            class="w-full"
-          />
-        </div>
-        <div>
-          <div>档案资料3：</div>
-          <textarea
-            v-model="state.formdazl.dazl3"
-            class="w-full"
-          />
-        </div>
-        <div>
-          <div>档案资料4：</div>
-          <textarea
-            v-model="state.formdazl.dazl4"
-            class="w-full"
-          />
-        </div>
-        <div>
-          <div>附加资料：</div>
-          <textarea
-            v-model="state.formdazl.fjzl"
-            class="w-full"
-          />
-        </div>
-      </div>
+    <div class="flex gap-x-16px w-max mt-4">
+      <SelectImage
+        title="图标"
+        subtitle="请使用长宽比 1:1 并带有透明的的图标"
+        width="360px"
+        height="360px"
+        hint="选择"
+        :img="state.dazlimgdata"
+        @image-loaded="(data, base64) => { state.dazlimgdata = data; state.formdazl.imgdata = base64 }"
+        @image-cleared="state.dazlimgdata = '';state.formdazl.imgdata = ''"
+      />
+      <SelectImage
+        title="头像"
+        subtitle="请使用长宽比 1:1 的头像"
+        width="360px"
+        height="360px"
+        hint="选择"
+        :img="state.dazlimgdata_t"
+        @image-loaded="(data, base64) => { state.dazlimgdata_t = data; state.formdazl.imgdata_t = base64 }"
+        @image-cleared="state.dazlimgdata_t = '';state.formdazl.imgdata_t = ''"
+      />
+    </div>
+    <div class="mt-4">
+      <VTextarea v-model="state.formdazl.dazl1" color="primary" variant="outlined" label="档案资料1" density="compact" />
+      <VTextarea v-model="state.formdazl.dazl2" color="primary" variant="outlined" label="档案资料2" density="compact" />
+      <VTextarea v-model="state.formdazl.dazl3" color="primary" variant="outlined" label="档案资料3" density="compact" />
+      <VTextarea v-model="state.formdazl.dazl4" color="primary" variant="outlined" label="档案资料4" density="compact" />
+      <VTextarea v-model="state.formdazl.fjzl" color="primary" variant="outlined" label="附加资料" density="compact" />
     </div>
   </div>
 </template>
-
-  <style>
-.title_box_dazl {
-  width: 4.5rem;
-}
-.upload_da{
-    display: flex;
-}
-.top_upload_da{
-    display: flex;
-    align-items: stretch;
-}
-.upload_dazl{
-    width: 1.6125rem;
-    height: .4375rem;
-    box-shadow: 0 2px 4px rgb(0 0 0 / 12%), 0 0 6px rgb(0 0 0 / 4%);
-    cursor: pointer;
-    text-align: center;
-    line-height: .4375rem;
-    font-size: .225rem;
-    color: #000;
-}
-.upload_img{
-    width: 2.35rem;
-    height: 2.0375rem;
-    box-shadow:2px 2px 2px 2px rgb(0 0 0 / 23%), 0 0 6px rgb(0 0 0 / 4%);
-}
-.upload_img img{
-    width: 100%;
-    height: 100%;
-}
-.upload_img_box{
-    margin-left: .3125rem;
-}
-.upload_img_box span{
-    font-size: .1625rem;
-    color: #888686;
-    text-align: center;
-    margin-left: -0.5375rem;
-    margin-top: .12rem;
-    display: block;
-}
-.upload_img_tx{
-    margin-left: .025rem !important;
-}
-.form_box{
-    margin-top: .25rem;
-    margin-left: .1875rem;
-}
-.formdata{
-    margin-top: .1875rem;
-}
-</style>

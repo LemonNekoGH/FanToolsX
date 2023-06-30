@@ -1,11 +1,15 @@
 <script setup lang="ts">
-import { VBtn, VCard } from 'vuetify/lib/components/index.mjs'
+import { VBtn, VCard, VCardItem, VCardSubtitle, VCardTitle } from 'vuetify/lib/components/index.mjs'
 import { loadFile, removeBase64DataUrlPrefix } from '../utils/file'
 import defaultImg from '../assets/img/方舟干员_一图流模板-bkg.png'
 
 defineProps<{
   img: string
   hint: string
+  title: string
+  subtitle?: string
+  width: string
+  height: string
 }>()
 
 const emit = defineEmits<{
@@ -27,9 +31,18 @@ function clearImg(e: MouseEvent) {
 
 <template>
   <VCard variant="outlined" color="#bbb" class="w-full">
+    <VCardItem>
+      <VCardTitle class="text-black">
+        {{ title }}
+      </VCardTitle>
+      <VCardSubtitle v-if="subtitle" class="text-black">
+        {{ subtitle }}
+      </VCardSubtitle>
+    </VCardItem>
+    <div class="h-1px w-full bg-[#ddd]" />
     <div
       class="hover-to-reselect text-center cursor-pointer !bg-center !bg-contain !bg-no-repeat w-full h-full"
-      :style="{ backgroundImage: `url(${img})` }"
+      :style="{ backgroundImage: `url(${img})`, width, height }"
       @click="loadImg"
     >
       <div
@@ -39,10 +52,10 @@ function clearImg(e: MouseEvent) {
           'opacity-0': img && img !== defaultImg,
         }"
       >
-        <VBtn class="bg-white outline-none border-1px pointer-events-none border-black/10 border-solid" @click="clearImg">
+        <VBtn variant="text" color="primary" class="bg-white outline-none border-1px pointer-events-none border-black/10 border-solid" @click="clearImg">
           {{ hint }}
         </VBtn>
-        <VBtn v-if="img && img !== defaultImg" class="bg-white outline-none border-1px cursor-pointer border-black/10 border-solid" @click="clearImg">
+        <VBtn v-if="img && img !== defaultImg" variant="text" color="primary" class="bg-white outline-none border-1px cursor-pointer border-black/10 border-solid" @click="clearImg">
           移除
         </VBtn>
       </div>

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { VTextarea } from 'vuetify/components'
 import { useState } from '../store'
 
 const state = useState()
@@ -6,7 +7,7 @@ const state = useState()
 
 <template>
   <div class="w-full h-full bg-white box-shadow box-border p-4">
-    <div>
+    <div class="flex">
       <div class="title">
         晋升记录
       </div>
@@ -14,10 +15,7 @@ const state = useState()
         <span>///Elevate Record</span>
       </div>
     </div>
-    <div class="form_box jsjl_from">
-      <div>晋升记录：</div>
-      <textarea v-model="state.state.formjsjl" class="w-full" rows="15" />
-    </div>
+    <VTextarea v-model="state.state.formjsjl" class="mt-4" color="primary" variant="outlined" label="晋升记录" />
   </div>
 </template>
 
