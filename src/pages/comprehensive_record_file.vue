@@ -8,7 +8,7 @@ const { state } = storeToRefs(useState())
 </script>
 
 <template>
-  <div class="w-full h-full bg-white box-shadow box-border p-4">
+  <div class="w-full h-full p-4">
     <div class="title_box">
       <div class="title">
         综合记录

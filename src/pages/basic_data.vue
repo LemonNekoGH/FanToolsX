@@ -19,6 +19,7 @@ const { state } = storeToRefs(useState())
       </div>
     </div>
     <SelectImage
+      class="mt-4"
       width="100%"
       height="360px"
       title="立绘"

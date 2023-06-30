@@ -1,8 +1,5 @@
 <script lang="ts" setup>
-import { useRoute } from 'vue-router'
 import { VList, VListItem, VNavigationDrawer } from 'vuetify/components'
-
-const route = useRoute()
 
 const nav = [
   {
@@ -48,7 +45,7 @@ const nav = [
   {
     id: 9,
     name: '技能数据',
-    path: '/jnsj',
+    path: '/skills',
   },
   {
     id: 10,

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { storeToRefs } from 'pinia'
-import { VTextarea } from 'vuetify/lib/components/index.mjs'
+import { VTextarea } from 'vuetify/components'
 import { useState } from '../store'
 import { loadFile, removeBase64DataUrlPrefix } from '../utils/file'
 import SelectImage from '../components/select-image.vue'
