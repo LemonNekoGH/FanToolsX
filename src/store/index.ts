@@ -109,7 +109,7 @@ export const useState = defineStore('state', () => {
       zds: '',
       jg: '',
       xj: 1,
-      zy: '0',
+      zy: '近卫',
     },
     formjcs2: {
       smz: '',

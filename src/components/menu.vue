@@ -43,7 +43,7 @@ const nav = [
   {
     id: 8,
     name: '基础数值',
-    path: '/jcsz',
+    path: '/attributes',
   },
   {
     id: 9,
