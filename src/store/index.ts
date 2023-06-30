@@ -82,7 +82,8 @@ export const useState = defineStore('state', () => {
       xlcm: '',
       wh: '',
       bt: '',
-
+      gybd: '',
+      jjss: '',
     },
     formgyml: {
       imgdata: '',

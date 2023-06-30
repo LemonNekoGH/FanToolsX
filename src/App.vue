@@ -37,7 +37,7 @@ async function load() {
 useIntervalFn(() => save(true), 5000)
 
 onMounted(() => {
-  router.push('/basic_data')
+  // router.push('/basic_data')
   const cached = localStorage.getItem('cache')
   // 缓存
   if (cached)

@@ -28,7 +28,7 @@ const nav = [
   {
     id: 5,
     name: '语音资料',
-    path: '/yyzl',
+    path: '/voices',
   },
   {
     id: 6,
