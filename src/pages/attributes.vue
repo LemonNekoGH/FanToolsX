@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { VCard, VCardItem, VCardSubtitle, VCardTitle, VSelect, VTextField } from 'vuetify/components'
+import { VCard, VCardItem, VCardSubtitle, VCardTitle, VCheckbox, VSelect, VSlider, VTextField } from 'vuetify/components'
 import { storeToRefs } from 'pinia'
 import { useState } from '../store'
 
@@ -67,7 +67,7 @@ const { state } = storeToRefs(useState())
     <VCard variant="outlined" class="mt-4 border-[#bbb]">
       <VCardItem>
         <VCardTitle class="text-black">
-          特殊属性
+          属性
         </VCardTitle>
       </VCardItem>
       <div class="h-1px w-full bg-[#ddd]" />
@@ -83,7 +83,26 @@ const { state } = storeToRefs(useState())
         <VTextField v-model="state.formjcs1.fz" variant="outlined" color="primary" label="分支" density="compact" />
         <VTextField v-model="state.formjcs1.bq" variant="outlined" color="primary" label="标签" density="compact" />
         <VTextField v-model="state.formjcs1.bq" variant="outlined" color="primary" label="站位" density="compact" />
+        <VSlider min="1" max="6" step="1" label="星级" color="primary" density="compact" />
+      </div>
+      <div class="h-1px w-full bg-[#ddd]" />
+      <VCardItem>
+        <VCardSubtitle class="text-black">
+          攻击范围
+        </VCardSubtitle>
+      </VCardItem>
+      <div class="h-1px w-full bg-[#ddd]" />
+      <div class="grid scopes grid-cols-10 grid-items-start w-400px px-4 pt-4">
+        <VCheckbox v-for="(_, index) in Array(70)" :key="index" v-model="state.fw[index]" density="compact" color="primary" />
       </div>
     </VCard>
   </div>
 </template>
+
+<style lang="less">
+.scopes {
+  .v-input__details {
+    display: none!important;
+  }
+}
+</style>

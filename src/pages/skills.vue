@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { VCard, VCardItem, VCardTitle, VSelect, VTextField } from 'vuetify/components'
+import { VCard, VCardItem, VCardSubtitle, VCardTitle, VSelect, VSwitch, VTextField } from 'vuetify/components'
 import { storeToRefs } from 'pinia'
 import SelectImage from '../components/select-image.vue'
 import { useState } from '../store'
@@ -28,7 +28,9 @@ function levelName(level: string) {
     <div class="flex gap-x-16px mt-4">
       <!-- 技能 1 -->
       <div>
+        <VSwitch v-model="state.formjnsj.exists" inset color="primary" label="启用技能 1" messages="不启用时不会显示在展示页面" density="compact" />
         <SelectImage
+          class="mt-4"
           :img="state.jnsjimg"
           width="360px" height="360px" title="技能 1 图标"
           @image-loaded="(data, base64) => { state.jnsjimg = data; state.formjnsj.imgdata = base64 }"
@@ -71,7 +73,9 @@ function levelName(level: string) {
       </div>
       <!-- 技能 2 -->
       <div>
+        <VSwitch v-model="state.formjnsj1.exists" inset color="primary" label="启用技能 2" messages="不启用时不会显示在展示页面" density="compact" />
         <SelectImage
+          class="mt-4"
           :img="state.jnsjimg1" width="360px" height="360px" title="技能 2 图标"
           @image-loaded="(data, base64) => { state.jnsjimg1 = data; state.formjnsj1.imgdata = base64 }"
           @image-cleared="state.jnsjimg1 = ''; state.formjnsj1.imgdata = ''"
@@ -113,7 +117,9 @@ function levelName(level: string) {
       </div>
       <!-- 技能 3 -->
       <div>
+        <VSwitch v-model="state.formjnsj2.exists" inset color="primary" label="启用技能 3" messages="不启用时不会显示在展示页面" density="compact" />
         <SelectImage
+          class="mt-4"
           :img="state.jnsjimg2" width="360px" height="360px" title="技能 3 图标"
           @image-loaded="(data, base64) => { state.jnsjimg2 = data; state.formjnsj2.imgdata = base64 }"
           @image-cleared="state.jnsjimg2 = ''; state.formjnsj2.imgdata = ''"

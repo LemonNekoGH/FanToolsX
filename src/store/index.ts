@@ -203,6 +203,7 @@ const initState = {
     false,
     false],
   formjnsj: {
+    exists: true,
     sw1: '',
     jn: '1',
     fs: '0',
@@ -252,6 +253,7 @@ const initState = {
     },
   ],
   formjnsj1: {
+    exists: true,
     sw1: '',
     jn: '1',
     fs: '0',
@@ -301,6 +303,7 @@ const initState = {
     },
   ],
   formjnsj2: {
+    exists: true,
     sw1: '',
     jn: '1',
     fs: '0',
@@ -360,7 +363,8 @@ const initState = {
     tfx1: '',
     tf2: '',
     tfx2: '',
-    tfms: '',
+    tf1ms: '',
+    tf2ms: '',
     imgdata: '',
   },
   tfmzimg: '',

@@ -49,8 +49,8 @@ const nav = [
   },
   {
     id: 10,
-    name: '天赋模组',
-    path: '/tfmz',
+    name: '天赋与模组',
+    path: '/talents',
   },
 ]
 </script>

@@ -18,7 +18,7 @@ const { state } = storeToRefs(useState())
       </div>
     </div>
     <div id="story-switch">
-      <VSwitch v-model="state.formgyml.checkdata" label="启用干员密录 2" color="primary" />
+      <VSwitch v-model="state.formgyml.checkdata" inset label="启用干员密录 2" color="primary" />
     </div>
     <VCard variant="outlined" class="border-[#bbb]">
       <VCardItem>
