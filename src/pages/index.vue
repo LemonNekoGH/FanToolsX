@@ -2,7 +2,6 @@
 import { storeToRefs } from 'pinia'
 import { VTextField, VTextarea } from 'vuetify/components'
 import { useState } from '../store'
-import defaultImg from '../assets/img/方舟干员_一图流模板-bkg.png'
 import SelectImage from '../components/select-image.vue'
 
 const { state } = storeToRefs(useState())
@@ -20,11 +19,9 @@ const { state } = storeToRefs(useState())
     </div>
     <SelectImage
       class="mt-4"
-      width="100%"
-      height="360px"
       title="立绘"
       hint="选择"
-      :img="state.zcdaimgdata || defaultImg"
+      :img="state.zcdaimgdata"
       @image-cleared="state.zcdaimgdata = '';state.formzcda.imgdata = ''"
       @image-loaded="(data, base64) => { state.zcdaimgdata = data; state.formzcda.imgdata = base64 }"
     />

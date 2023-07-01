@@ -1,8 +1,9 @@
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useIntervalFn } from '@vueuse/core'
 import dayjs from 'dayjs'
 import { VApp, VAppBar, VBtn, VLayout, VMain, VSpacer, VThemeProvider, VToolbar, VToolbarTitle } from 'vuetify/components'
+import { useDisplay } from 'vuetify/lib/framework.mjs'
 import NavMenu from './components/menu.vue'
 
 import { loadFile, saveFile } from './utils/file'
@@ -10,6 +11,9 @@ import { useState } from './store'
 
 const state = useState()
 const lastCacheTime = ref(Date.now())
+const lastCacheTimeStr = computed(() => dayjs(lastCacheTime.value).format('YYYY-MM-DD HH:mm:ss'))
+const display = useDisplay()
+const showNav = ref(!display.mobile.value)
 
 type State = typeof state.state
 
@@ -48,27 +52,35 @@ onMounted(() => {
       <VLayout>
         <VAppBar class="w-full" elevation="0">
           <VToolbar color="primary">
+            <VBtn v-if="display.mobile.value" icon="mdi-menu" @click="showNav = !showNav" />
             <div class="flex justify-center items-center ml-4">
               <img src="./assets/img/logo.png" width="159" height="49" alt="" class="">
             </div>
-            <VToolbarTitle class="ml-4">
+            <VToolbarTitle v-if="!display.mobile.value" class="ml-4">
               当前编辑：{{ state.state.formzcda.dh || '新干员' }}
             </VToolbarTitle>
             <VSpacer />
 
-            <div class="mr-4">
+            <div v-if="!display.mobile.value" class="mr-4">
               <p>上次缓存</p>
               <div>{{ dayjs(lastCacheTime).format('YYYY-MM-DD HH:mm:ss') }}</div>
             </div>
             <!-- 按钮 -->
-
-            <VBtn icon="mdi-folder-open" @click="load()" />
-            <VBtn icon="mdi-download" @click="save()" />
-            <VBtn icon="mdi-camera" />
+            <div v-if="!display.mobile.value">
+              <VBtn icon="mdi-folder-open" @click="load()" />
+              <VBtn icon="mdi-download" @click="save()" />
+              <VBtn icon="mdi-camera" />
+            </div>
           </VToolbar>
         </VAppBar>
 
-        <NavMenu />
+        <NavMenu
+          :show-nav="showNav"
+          :last-cache-time="lastCacheTimeStr"
+          @state-changed="(newVal) => { showNav = newVal }"
+          @load="load"
+          @save="save"
+        />
 
         <VMain class="overflow-y-scroll">
           <router-view />

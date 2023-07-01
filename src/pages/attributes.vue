@@ -92,7 +92,7 @@ const { state } = storeToRefs(useState())
         </VCardSubtitle>
       </VCardItem>
       <div class="h-1px w-full bg-[#ddd]" />
-      <div class="grid scopes grid-cols-10 grid-items-start w-400px px-4 pt-4">
+      <div class="grid scopes grid-cols-10 grid-items-start w-300px px-4 pt-4">
         <VCheckbox v-for="(_, index) in Array(70)" :key="index" v-model="state.fw[index]" density="compact" color="primary" />
       </div>
     </VCard>

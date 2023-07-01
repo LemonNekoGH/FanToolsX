@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { VCard, VCardItem, VCardSubtitle, VCardTitle, VSelect, VTextField, VTextarea } from 'vuetify/components'
 import { storeToRefs } from 'pinia'
+import { useDisplay } from 'vuetify/framework'
 import SelectImage from '../components/select-image.vue'
 import { useState } from '../store'
 
 const { state } = storeToRefs(useState())
+const display = useDisplay()
 </script>
 
 <template>
@@ -17,11 +19,15 @@ const { state } = storeToRefs(useState())
         <span>///Talents</span>
       </div>
     </div>
-    <div class="flex mt-4 gap-4">
-      <div>
+    <div
+      class="mt-4 w-full" :class="{
+        'flex gap-x-16px': !display.mobile.value,
+      }"
+    >
+      <div :class="[display.mobile.value ? '' : 'w-360px']">
         <SelectImage
           :img="state.tfmzimg"
-          width="360px" height="360px" title="分支图标"
+          title="分支图标"
           @image-loaded="(data, base64) => { state.tfmzimg = data; state.formtfmz.imgdata = base64 }"
           @image-cleared="state.tfmzimg = ''; state.formtfmz.imgdata = ''"
         />
@@ -62,17 +68,22 @@ const { state } = storeToRefs(useState())
           </div>
         </VCard>
       </div>
-      <div>
+      <div
+        :class="{
+          'mt-4': display.mobile.value,
+          'w-360px': !display.mobile.value,
+        }"
+      >
         <SelectImage
           :img="state.mzsjimg"
-          width="360px" height="360px" title="模组 1 图片"
+          title="模组 1 图片"
           @image-loaded="(data, base64) => { state.mzsjimg = data; state.formmzsj.imgdata = base64 }"
           @image-cleared="state.mzsjimg = ''; state.formmzsj.imgdata = ''"
         />
         <SelectImage
           class="mt-4"
           :img="state.mzsjimg1"
-          width="360px" height="360px" title="模组 1 图标"
+          title="模组 1 图标"
           @image-loaded="(data, base64) => { state.mzsjimg1 = data; state.formmzsj.imgdata1 = base64 }"
           @image-cleared="state.mzsjimg1 = ''; state.formmzsj.imgdata1 = ''"
         />
@@ -99,7 +110,7 @@ const { state } = storeToRefs(useState())
           <div class="h-1px w-full bg-[#ddd]" />
           <VCardItem>
             <VCardSubtitle>
-              STAGE.1
+              STAGE.I
             </VCardSubtitle>
           </VCardItem>
           <div class="h-1px w-full bg-[#ddd]" />
@@ -112,7 +123,7 @@ const { state } = storeToRefs(useState())
           <div class="h-1px w-full bg-[#ddd]" />
           <VCardItem>
             <VCardSubtitle>
-              STAGE.2
+              STAGE.II
             </VCardSubtitle>
           </VCardItem>
           <div class="h-1px w-full bg-[#ddd]" />
@@ -125,7 +136,7 @@ const { state } = storeToRefs(useState())
           <div class="h-1px w-full bg-[#ddd]" />
           <VCardItem>
             <VCardSubtitle>
-              STAGE.3
+              STAGE.III
             </VCardSubtitle>
           </VCardItem>
           <div class="h-1px w-full bg-[#ddd]" />
@@ -137,17 +148,22 @@ const { state } = storeToRefs(useState())
           </div>
         </VCard>
       </div>
-      <div>
+      <div
+        :class="{
+          'mt-4': display.mobile.value,
+          'w-360px': !display.mobile.value,
+        }"
+      >
         <SelectImage
           :img="state.mzsjimg2"
-          width="360px" height="360px" title="模组 2 图片"
+          title="模组 2 图片"
           @image-loaded="(data, base64) => { state.mzsjimg = data; state.formmzsj.imgdata = base64 }"
           @image-cleared="state.mzsjimg3 = ''; state.formmzsj.imgdata = ''"
         />
         <SelectImage
           class="mt-4"
           :img="state.mzsjimg3"
-          width="360px" height="360px" title="模组 2 图标"
+          title="模组 2 图标"
           @image-loaded="(data, base64) => { state.mzsjimg1 = data; state.formmzsj1.imgdata1 = base64 }"
           @image-cleared="state.mzsjimg3 = ''; state.formmzsj1.imgdata1 = ''"
         />
@@ -174,7 +190,7 @@ const { state } = storeToRefs(useState())
           <div class="h-1px w-full bg-[#ddd]" />
           <VCardItem>
             <VCardSubtitle>
-              STAGE.1
+              STAGE.I
             </VCardSubtitle>
           </VCardItem>
           <div class="h-1px w-full bg-[#ddd]" />
@@ -187,7 +203,7 @@ const { state } = storeToRefs(useState())
           <div class="h-1px w-full bg-[#ddd]" />
           <VCardItem>
             <VCardSubtitle>
-              STAGE.2
+              STAGE.II
             </VCardSubtitle>
           </VCardItem>
           <div class="h-1px w-full bg-[#ddd]" />
@@ -200,7 +216,7 @@ const { state } = storeToRefs(useState())
           <div class="h-1px w-full bg-[#ddd]" />
           <VCardItem>
             <VCardSubtitle>
-              STAGE.3
+              STAGE.III
             </VCardSubtitle>
           </VCardItem>
           <div class="h-1px w-full bg-[#ddd]" />

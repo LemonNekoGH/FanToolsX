@@ -32,7 +32,7 @@ function levelName(level: string) {
         <SelectImage
           class="mt-4"
           :img="state.jnsjimg"
-          width="360px" height="360px" title="技能 1 图标"
+          title="技能 1 图标"
           @image-loaded="(data, base64) => { state.jnsjimg = data; state.formjnsj.imgdata = base64 }"
           @image-cleared="state.jnsjimg = ''; state.formjnsj.imgdata = ''"
         />
@@ -76,7 +76,7 @@ function levelName(level: string) {
         <VSwitch v-model="state.formjnsj1.exists" inset color="primary" label="启用技能 2" messages="不启用时不会显示在展示页面" density="compact" />
         <SelectImage
           class="mt-4"
-          :img="state.jnsjimg1" width="360px" height="360px" title="技能 2 图标"
+          :img="state.jnsjimg1" title="技能 2 图标"
           @image-loaded="(data, base64) => { state.jnsjimg1 = data; state.formjnsj1.imgdata = base64 }"
           @image-cleared="state.jnsjimg1 = ''; state.formjnsj1.imgdata = ''"
         />
@@ -120,7 +120,7 @@ function levelName(level: string) {
         <VSwitch v-model="state.formjnsj2.exists" inset color="primary" label="启用技能 3" messages="不启用时不会显示在展示页面" density="compact" />
         <SelectImage
           class="mt-4"
-          :img="state.jnsjimg2" width="360px" height="360px" title="技能 3 图标"
+          :img="state.jnsjimg2" title="技能 3 图标"
           @image-loaded="(data, base64) => { state.jnsjimg2 = data; state.formjnsj2.imgdata = base64 }"
           @image-cleared="state.jnsjimg2 = ''; state.formjnsj2.imgdata = ''"
         />

@@ -1,14 +1,12 @@
 <script setup lang="ts">
-import { VBtn, VCard, VCardActions, VCardItem, VCardSubtitle, VCardTitle } from 'vuetify/lib/components/index.mjs'
+import { VBtn, VCard, VCardActions, VCardItem, VCardSubtitle, VCardTitle, VIcon, VImg } from 'vuetify/lib/components/index.mjs'
 import { loadFile, removeBase64DataUrlPrefix } from '../utils/file'
-import defaultImg from '../assets/img/方舟干员_一图流模板-bkg.png'
+import defaultImg from '../assets/img/missingtex.png'
 
 defineProps<{
   img: string
   title: string
   subtitle?: string
-  width: string
-  height: string
 }>()
 
 const emit = defineEmits<{
@@ -39,17 +37,13 @@ function clearImg(e: MouseEvent) {
       </VCardSubtitle>
     </VCardItem>
     <div class="h-1px w-full bg-[#ddd]" />
-    <div
-      class="hover-to-reselect text-center cursor-pointer !bg-center !bg-contain !bg-no-repeat w-full h-full"
-      :style="{ backgroundImage: `url(${img})`, width, height }"
-      @click="loadImg"
-    >
-      <div
-        class="flex gap-y-16px justify-center reselect items-center flex-col w-full h-full text-black"
-      >
-        {{ img && img !== defaultImg ? '' : '未选择' }}
-      </div>
-    </div>
+    <VImg :src="img" :lazy-src="defaultImg" :aspect-ratio="1">
+      <template #placeholder>
+        <div class="w-full h-full flex justify-center items-center">
+          <VIcon icon="mdi-alert-box" color="white" size="48" />
+        </div>
+      </template>
+    </VImg>
     <div class="h-1px w-full bg-[#bbb]" />
     <VCardActions>
       <VBtn variant="text" color="primary" class="bg-white outline-none border-1px border-black/10 border-solid" @click="loadImg">

@@ -1,11 +1,27 @@
 <script lang="ts" setup>
-import { VList, VListItem, VNavigationDrawer } from 'vuetify/components'
+import { VBtn, VDivider, VList, VListItem, VNavigationDrawer } from 'vuetify/components'
+import { useDisplay } from 'vuetify/framework'
+import { storeToRefs } from 'pinia'
+import { useState } from '../store'
+
+defineProps<{
+  showNav: boolean
+  lastCacheTime: string
+}>()
+
+const emit = defineEmits<{
+  (e: 'stateChanged', val: boolean): void
+  (e: 'load'): void
+  (e: 'save'): void
+}>()
+
+const { state } = storeToRefs(useState())
 
 const nav = [
   {
     id: 1,
     name: '基础档案',
-    path: '/basic_data',
+    path: '/',
   },
   {
     id: 2,
@@ -53,10 +69,29 @@ const nav = [
     path: '/talents',
   },
 ]
+
+const display = useDisplay()
+function updateModelValue(val: boolean) {
+  emit('stateChanged', val)
+}
 </script>
 
 <template>
-  <VNavigationDrawer>
+  <VNavigationDrawer :temporary="display.mobile.value" :model-value="showNav" @update:model-value="updateModelValue">
+    <div v-if="display.mobile.value" class="p-4">
+      <div>当前编辑：{{ state.formzcda.dh || '新干员' }}</div>
+      <div class="mr-4">
+        <p>上次缓存</p>
+        <div>{{ lastCacheTime }}</div>
+      </div>
+      <!-- 按钮 -->
+      <div class="flex justify-between mt-4">
+        <VBtn icon="mdi-folder-open" variant="outlined" color="primary" @click="emit('load')" />
+        <VBtn icon="mdi-download" variant="outlined" color="primary" @click="emit('save')" />
+        <VBtn icon="mdi-camera" variant="outlined" color="primary" />
+      </div>
+    </div>
+    <VDivider />
     <VList nav color="primary">
       <VListItem v-for="item in nav" :key="item.id" nav :title="item.name" :to="item.path" density="compact" prepend-icon="mdi-star-outline" />
     </VList>
