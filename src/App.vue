@@ -3,6 +3,7 @@ import { computed, onMounted, ref } from 'vue'
 import dayjs from 'dayjs'
 import { VApp, VAppBar, VBtn, VLayout, VMain, VSpacer, VThemeProvider, VToolbar, VToolbarTitle } from 'vuetify/components'
 import { useDisplay } from 'vuetify/lib/framework.mjs'
+import { useIntervalFn } from '@vueuse/core'
 import NavMenu from './components/menu.vue'
 
 import { loadFile, saveFile } from './utils/file'
@@ -30,12 +31,27 @@ function save(cache = false) {
 }
 
 async function load() {
-  const data = await loadFile('save')
+  const data = await loadFile('*.akf,*.json')
+  const parsedData = JSON.parse(data) as State
   state.state = JSON.parse(data) as State
+  // Unity 中没有 Data URL, 导入时需要为图片加上前缀
+  state.state.AbilityImage = `data:image/*;base64,${parsedData.AbilityData[7]}`
+  state.state.BasicDataImgForWeb = `data:image/*;base64,${parsedData.BasicdataText[0]}`
+  state.state.ProfLogoForWeb = `data:image/*;base64,${parsedData.ProfDat[0]}`
+  state.state.ProfAvatarForWeb = `data:image/*;base64,${parsedData.ProfDat[1]}`
+  state.state.StoryImgForWeb = `data:image/*;base64,${parsedData.Story[0]}`
+  state.state.StoryImg2ForWeb = `data:image/*;base64,${parsedData.Story[1]}`
+  state.state.Skill1PicB64ForWeb = `data:image/*;base64,${parsedData.Skill1PicB64}`
+  state.state.Skill2PicB64ForWeb = `data:image/*;base64,${parsedData.Skill2PicB64}`
+  state.state.Skill3PicB64ForWeb = `data:image/*;base64,${parsedData.Skill3PicB64}`
+  state.state.Mod1IconForWeb = `data:image/*;base64,${parsedData.Mod1[0]}`
+  state.state.Mod1ImgForWeb = `data:image/*;base64,${parsedData.Mod1[1]}`
+  state.state.Mod2IconForWeb = `data:image/*;base64,${parsedData.Mod2[0]}`
+  state.state.Mod2ImgForWeb = `data:image/*;base64,${parsedData.Mod2[1]}`
 }
 
 // 每 5 秒缓存一次到 localStorage
-// useIntervalFn(() => save(true), 5000)
+useIntervalFn(() => save(true), 5000)
 
 onMounted(() => {
   const cached = localStorage.getItem('cache')

@@ -15,7 +15,7 @@ const emit = defineEmits<{
 }>()
 
 async function loadImg() {
-  const imgDataUrl = await loadFile('image/png,image/jpg,image/jpeg,image/webp,image/svg')
+  const imgDataUrl = await loadFile('image/*')
   const imgPureBase64 = removeBase64DataUrlPrefix(imgDataUrl)
   emit('imageLoaded', imgDataUrl, imgPureBase64)
 }

@@ -6,7 +6,7 @@ export function saveFile(file: Blob, fileName: string) {
   link.click()
 }
 
-export async function loadFile(accept: 'image/png,image/jpg,image/jpeg,image/webp,image/svg' | 'save') {
+export async function loadFile(accept: 'image/*' | '*.akf,*.json') {
   return new Promise<string>((resolve) => {
     const input = document.createElement('input')
     input.type = 'file'
@@ -14,7 +14,7 @@ export async function loadFile(accept: 'image/png,image/jpg,image/jpeg,image/web
     input.onchange = () => {
       const fr = new FileReader()
       // 如果是图片就使用 base64 的方式读取
-      if (accept === 'image/png,image/jpg,image/jpeg,image/webp,image/svg')
+      if (accept === 'image/*')
         fr.readAsDataURL(input.files![0])
 
       // 否则读取纯文本
