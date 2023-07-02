@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, ref, toRaw } from 'vue'
 import dayjs from 'dayjs'
 import { VApp, VAppBar, VBtn, VLayout, VMain, VSpacer, VThemeProvider, VToolbar, VToolbarTitle } from 'vuetify/components'
 import { useDisplay } from 'vuetify/lib/framework.mjs'
@@ -18,13 +18,30 @@ const showNav = ref(!display.mobile.value)
 type State = typeof state.state
 
 function save(cache = false) {
-  const data = JSON.stringify(state.state)
+  const stateRaw = toRaw(state.state)
   if (cache) {
+    const data = JSON.stringify(stateRaw)
     localStorage.setItem('cache', data)
     lastCacheTime.value = Date.now()
     return
   }
 
+  // 移除多余的图片数据
+  stateRaw.AbilityImage = ''
+  stateRaw.BasicDataImgForWeb = ''
+  stateRaw.ProfLogoForWeb = ''
+  stateRaw.ProfAvatarForWeb = ''
+  stateRaw.StoryImgForWeb = ''
+  stateRaw.StoryImg2ForWeb = ''
+  stateRaw.Skill1PicB64ForWeb = ''
+  stateRaw.Skill2PicB64ForWeb = ''
+  stateRaw.Skill3PicB64ForWeb = ''
+  stateRaw.Mod1IconForWeb = ''
+  stateRaw.Mod1ImgForWeb = ''
+  stateRaw.Mod2IconForWeb = ''
+  stateRaw.Mod2ImgForWeb = ''
+
+  const data = JSON.stringify(stateRaw)
   const blob = new Blob([data], { type: 'application/json' })
   const fileName = 'operator.akf'
   saveFile(blob, fileName)
