@@ -79,7 +79,7 @@ function updateModelValue(val: boolean) {
 <template>
   <VNavigationDrawer :temporary="display.mobile.value" :model-value="showNav" @update:model-value="updateModelValue">
     <div v-if="display.mobile.value" class="p-4">
-      <div>当前编辑：{{ state.formzcda.dh || '新干员' }}</div>
+      <div>当前编辑：{{ state.BasicdataText[1] || '新干员' }}</div>
       <div class="mr-4">
         <p>上次缓存</p>
         <div>{{ lastCacheTime }}</div>

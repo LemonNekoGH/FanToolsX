@@ -15,7 +15,7 @@ const state = useState()
         <span>///Elevate Record</span>
       </div>
     </div>
-    <VTextarea v-model="state.state.formjsjl" class="mt-4" color="primary" variant="outlined" label="晋升记录" />
+    <VTextarea v-model="state.state.EliteRec" class="mt-4" color="primary" variant="outlined" label="晋升记录" />
   </div>
 </template>
 

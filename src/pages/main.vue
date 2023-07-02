@@ -1,5 +1,5 @@
-<script>
-import '../assets/css/main.css'
+<script lang="ts">
+// import '../../assets/css/main.css'
 
 export default {
 

@@ -16,8 +16,8 @@ const { state } = storeToRefs(useState())
         <span>///Paradox Simulation</span>
       </div>
     </div>
-    <VTextField v-model="state.formblmn.blbt" class="mt-4" variant="outlined" color="primary" label="标题" density="compact" />
-    <VTextarea v-model="state.formblmn.blms" variant="outlined" color="primary" label="描述" density="compact" />
+    <VTextField v-model="state.Paradox[0]" class="mt-4" variant="outlined" color="primary" label="标题" density="compact" />
+    <VTextarea v-model="state.Paradox[1]" variant="outlined" color="primary" label="描述" density="compact" />
   </div>
 </template>
 

@@ -20,7 +20,7 @@ const display = useDisplay()
       </div>
     </div>
     <div id="story-switch">
-      <VSwitch v-model="state.formgyml.checkdata" inset label="启用干员密录 2" color="primary" />
+      <VSwitch v-model="state.Story[2]" inset label="启用干员密录 2" color="primary" />
     </div>
     <VCard variant="outlined" class="border-[#bbb]">
       <VCardItem>
@@ -30,11 +30,11 @@ const display = useDisplay()
       </VCardItem>
       <div class="h-1px w-full bg-[#ddd]" />
       <div class="px-4 pt-4">
-        <VTextField v-model="state.formgyml.gyml1" variant="outlined" color="primary" label="标题" density="compact" />
-        <VTextField v-model="state.formgyml.gyml2" variant="outlined" color="primary" label="副标题" density="compact" />
+        <VTextField v-model="state.Story[3]" variant="outlined" color="primary" label="标题" density="compact" />
+        <VTextField v-model="state.Story[4]" variant="outlined" color="primary" label="副标题" density="compact" />
       </div>
     </VCard>
-    <VCard v-if="state.formgyml.checkdata" variant="outlined" class="mt-4 border-[#bbb]">
+    <VCard v-if="state.Story[2] !== 'false'" variant="outlined" class="mt-4 border-[#bbb]">
       <VCardItem>
         <VCardTitle class="text-black">
           干员密录 2
@@ -42,8 +42,8 @@ const display = useDisplay()
       </VCardItem>
       <div class="h-1px w-full bg-[#ddd]" />
       <div class="px-4 pt-4">
-        <VTextField v-model="state.formgyml.gyml3" variant="outlined" color="primary" label="标题" density="compact" />
-        <VTextField v-model="state.formgyml.gyml4" variant="outlined" color="primary" label="副标题" density="compact" />
+        <VTextField v-model="state.Story[5]" variant="outlined" color="primary" label="标题" density="compact" />
+        <VTextField v-model="state.Story[6]" variant="outlined" color="primary" label="副标题" density="compact" />
       </div>
     </VCard>
     <div
@@ -55,20 +55,20 @@ const display = useDisplay()
       <SelectImage
         title="干员密录 1 蚀刻章"
         subtitle="请使用长宽比 1:1 并带有透明的的图片"
-        :img="state.gymlimgdata"
-        @image-loaded="(data, base64) => { state.gymlimgdata = data; state.formgyml.imgdata = base64 }"
-        @image-cleared="state.gymlimgdata = '';state.formgyml.imgdata = ''"
+        :img="state.StoryImgForWeb"
+        @image-loaded="(data, base64) => { state.StoryImgForWeb = data; state.Story[0] = base64 }"
+        @image-cleared="state.StoryImgForWeb = '';state.Story[0] = ''"
       />
       <SelectImage
-        v-if="state.formgyml.checkdata"
+        v-if="state.Story[2] !== 'false'"
         :class="{
           'mt-4': display.mobile.value,
         }"
         title="干员密录 2 蚀刻章"
         subtitle="请使用长宽比 1:1 并带有透明的的图片"
-        :img="state.gymlimgdata_t"
-        @image-loaded="(data, base64) => { state.gymlimgdata_t = data; state.formgyml.imgdata_t = base64 }"
-        @image-cleared="state.gymlimgdata_t = '';state.formgyml.imgdata_t = ''"
+        :img="state.StoryImg2ForWeb"
+        @image-loaded="(data, base64) => { state.StoryImg2ForWeb = data; state.Story[1] = base64 }"
+        @image-cleared="state.StoryImg2ForWeb = '';state.Story[1] = ''"
       />
     </div>
   </div>

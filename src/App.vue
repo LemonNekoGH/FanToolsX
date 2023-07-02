@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { computed, onMounted, ref } from 'vue'
-import { useIntervalFn } from '@vueuse/core'
 import dayjs from 'dayjs'
 import { VApp, VAppBar, VBtn, VLayout, VMain, VSpacer, VThemeProvider, VToolbar, VToolbarTitle } from 'vuetify/components'
 import { useDisplay } from 'vuetify/lib/framework.mjs'
@@ -36,7 +35,7 @@ async function load() {
 }
 
 // 每 5 秒缓存一次到 localStorage
-useIntervalFn(() => save(true), 5000)
+// useIntervalFn(() => save(true), 5000)
 
 onMounted(() => {
   const cached = localStorage.getItem('cache')
@@ -57,7 +56,7 @@ onMounted(() => {
               <img src="./assets/img/logo.png" width="159" height="49" alt="" class="">
             </div>
             <VToolbarTitle v-if="!display.mobile.value" class="ml-4">
-              当前编辑：{{ state.state.formzcda.dh || '新干员' }}
+              当前编辑：{{ state.state.BasicdataText[1] || '新干员' }}
             </VToolbarTitle>
             <VSpacer />
 

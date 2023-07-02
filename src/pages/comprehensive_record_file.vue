@@ -18,15 +18,15 @@ const { state } = storeToRefs(useState())
       </div>
     </div>
     <div class="mt-4">
-      <VTextField v-model="state.formzhjl.wlqd" color="primary" variant="outlined" label="物理强度" density="compact" />
-      <VTextField v-model="state.formzhjl.zcjd" color="primary" variant="outlined" label="战斗机动" density="compact" />
-      <VTextField v-model="state.formzhjl.slns" color="primary" variant="outlined" label="生理耐受" density="compact" />
-      <VTextField v-model="state.formzhjl.zdgh" color="primary" variant="outlined" label="战斗规划" density="compact" />
-      <VTextField v-model="state.formzhjl.zdjq" color="primary" variant="outlined" label="战斗技巧" density="compact" />
-      <VTextField v-model="state.formzhjl.ysjy" color="primary" variant="outlined" label="源石技艺适应性" density="compact" />
-      <VTextarea v-model="state.formzhjl.zhtcfj" color="primary" variant="outlined" label="综合体检测试附加数据" density="compact" />
-      <VTextarea v-model="state.formzhjl.kgll" color="primary" variant="outlined" label="客观履历" density="compact" />
-      <VTextarea v-model="state.formzhjl.lcfx" color="primary" variant="outlined" label="临床诊断分析" density="compact" />
+      <VTextField v-model="state.CompRec[0]" color="primary" variant="outlined" label="物理强度" density="compact" />
+      <VTextField v-model="state.CompRec[1]" color="primary" variant="outlined" label="战斗机动" density="compact" />
+      <VTextField v-model="state.CompRec[2]" color="primary" variant="outlined" label="生理耐受" density="compact" />
+      <VTextField v-model="state.CompRec[3]" color="primary" variant="outlined" label="战斗规划" density="compact" />
+      <VTextField v-model="state.CompRec[4]" color="primary" variant="outlined" label="战斗技巧" density="compact" />
+      <VTextField v-model="state.CompRec[5]" color="primary" variant="outlined" label="源石技艺适应性" density="compact" />
+      <VTextarea v-model="state.CompRec[6]" color="primary" variant="outlined" label="客观履历" density="compact" />
+      <VTextarea v-model="state.CompRec[7]" color="primary" variant="outlined" label="临床诊断分析" density="compact" />
+      <VTextarea v-model="state.CompRec[8]" color="primary" variant="outlined" label="综合体检测试附加数据" density="compact" />
     </div>
   </div>
 </template>
