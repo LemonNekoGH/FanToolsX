@@ -19,32 +19,32 @@ function levelName(level: number) {
 const display = useDisplay()
 const skillFillType = ['自动回复', '攻击回复', '受击回复', '被动'] as const
 const skillFireType = ['自动', '手动'] as const
+type SkillFillType = (typeof skillFillType)[number]
+type SkillFireType = (typeof skillFireType)[number]
 
-const skill1FillType = computed<string>({
-  get: () => skillFillType[state.value.Skill1Type[0]],
-  set: val => skillFillType.find(it => it === val)!,
+const skill1FillType = computed<SkillFillType>({
+  get: () => skillFillType[state.value.Skill1Type.x],
+  set: val => state.value.Skill1Type.x = skillFillType.findIndex(it => it === val)!,
 })
-const skill1FireType = computed<string>({
-  get: () => skillFireType[state.value.Skill1Type[1]],
-  set: val => skillFireType.find(it => it === val)!,
+const skill1FireType = computed<SkillFireType>({
+  get: () => skillFireType[state.value.Skill1Type.y],
+  set: val => state.value.Skill1Type.y = skillFireType.findIndex(it => it === val)!,
 })
-
-const skill2FillType = computed<string>({
-  get: () => skillFillType[state.value.Skill1Type[0]],
-  set: val => skillFillType.find(it => it === val)!,
+const skill2FillType = computed<SkillFillType>({
+  get: () => skillFillType[state.value.Skill2Type.x],
+  set: val => state.value.Skill2Type.x = skillFillType.findIndex(it => it === val)!,
 })
-const skill2FireType = computed<string>({
-  get: () => skillFireType[state.value.Skill1Type[1]],
-  set: val => skillFireType.find(it => it === val)!,
+const skill2FireType = computed<SkillFireType>({
+  get: () => skillFireType[state.value.Skill2Type.y],
+  set: val => state.value.Skill2Type.y = skillFireType.findIndex(it => it === val)!,
 })
-
-const skill3FillType = computed<string>({
-  get: () => skillFillType[state.value.Skill1Type[0]],
-  set: val => skillFillType.find(it => it === val)!,
+const skill3FillType = computed<SkillFillType>({
+  get: () => skillFillType[state.value.Skill3Type.x],
+  set: val => state.value.Skill3Type.x = skillFillType.findIndex(it => it === val)!,
 })
-const skill3FireType = computed<string>({
-  get: () => skillFireType[state.value.Skill1Type[1]],
-  set: val => skillFireType.find(it => it === val)!,
+const skill3FireType = computed<SkillFireType>({
+  get: () => skillFireType[state.value.Skill3Type.y],
+  set: val => state.value.Skill3Type.y = skillFireType.findIndex(it => it === val)!,
 })
 </script>
 
@@ -88,8 +88,8 @@ const skill3FireType = computed<string>({
           <div class="h-1px w-full bg-[#ddd]" />
           <div class="px-4 pt-4">
             <VTextField v-model="state.Skill1Name" color="primary" variant="outlined" label="名称" density="compact" />
-            <VSelect v-model="skill1FillType" :items="['自动回复', '攻击回复', '受击回复', '被动技能']" color="primary" variant="outlined" label="技力回复方式" density="compact" />
-            <VSelect v-model="skill1FireType" :items="['自动', '手动']" color="primary" variant="outlined" label="触发方式" density="compact" />
+            <VSelect v-model="skill1FillType" :items="skillFillType" color="primary" variant="outlined" label="技力回复方式" density="compact" />
+            <VSelect v-model="skill1FireType" :items="skillFireType" color="primary" variant="outlined" label="触发方式" density="compact" />
           </div>
           <template v-for="(_, i) in Array(10)" :key="i">
             <div class="h-1px w-full bg-[#ddd]" />

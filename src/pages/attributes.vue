@@ -8,7 +8,7 @@ const { state } = storeToRefs(useState())
 
 const professions = ['近卫', '狙击', '特种', '先锋', '医疗', '术师', '辅助', '重装'] as const
 const profession = computed<(typeof professions)[number]>({
-  set: val => state.value.BasedataA[7] = professions.find(it => it === val)!,
+  set: val => state.value.BasedataA[7] = professions.findIndex(it => it === val)!.toString(),
   get: () => professions[Number.parseInt(state.value.BasedataA[7])],
 })
 const star = computed<number>({
@@ -93,7 +93,7 @@ const star = computed<number>({
         <VTextField v-model="state.BasedataA[0]" variant="outlined" color="primary" label="分支" density="compact" />
         <VTextField v-model="state.BasedataA[2]" variant="outlined" color="primary" label="标签" density="compact" />
         <VTextField v-model="state.BasedataA[1]" variant="outlined" color="primary" label="站位" density="compact" />
-        <VSlider v-model="star" min="1" max="6" step="1" :label="`星级：${star}`" color="primary" density="compact" />
+        <VSlider v-model="star" min="0" max="5" step="1" :label="`星级：${star + 1}`" color="primary" density="compact" />
       </div>
       <div class="h-1px w-full bg-[#ddd]" />
       <VCardItem>

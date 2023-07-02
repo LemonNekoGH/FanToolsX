@@ -219,9 +219,18 @@ const initState = {
   Skill1Durat: Array<number>(10).fill(0), // 等级 1 到 10 的技能时长
   Skill2Durat: Array<number>(10).fill(0), // 等级 1 到 10 的技能时长
   Skill3Durat: Array<number>(10).fill(0), // 等级 1 到 10 的技能时长
-  Skill1Type: [1, 0], // 技能 1 回复方式，触发方式
-  Skill2Type: [1, 0], // 技能 2 回复方式，触发方式
-  Skill3Type: [1, 0], // 技能 3 回复方式，触发方式
+  Skill1Type: {
+    x: 0,
+    y: 0,
+  }, // 技能 1 回复方式，触发方式
+  Skill2Type: {
+    x: 0,
+    y: 0,
+  }, // 技能 2 回复方式，触发方式
+  Skill3Type: {
+    x: 0,
+    y: 0,
+  }, // 技能 3 回复方式，触发方式
   Skill1PicB64: '', // 技能 1 图标
   Skill2PicB64: '', // 技能 2 图标
   Skill3PicB64: '', // 技能 3 图标
