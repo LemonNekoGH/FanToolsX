@@ -4,6 +4,7 @@ import dayjs from 'dayjs'
 import { VApp, VAppBar, VBtn, VLayout, VMain, VSpacer, VThemeProvider, VToolbar, VToolbarTitle } from 'vuetify/components'
 import { useDisplay } from 'vuetify/lib/framework.mjs'
 import { useIntervalFn } from '@vueuse/core'
+import * as localforage from 'localforage'
 import NavMenu from './components/menu.vue'
 
 import { loadFile, saveFile } from './utils/file'
@@ -17,11 +18,11 @@ const showNav = ref(!display.mobile.value)
 
 type State = typeof state.state
 
-function save(cache = false) {
+async function save(cache = false) {
   const stateRaw = toRaw(state.state)
   if (cache) {
     const data = JSON.stringify(stateRaw)
-    localStorage.setItem('cache', data)
+    await localforage.setItem('cache', data)
     lastCacheTime.value = Date.now()
     return
   }
@@ -70,8 +71,8 @@ async function load() {
 // 每 5 秒缓存一次到 localStorage
 useIntervalFn(() => save(true), 5000)
 
-onMounted(() => {
-  const cached = localStorage.getItem('cache')
+onMounted(async () => {
+  const cached = await localforage.getItem<string>('cache')
   // 缓存
   if (cached)
     state.state = JSON.parse(cached) as State
