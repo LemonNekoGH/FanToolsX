@@ -87,7 +87,7 @@ const skill3FireType = computed<SkillFireType>({
           </VCardItem>
           <div class="h-1px w-full bg-[#ddd]" />
           <div class="px-4 pt-4">
-            <VTextField v-model="state.Skill1Name" color="primary" variant="outlined" label="名称" density="compact" />
+            <VTextField v-model="state.SKill1Name" color="primary" variant="outlined" label="名称" density="compact" />
             <VSelect v-model="skill1FillType" :items="skillFillType" color="primary" variant="outlined" label="技力回复方式" density="compact" />
             <VSelect v-model="skill1FireType" :items="skillFireType" color="primary" variant="outlined" label="触发方式" density="compact" />
           </div>
@@ -100,7 +100,7 @@ const skill3FireType = computed<SkillFireType>({
             </VCardItem>
             <div class="h-1px w-full bg-[#ddd]" />
             <div class="px-4 pt-4">
-              <VTextField v-model="state.Skill1Des[i]" color="primary" variant="outlined" label="描述" density="compact" />
+              <VTextField v-model="state.SKill1Des[i]" color="primary" variant="outlined" label="描述" density="compact" />
               <VTextField v-model="state.Skill1Sp[i]" color="primary" variant="outlined" label="总技力" density="compact" />
               <VTextField v-model="state.Skill1Start[i]" color="primary" variant="outlined" label="初始技力" density="compact" />
               <VTextField v-model="state.Skill1Durat[i]" color="primary" variant="outlined" label="持续时间" density="compact" />
@@ -132,7 +132,7 @@ const skill3FireType = computed<SkillFireType>({
           </VCardItem>
           <div class="h-1px w-full bg-[#ddd]" />
           <div class="px-4 pt-4">
-            <VTextField v-model="state.Skill2Name" color="primary" variant="outlined" label="名称" density="compact" />
+            <VTextField v-model="state.SKill2Name" color="primary" variant="outlined" label="名称" density="compact" />
             <VSelect v-model="skill2FillType" :items="['自动回复', '攻击回复', '受击回复', '被动技能']" color="primary" variant="outlined" label="技力回复方式" density="compact" />
             <VSelect v-model="skill2FireType" :items="['自动', '手动']" color="primary" variant="outlined" label="触发方式" density="compact" />
           </div>
@@ -145,7 +145,7 @@ const skill3FireType = computed<SkillFireType>({
             </VCardItem>
             <div class="h-1px w-full bg-[#ddd]" />
             <div class="px-4 pt-4">
-              <VTextField v-model="state.Skill2Des[i]" color="primary" variant="outlined" label="描述" density="compact" />
+              <VTextField v-model="state.SKill2Des[i]" color="primary" variant="outlined" label="描述" density="compact" />
               <VTextField v-model="state.Skill2Sp[i]" color="primary" variant="outlined" label="总技力" density="compact" />
               <VTextField v-model="state.Skill2Start[i]" color="primary" variant="outlined" label="初始技力" density="compact" />
               <VTextField v-model="state.Skill2Durat[i]" color="primary" variant="outlined" label="持续时间" density="compact" />
@@ -177,7 +177,7 @@ const skill3FireType = computed<SkillFireType>({
           </VCardItem>
           <div class="h-1px w-full bg-[#ddd]" />
           <div class="px-4 pt-4">
-            <VTextField v-model="state.Skill3Name" color="primary" variant="outlined" label="名称" density="compact" />
+            <VTextField v-model="state.SKill3Name" color="primary" variant="outlined" label="名称" density="compact" />
             <VSelect v-model="skill3FillType" :items="['自动回复', '攻击回复', '受击回复', '被动技能']" color="primary" variant="outlined" label="技力回复方式" density="compact" />
             <VSelect v-model="skill3FireType" :items="['自动', '手动']" color="primary" variant="outlined" label="触发方式" density="compact" />
           </div>
@@ -190,7 +190,7 @@ const skill3FireType = computed<SkillFireType>({
             </VCardItem>
             <div class="h-1px w-full bg-[#ddd]" />
             <div class="px-4 pt-4">
-              <VTextField v-model="state.Skill3Des[i]" color="primary" variant="outlined" label="描述" density="compact" />
+              <VTextField v-model="state.SKill3Des[i]" color="primary" variant="outlined" label="描述" density="compact" />
               <VTextField v-model="state.Skill3Sp[i]" color="primary" variant="outlined" label="总技力" density="compact" />
               <VTextField v-model="state.Skill3Start[i]" color="primary" variant="outlined" label="初始技力" density="compact" />
               <VTextField v-model="state.Skill3Durat[i]" color="primary" variant="outlined" label="持续时间" density="compact" />

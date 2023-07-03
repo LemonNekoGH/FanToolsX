@@ -204,12 +204,12 @@ const initState = {
   Skill1Exists: true, // 是否需要显示在展示页面中
   Skill2Exists: true, // 是否需要显示在展示页面中
   Skill3Exists: true, // 是否需要显示在展示页面中
-  Skill1Name: '',
-  Skill2Name: '',
-  Skill3Name: '',
-  Skill1Des: Array<string>(10).fill(''), // 等级 1 到 10 的描述
-  Skill2Des: Array<string>(10).fill(''), // 等级 1 到 10 的描述
-  Skill3Des: Array<string>(10).fill(''), // 等级 1 到 10 的描述
+  SKill1Name: '',
+  SKill2Name: '',
+  SKill3Name: '',
+  SKill1Des: Array<string>(10).fill(''), // 等级 1 到 10 的描述
+  SKill2Des: Array<string>(10).fill(''), // 等级 1 到 10 的描述
+  SKill3Des: Array<string>(10).fill(''), // 等级 1 到 10 的描述
   Skill1Start: Array<number>(10).fill(0), // 等级 1 到 10 的初始技力
   Skill2Start: Array<number>(10).fill(0), // 等级 1 到 10 的初始技力
   Skill3Start: Array<number>(10).fill(0), // 等级 1 到 10 的初始技力
@@ -270,15 +270,15 @@ const initState = {
   Mod1AddiStr: [
     '', // STAGE.I 加成 1
     '', // STAGE.I 加成 2
-    '', // STAGE.I 加成 2
+    '', // STAGE.I 加成 3
     '', // STAGE.I 天赋改动
     '', // STAGE.II 加成 1
     '', // STAGE.II 加成 2
-    '', // STAGE.II 加成 2
+    '', // STAGE.II 加成 3
     '', // STAGE.II 天赋改动
     '', // STAGE.III 加成 1
     '', // STAGE.III 加成 2
-    '', // STAGE.III 加成 2
+    '', // STAGE.III 加成 3
     '', // STAGE.III 天赋改动
   ],
   Mod2: [

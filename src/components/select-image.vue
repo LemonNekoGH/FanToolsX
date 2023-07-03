@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { VBtn, VCard, VCardActions, VCardItem, VCardSubtitle, VCardTitle, VIcon, VImg } from 'vuetify/lib/components/index.mjs'
 import { loadFile, removeBase64DataUrlPrefix } from '../utils/file'
-import defaultImg from '../assets/img/missingtex.png'
+import defaultImg from '../assets/img/no_image.png'
 
 defineProps<{
   img: string
