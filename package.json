@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "vite --host 0.0.0.0 --port 5678",
-    "build": "vite build"
+    "dev:web": "vite --host 0.0.0.0 --port 5678",
+    "build:web": "vite build"
   },
   "dependencies": {
     "@vueuse/core": "^10.2.1",
