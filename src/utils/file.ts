@@ -6,7 +6,14 @@ export function saveFile(file: Blob, fileName: string) {
   link.click()
 }
 
+export function loadFileFromAndroid(accept: 'image/*' | '*.akf,*.json'): string {
+  return window.Android.loadFile(accept)
+}
+
 export async function loadFile(accept: 'image/*' | '*.akf,*.json') {
+  if (import.meta.env.MODE === 'ANDROID')
+    return loadFileFromAndroid(accept)
+
   return new Promise<string>((resolve) => {
     const input = document.createElement('input')
     input.type = 'file'

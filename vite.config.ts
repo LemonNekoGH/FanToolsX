@@ -9,4 +9,5 @@ export default defineConfig({
     pages(),
     unocss(),
   ],
+  base: './',
 })

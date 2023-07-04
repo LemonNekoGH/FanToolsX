@@ -43,6 +43,11 @@ async function save(cache = false) {
   stateRaw.Mod2ImgForWeb = ''
 
   const data = JSON.stringify(stateRaw)
+  if (import.meta.env.MODE === 'ANDROID') {
+    window.Android.saveFile(data)
+    return
+  }
+
   const blob = new Blob([data], { type: 'application/json' })
   const fileName = 'operator.akf'
   saveFile(blob, fileName)
@@ -66,6 +71,10 @@ async function load() {
   state.state.Mod1ImgForWeb = `data:image/*;base64,${parsedData.Mod1[1]}`
   state.state.Mod2IconForWeb = `data:image/*;base64,${parsedData.Mod2[0]}`
   state.state.Mod2ImgForWeb = `data:image/*;base64,${parsedData.Mod2[1]}`
+}
+
+function fileLoaded(data: string) {
+
 }
 
 // 每 5 秒缓存一次到 localStorage
