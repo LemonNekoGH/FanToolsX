@@ -6,7 +6,9 @@
     "dev:web": "vite --host 0.0.0.0 --port 5678",
     "build:android:debug": "cd android && gradlew :app:assembleDebug",
     "build:web": "vite build",
-    "dev:android": "pnpm build:web --mode ANDROID && cd android && gradlew :app:installDebug"
+    "clean:android": "cd android && ./gradlew clean",
+    "dev:android": "pnpm build:web --mode ANDROID && cd android && ./gradlew :app:installDebug",
+    "dev:android:for_windows": "pnpm build:web --mode ANDROID && cd android && gradlew :app:installDebug"
   },
   "dependencies": {
     "@vueuse/core": "^10.2.1",

@@ -21,6 +21,7 @@ const { state } = storeToRefs(useState())
       class="mt-4"
       title="立绘"
       hint="选择"
+      to-load="BasicDataImgForWeb"
       :img="state.BasicDataImgForWeb"
       @image-cleared="state.BasicDataImgForWeb = '';state.BasicdataText[0] = ''"
       @image-loaded="(data, base64) => { state.BasicDataImgForWeb = data; state.BasicdataText[0] = base64 }"

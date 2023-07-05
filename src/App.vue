@@ -84,13 +84,14 @@ async function save(cache = false) {
 }
 
 async function load() {
-  const data = await loadFile('*.akf,*.json')
+  const data = await loadFile('*.akf,*.json', 'entire')
   fileLoaded(data)
   // 关闭警告框
   closeAlert()
 }
 
 function fileLoadedFromAndroid(data: string) {
+  window.Android.log(`file loaded, key: ${window.Android.loadingKey}`)
   if (window.Android.loadingKey === '')
     return
   if (window.Android.loadingKey === 'entire') {
@@ -143,7 +144,9 @@ function fileLoadedFromAndroid(data: string) {
   window.Android.loadingKey = ''
 }
 
-window.Android.fileLoadedFromAndroid = fileLoadedFromAndroid
+// 暴露此函数到全局变量，以便 Android 调用
+if (import.meta.env.MODE === 'ANDROID')
+  window.Android.fileLoadedFromAndroid = fileLoadedFromAndroid
 
 function fileLoaded(data: string) {
   const parsedData = JSON.parse(data) as State

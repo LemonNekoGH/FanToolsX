@@ -68,6 +68,7 @@ const skill3FireType = computed<SkillFireType>({
         <VSwitch v-model="state.Skill1Exists" inset color="primary" label="启用技能 1" messages="不启用时不会显示在展示页面" density="compact" />
         <SelectImage
           class="mt-4"
+          to-load="Skill1PicB64ForWeb"
           :img="state.Skill1PicB64ForWeb"
           title="技能 1 图标"
           @image-loaded="(data, base64) => { state.Skill1PicB64ForWeb = data; state.Skill1PicB64 = base64 }"
@@ -112,6 +113,7 @@ const skill3FireType = computed<SkillFireType>({
       <div :class="display.mobile.value ? 'mt-4' : 'flex-1'">
         <VSwitch v-model="state.Skill2Exists" inset color="primary" label="启用技能 1" messages="不启用时不会显示在展示页面" density="compact" />
         <SelectImage
+          to-load="Skill2PicB64ForWeb"
           class="mt-4"
           :img="state.Skill2PicB64ForWeb"
           title="技能 1 图标"
@@ -157,6 +159,7 @@ const skill3FireType = computed<SkillFireType>({
       <div :class="display.mobile.value ? 'mt-4' : 'flex-1'">
         <VSwitch v-model="state.Skill3Exists" inset color="primary" label="启用技能 1" messages="不启用时不会显示在展示页面" density="compact" />
         <SelectImage
+          to-load="Skill3PicB64ForWeb"
           class="mt-4"
           :img="state.Skill3PicB64ForWeb"
           title="技能 1 图标"

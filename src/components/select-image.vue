@@ -3,10 +3,11 @@ import { VBtn, VCard, VCardActions, VCardItem, VCardSubtitle, VCardTitle, VIcon,
 import { loadFile, removeBase64DataUrlPrefix } from '../utils/file'
 import defaultImg from '../assets/img/no_image.png'
 
-defineProps<{
+const props = defineProps<{
   img: string
   title: string
   subtitle?: string
+  toLoad: LoadingKey // 在 Android 上调用时并不会马上返回值，而是调用回调，所以无法直接通过 emit 来提醒父组件图片更新了，只能用全局变量来告诉回调，应该更新哪个值
 }>()
 
 const emit = defineEmits<{
@@ -15,7 +16,7 @@ const emit = defineEmits<{
 }>()
 
 async function loadImg() {
-  const imgDataUrl = await loadFile('image/*')
+  const imgDataUrl = await loadFile('image/*', props.toLoad)
   const imgPureBase64 = removeBase64DataUrlPrefix(imgDataUrl)
   emit('imageLoaded', imgDataUrl, imgPureBase64)
 }

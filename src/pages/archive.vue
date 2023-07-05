@@ -29,6 +29,7 @@ const display = useDisplay()
         title="阵营图标"
         subtitle="请使用长宽比 1:1 并带有透明度的的图标"
         :img="state.ProfLogoForWeb"
+        to-load="ProfLogoForWeb"
         @image-loaded="(data, base64) => { state.ProfLogoForWeb = data; state.ProfDat[0] = base64 }"
         @image-cleared="state.ProfLogoForWeb = '';state.ProfDat[0] = ''"
       />
@@ -38,6 +39,7 @@ const display = useDisplay()
         :class="{
           'mt-4': display.mobile.value,
         }"
+        to-load="ProfAvatarForWeb"
         :img="state.ProfAvatarForWeb"
         @image-loaded="(data, base64) => { state.ProfAvatarForWeb = data; state.ProfDat[1] = base64 }"
         @image-cleared="state.ProfAvatarForWeb = '';state.ProfDat[1] = ''"

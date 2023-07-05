@@ -93,13 +93,16 @@ declare interface State {
   imgscl: number,
 }
 
+declare type LoadingKey = keyof {
+  [p in keyof State as p extends `${infer A}Web` ? p : never]: State[p]
+} | 'entire' | '' // 可以设置为全局变量的值
+
 declare interface Window {
   Android: {
     loadFile(accept: 'image/*' | '*.akf,*.json'): string
     saveFile(data: string)
-    loadingKey: keyof {
-      [p in keyof State as p extends `${infer A}Web` ? p : never]: State[p]
-    } | 'entire' | ''
-    fileLoadedFromAndroid(data: string)
+    log(text: string) // 用来在 Android 上打日志
+    loadingKey: LoadingKey // 回调会通过这里知道应该更新哪里的值
+    fileLoadedFromAndroid(data: string) // Android 会调用的回调
   }
 }
