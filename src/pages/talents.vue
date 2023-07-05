@@ -52,10 +52,10 @@ const mod2BuffValue3 = computed<(typeof buffItems)[number]>({
     >
       <div :class="[display.mobile.value ? '' : 'w-360px']">
         <SelectImage
-          :img="state.AbilityImage"
+          :img="state.AbilityImageForWeb"
           title="分支图标"
-          @image-loaded="(data, base64) => { state.AbilityImage = data; state.AbilityData[7] = base64 }"
-          @image-cleared="state.AbilityImage = ''; state.AbilityData[7] = ''"
+          @image-loaded="(data, base64) => { state.AbilityImageForWeb = data; state.AbilityData[7] = base64 }"
+          @image-cleared="state.AbilityImageForWeb = ''; state.AbilityData[7] = ''"
         />
         <VCard variant="outlined" class="mt-4 border-[#bbb]">
           <VCardItem>

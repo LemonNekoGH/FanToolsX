@@ -247,7 +247,7 @@ const initState = {
     '', // 天赋描述
     '', // 分支图标
   ],
-  AbilityImage: '', // 用于在网页端显示的分支图标
+  AbilityImageForWeb: '', // 用于在网页端显示的分支图标
   Mod1IconForWeb: '', // 模组 1 图标，用于在 web 上显示
   Mod1ImgForWeb: '', // 模组 1 图片，用于在 web 上显示
   Mod2IconForWeb: '', // 模组 2 图标，用于在 web 上显示

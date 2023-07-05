@@ -68,7 +68,7 @@ declare interface State {
   Skill2PicB64ForWeb: string, // 技能 2 图标，用于在网页中显示
   Skill3PicB64ForWeb: string, // 技能 3 图标，用于在网页中显示
   AbilityData: string[],
-  AbilityImage: string, // 用于在网页端显示的分支图标
+  AbilityImageForWeb: string, // 用于在网页端显示的分支图标
   Mod1IconForWeb: string, // 模组 1 图标，用于在 web 上显示
   Mod1ImgForWeb: string, // 模组 1 图片，用于在 web 上显示
   Mod2IconForWeb: string, // 模组 2 图标，用于在 web 上显示
@@ -97,6 +97,9 @@ declare interface Window {
   Android: {
     loadFile(accept: 'image/*' | '*.akf,*.json'): string
     saveFile(data: string)
-    loadingImageKey: keyof State | 'entire'
+    loadingKey: keyof {
+      [p in keyof State as p extends `${infer A}Web` ? p : never]: State[p]
+    } | 'entire' | ''
+    fileLoadedFromAndroid(data: string)
   }
 }

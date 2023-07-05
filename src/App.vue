@@ -58,7 +58,7 @@ async function save(cache = false) {
   }
 
   // 移除多余的图片数据
-  stateRaw.AbilityImage = ''
+  stateRaw.AbilityImageForWeb = ''
   stateRaw.BasicDataImgForWeb = ''
   stateRaw.ProfLogoForWeb = ''
   stateRaw.ProfAvatarForWeb = ''
@@ -88,7 +88,7 @@ async function load() {
   const parsedData = JSON.parse(data) as State
   state.state = JSON.parse(data) as State
   // Unity 中没有 Data URL, 导入时需要为图片加上前缀
-  state.state.AbilityImage = `data:image/*;base64,${parsedData.AbilityData[7]}`
+  state.state.AbilityImageForWeb = `data:image/*;base64,${parsedData.AbilityData[7]}`
   state.state.BasicDataImgForWeb = `data:image/*;base64,${parsedData.BasicdataText[0]}`
   state.state.ProfLogoForWeb = `data:image/*;base64,${parsedData.ProfDat[0]}`
   state.state.ProfAvatarForWeb = `data:image/*;base64,${parsedData.ProfDat[1]}`
