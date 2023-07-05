@@ -3,6 +3,7 @@ package com.arkfanmade.fantoolsxmobile
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Base64
 import android.util.Log
@@ -10,6 +11,7 @@ import android.webkit.JavascriptInterface
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
+import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -38,7 +40,9 @@ class MainActivity : AppCompatActivity() {
     // js interface
     class JSInterface(
         private val loadFile: ActivityResultLauncher<Intent>,
-        private val setDataType: (String) -> Unit
+        private val saveFile: ActivityResultLauncher<Intent>,
+        private val setDataType: (String) -> Unit,
+        private val setDataToSave: (String) -> Unit
     ) {
         @JavascriptInterface
         fun loadFile(accept: String) {
@@ -61,7 +65,13 @@ class MainActivity : AppCompatActivity() {
 
         @JavascriptInterface
         fun saveFile(data: String) {
+            setDataToSave(data)
             Log.d("JSInterface.saveFile", "data: $data")
+            saveFile.launch(Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+                addCategory(Intent.CATEGORY_OPENABLE)
+                type = "*/*"
+                putExtra(Intent.EXTRA_TITLE, "operator.akf")
+            })
         }
 
         @JavascriptInterface
@@ -72,6 +82,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private var dataType = "*/*"
+    private var dataToSave = ""
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -86,11 +97,12 @@ class MainActivity : AppCompatActivity() {
             .addPathHandler("/assets/", WebViewAssetLoader.AssetsPathHandler(this))
             .build()
         binding.webView.webViewClient = LocalContentWebViewClient(assetLoader)
-        // define load requester
+        // define load and save requester
         val loadFile = registerForActivityResult(ActivityResultContracts.StartActivityForResult(), this::onLoadFileResult)
+        val saveFile = registerForActivityResult(ActivityResultContracts.StartActivityForResult(), this::onSaveFileResult)
         // load
         binding.webView.settings.javaScriptEnabled = true
-        binding.webView.addJavascriptInterface(JSInterface(loadFile) { dataType = it }, "Android")
+        binding.webView.addJavascriptInterface(JSInterface(loadFile, saveFile, { dataType = it }, { dataToSave = it }), "Android")
         binding.webView.loadUrl("https://appassets.androidplatform.net/assets/index.html")
     }
 
@@ -104,26 +116,19 @@ class MainActivity : AppCompatActivity() {
 
     private fun onLoadFileResult(result: ActivityResult) {
         if (result.resultCode != Activity.RESULT_OK) {
-            callFileLoadedInJS("failed")
+            Toast.makeText(this, "failed to load file", Toast.LENGTH_SHORT).show()
             return
         }
-        val data = result.data
-        if (data == null) {
-            Log.e("onLoadFileResult", "data is null")
-            callFileLoadedInJS("failed")
-            return
-        }
-        val dataUri = data.data
-        if (dataUri == null) {
-            Log.e("onLoadFileResult", "data uri is null")
-            callFileLoadedInJS("failed")
+        val (ok, dataUri) = requireDataUriNotNull(result.data)
+        if (!ok) {
+            Toast.makeText(this, "failed to load file", Toast.LENGTH_SHORT).show()
             return
         }
         // read uri
-        val input = contentResolver.openInputStream(dataUri)
+        val input = contentResolver.openInputStream(dataUri!!)
         if (input == null) {
             Log.e("onLoadFileResult", "input stream is null")
-            callFileLoadedInJS("failed")
+            Toast.makeText(this, "failed to load file", Toast.LENGTH_SHORT).show()
             return
         }
         val bytes = input.readBytes()
@@ -136,5 +141,44 @@ class MainActivity : AppCompatActivity() {
         }
         val resultStr = readResult.toString(Charsets.UTF_8)
         callFileLoadedInJS(resultStr)
+    }
+
+    private fun requireDataUriNotNull(data: Intent?): Pair<Boolean, Uri?> {
+        if (data == null) {
+            Log.e("requireDataUriNotNull", "data is null")
+            return Pair(false, null)
+        }
+        val dataUri = data.data
+        if (dataUri == null) {
+            Log.e("requireDataUriNotNull", "data uri is null")
+            return Pair(false, null)
+        }
+
+        return Pair(true, dataUri)
+    }
+
+    private fun onSaveFileResult(result: ActivityResult) {
+        if (result.resultCode != Activity.RESULT_OK) {
+            Toast.makeText(this, "failed to save file", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val (ok, dataUri) = requireDataUriNotNull(result.data)
+        if (!ok) {
+            Toast.makeText(this, "failed to save file", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        // read uri
+        val output = contentResolver.openOutputStream(dataUri!!)
+        if (output == null) {
+            Log.e("onLoadFileResult", "input stream is null")
+            Toast.makeText(this, "failed to save file", Toast.LENGTH_SHORT).show()
+            return
+        }
+        output.write(dataToSave.toByteArray(Charsets.UTF_8))
+        output.close()
+
+        Toast.makeText(this, "success", Toast.LENGTH_SHORT).show()
     }
 }
