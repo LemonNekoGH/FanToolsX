@@ -1,6 +1,7 @@
 package com.arkfanmade.fantoolsxmobile
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -10,6 +11,8 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContract
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.webkit.WebViewAssetLoader
@@ -66,5 +69,11 @@ class MainActivity : AppCompatActivity() {
         binding.webView.settings.javaScriptEnabled = true
         binding.webView.addJavascriptInterface(JSInterface(this), "Android")
         binding.webView.loadUrl("https://appassets.androidplatform.net/assets/index.html")
+
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == Activity.RESULT_OK) {
+
+            }
+        }
     }
 }

@@ -4,9 +4,9 @@
   "private": true,
   "scripts": {
     "dev:web": "vite --host 0.0.0.0 --port 5678",
+    "build:android:debug": "cd android && gradlew :app:assembleDebug",
     "build:web": "vite build",
-    "build:android": "vite build --mode ANDROID",
-    "build:android:debug": "cd android && ./gradlew :app:assembleDebug"
+    "dev:android": "pnpm build:web --mode ANDROID && cd android && gradlew :app:installDebug"
   },
   "dependencies": {
     "@vueuse/core": "^10.2.1",

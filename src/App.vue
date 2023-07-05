@@ -85,6 +85,67 @@ async function save(cache = false) {
 
 async function load() {
   const data = await loadFile('*.akf,*.json')
+  fileLoaded(data)
+  // 关闭警告框
+  closeAlert()
+}
+
+function fileLoadedFromAndroid(data: string) {
+  if (window.Android.loadingKey === '')
+    return
+  if (window.Android.loadingKey === 'entire') {
+    fileLoaded(data)
+    return
+  }
+  state.state[window.Android.loadingKey] = `data:image/*;base64,${data}`
+  switch (window.Android.loadingKey) {
+    case 'AbilityImageForWeb':
+      state.state.AbilityData[7] = data
+      break
+    case 'BasicDataImgForWeb':
+      state.state.BasicdataText[0] = data
+      break
+    case 'ProfAvatarForWeb':
+      state.state.ProfDat[1] = data
+      break
+    case 'ProfLogoForWeb':
+      state.state.ProfDat[0] = data
+      break
+    case 'StoryImgForWeb':
+      state.state.Story[0] = data
+      break
+    case 'StoryImg2ForWeb':
+      state.state.Story[1] = data
+      break
+    case 'Skill1PicB64ForWeb':
+      state.state.Skill1PicB64 = data
+      break
+    case 'Skill2PicB64ForWeb':
+      state.state.Skill2PicB64 = data
+      break
+    case 'Skill3PicB64ForWeb':
+      state.state.Skill3PicB64 = data
+      break
+    case 'Mod1IconForWeb':
+      state.state.Mod1[0] = data
+      break
+    case 'Mod1ImgForWeb':
+      state.state.Mod1[1] = data
+      break
+    case 'Mod2IconForWeb':
+      state.state.Mod2[0] = data
+      break
+    case 'Mod2ImgForWeb':
+      state.state.Mod2[1] = data
+      break
+  }
+
+  window.Android.loadingKey = ''
+}
+
+window.Android.fileLoadedFromAndroid = fileLoadedFromAndroid
+
+function fileLoaded(data: string) {
   const parsedData = JSON.parse(data) as State
   state.state = JSON.parse(data) as State
   // Unity 中没有 Data URL, 导入时需要为图片加上前缀
@@ -104,10 +165,6 @@ async function load() {
 
   // 关闭警告框
   closeAlert()
-}
-
-function fileLoaded(data: string) {
-
 }
 
 function reset() {
