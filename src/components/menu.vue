@@ -13,6 +13,8 @@ const emit = defineEmits<{
   (e: 'stateChanged', val: boolean): void
   (e: 'load'): void
   (e: 'save'): void
+  (e: 'reset'): void
+  (e: 'preview'): void
 }>()
 
 const { state } = storeToRefs(useState())
@@ -86,9 +88,10 @@ function updateModelValue(val: boolean) {
       </div>
       <!-- 按钮 -->
       <div class="flex justify-between mt-4">
+        <VBtn icon="mdi-trash-can" variant="outlined" color="primary" @click="emit('reset')" />
         <VBtn icon="mdi-folder-open" variant="outlined" color="primary" @click="emit('load')" />
         <VBtn icon="mdi-download" variant="outlined" color="primary" @click="emit('save')" />
-        <VBtn icon="mdi-camera" variant="outlined" color="primary" />
+        <VBtn icon="mdi-camera" variant="outlined" color="primary" @click="emit('preview')" />
       </div>
     </div>
     <VDivider />

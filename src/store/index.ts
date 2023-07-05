@@ -320,8 +320,34 @@ export type State = typeof initState
 
 export const useState = defineStore('state', () => {
   const state = ref(initState)
+  const reset = () => state.value = initState
 
   return {
     state,
+    reset,
+  }
+})
+
+export const useHelper = defineStore('helper', () => {
+  const snackbar = ref({
+    show: false,
+    text: '',
+  })
+
+  const closeSnackbar = (val: boolean) => {
+    snackbar.value.show = val
+  }
+
+  const showSnackbar = (text: string) => {
+    snackbar.value = {
+      text,
+      show: true,
+    }
+  }
+
+  return {
+    snackbar,
+    showSnackbar,
+    closeSnackbar,
   }
 })

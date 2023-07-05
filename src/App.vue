@@ -1,20 +1,50 @@
 <script lang="ts" setup>
 import { computed, onMounted, ref, toRaw } from 'vue'
 import dayjs from 'dayjs'
-import { VApp, VAppBar, VBtn, VLayout, VMain, VSpacer, VThemeProvider, VToolbar, VToolbarTitle } from 'vuetify/components'
+import { VApp, VAppBar, VBtn, VCard, VCardActions, VCardItem, VCardText, VCardTitle, VDialog, VLayout, VMain, VSnackbar, VSpacer, VThemeProvider, VToolbar, VToolbarTitle } from 'vuetify/components'
 import { useDisplay } from 'vuetify/lib/framework.mjs'
 import { useIntervalFn } from '@vueuse/core'
 import * as localforage from 'localforage'
 import NavMenu from './components/menu.vue'
 
 import { loadFile, saveFile } from './utils/file'
-import { useState } from './store'
+import { useHelper, useState } from './store'
 
 const state = useState()
+const helper = useHelper()
 const lastCacheTime = ref(Date.now())
 const lastCacheTimeStr = computed(() => dayjs(lastCacheTime.value).format('YYYY-MM-DD HH:mm:ss'))
 const display = useDisplay()
 const showNav = ref(!display.mobile.value)
+
+const dialogModel = ref<{
+  type: 'reset' | 'load' | ''
+  show: boolean
+}>({
+  type: '',
+  show: false,
+})
+
+function showResetAlert() {
+  dialogModel.value = {
+    type: 'reset',
+    show: true,
+  }
+}
+
+function showLoadAlert() {
+  dialogModel.value = {
+    type: 'load',
+    show: true,
+  }
+}
+
+function closeAlert() {
+  dialogModel.value = {
+    type: '',
+    show: false,
+  }
+}
 
 type State = typeof state.state
 
@@ -71,10 +101,18 @@ async function load() {
   state.state.Mod1ImgForWeb = `data:image/*;base64,${parsedData.Mod1[1]}`
   state.state.Mod2IconForWeb = `data:image/*;base64,${parsedData.Mod2[0]}`
   state.state.Mod2ImgForWeb = `data:image/*;base64,${parsedData.Mod2[1]}`
+
+  // 关闭警告框
+  closeAlert()
 }
 
 function fileLoaded(data: string) {
 
+}
+
+function reset() {
+  state.reset()
+  closeAlert()
 }
 
 // 每 5 秒缓存一次到 localStorage
@@ -109,9 +147,10 @@ onMounted(async () => {
             </div>
             <!-- 按钮 -->
             <div v-if="!display.mobile.value">
-              <VBtn icon="mdi-folder-open" @click="load()" />
+              <VBtn icon="mdi-trash-can" @click="showResetAlert()" />
+              <VBtn icon="mdi-folder-open" @click="showLoadAlert()" />
               <VBtn icon="mdi-download" @click="save()" />
-              <VBtn icon="mdi-camera" />
+              <VBtn icon="mdi-camera" @click="helper.showSnackbar('施工中')" />
             </div>
           </VToolbar>
         </VAppBar>
@@ -120,13 +159,37 @@ onMounted(async () => {
           :show-nav="showNav"
           :last-cache-time="lastCacheTimeStr"
           @state-changed="(newVal) => { showNav = newVal }"
-          @load="load"
+          @load="showLoadAlert()"
+          @reset="showResetAlert"
           @save="save"
+          @preview="helper.showSnackbar('施工中')"
         />
 
         <VMain class="overflow-y-scroll">
           <router-view />
         </VMain>
+        <!-- 加载和清空数据警告框 -->
+        <VDialog v-model="dialogModel.show" max-width="600px">
+          <VCard>
+            <VCardItem>
+              <VCardTitle>警告</VCardTitle>
+            </VCardItem>
+            <VCardText>这会{{ dialogModel.type === 'load' ? '覆盖' : '清空' }}已有的数据，是否继续？</VCardText>
+            <VCardActions>
+              <VSpacer />
+              <VBtn color="primary" @click="closeAlert()">
+                取消
+              </VBtn>
+              <VBtn color="error" @click="dialogModel.type === 'load' ? load() : reset()">
+                确认
+              </VBtn>
+            </VCardActions>
+          </VCard>
+        </VDialog>
+        <!-- 提示消息 -->
+        <VSnackbar :model-value="helper.snackbar.show" color="primary" @update:model-value="helper.closeSnackbar">
+          {{ helper.snackbar.text }}
+        </VSnackbar>
       </VLayout>
     </VApp>
   </VThemeProvider>
