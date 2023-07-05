@@ -1,10 +1,22 @@
+# node.js
 node_modules
-
+# IDE
 .vscode
 .idea
 *.iml
-
+# macOS
 .DS_Store
 ._*
 
 dist
+# Android
+android/build
+android/captures
+android/app/src/main/assets/*
+.externalNativeBuild
+.cxx
+.gradle
+local.properties
+# Android building
+keystore.properties
+tmpKeyStore
