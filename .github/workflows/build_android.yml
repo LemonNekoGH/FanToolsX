@@ -31,7 +31,7 @@ jobs:
         run: |
           cd android
           echo "${{ secrets.KEYSTORE }}" > tmpKeyStoreBase64
-          base64 -d tempKeyStoreBase64 > tmpKeyStore
+          base64 -d tmpKeyStoreBase64 > tmpKeyStore
           echo "storeFile=./tmpKeyStore" > keystore.properties
           echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> keystore.properties
           echo "storePassword=${{ secrets.STORE_PASSWORD }}" >> keystore.properties
