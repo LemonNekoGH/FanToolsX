@@ -5,8 +5,7 @@
   "scripts": {
     "dev:web": "vite --host 0.0.0.0 --port 5678",
     "build:web": "vite build",
-    "build:android:debug": "cd android && gradlew :app:assembleDebug",
-    "build:android:release": "cd android && gradlew :app:assembleRelease",
+    "build:android:release": "cd android && ./gradlew :app:assembleRelease",
     "clean:android": "cd android && ./gradlew clean",
     "dev:android": "pnpm build:web --mode ANDROID && cd android && ./gradlew :app:installDebug",
     "dev:android:for_windows": "pnpm build:web --mode ANDROID && cd android && gradlew :app:installDebug"
