@@ -152,19 +152,19 @@ class MainActivity : AppCompatActivity() {
 
     private fun onLoadFileResult(result: ActivityResult) {
         if (result.resultCode != Activity.RESULT_OK) {
-            Toast.makeText(this, "failed to load file", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "文件加载失败", Toast.LENGTH_SHORT).show()
             return
         }
         val (ok, dataUri) = requireDataUriNotNull(result.data)
         if (!ok) {
-            Toast.makeText(this, "failed to load file", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "文件加载失败", Toast.LENGTH_SHORT).show()
             return
         }
         // read uri
         val input = contentResolver.openInputStream(dataUri!!)
         if (input == null) {
             Log.e("onLoadFileResult", "input stream is null")
-            Toast.makeText(this, "failed to load file", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "文件加载失败", Toast.LENGTH_SHORT).show()
             return
         }
         val bytes = input.readBytes()
@@ -195,13 +195,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun onSaveFileResult(result: ActivityResult) {
         if (result.resultCode != Activity.RESULT_OK) {
-            Toast.makeText(this, "failed to save file", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "文件保存失败", Toast.LENGTH_SHORT).show()
             return
         }
 
         val (ok, dataUri) = requireDataUriNotNull(result.data)
         if (!ok) {
-            Toast.makeText(this, "failed to save file", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "文件保存失败", Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -209,12 +209,12 @@ class MainActivity : AppCompatActivity() {
         val output = contentResolver.openOutputStream(dataUri!!)
         if (output == null) {
             Log.e("onLoadFileResult", "input stream is null")
-            Toast.makeText(this, "failed to save file", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "文件保存失败", Toast.LENGTH_SHORT).show()
             return
         }
         output.write(dataToSave.toByteArray(Charsets.UTF_8))
         output.close()
 
-        Toast.makeText(this, "success", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "文件加载成功", Toast.LENGTH_SHORT).show()
     }
 }
