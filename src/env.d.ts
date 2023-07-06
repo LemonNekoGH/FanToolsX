@@ -101,8 +101,10 @@ declare interface Window {
   Android: {
     loadFile(accept: 'image/*' | '*.akf,*.json'): string
     saveFile(data: string)
+    writeCache(data: String) // 把缓存写入 Android 的 DataStore，避开 localStorage 的存储限制
+    readCache(): string // 读取 DataStore 中的缓存
     log(text: string) // 用来在 Android 上打日志
+    fileLoadedFromAndroid(data: string) // Android 在加载完文件后会调用的回调
     loadingKey: LoadingKey // 回调会通过这里知道应该更新哪里的值
-    fileLoadedFromAndroid(data: string) // Android 会调用的回调
   }
 }

@@ -1,3 +1,5 @@
+import { isOnAndroid } from './platform'
+
 export function saveFile(file: Blob, fileName: string) {
   const link = document.createElement('a')
   const target = URL.createObjectURL(file)
@@ -16,7 +18,7 @@ export function loadFileFromAndroid(accept: 'image/*' | '*.akf,*.json', key: Loa
 }
 
 export async function loadFile(accept: 'image/*' | '*.akf,*.json', key: LoadingKey) {
-  if (import.meta.env.MODE === 'ANDROID')
+  if (isOnAndroid())
     return loadFileFromAndroid(accept, key)
 
   return new Promise<string>((resolve) => {

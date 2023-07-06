@@ -9,6 +9,7 @@ import NavMenu from './components/menu.vue'
 
 import { loadFile, saveFile } from './utils/file'
 import { useHelper, useState } from './store'
+import { isOnAndroid } from './utils/platform'
 
 const state = useState()
 const helper = useHelper()
@@ -48,11 +49,20 @@ function closeAlert() {
 
 type State = typeof state.state
 
+async function writeCache(data: string) {
+  if (isOnAndroid()) {
+    window.Android.writeCache(data)
+    return
+  }
+
+  await localforage.setItem('cache', data)
+}
+
 async function save(cache = false) {
   const stateRaw = toRaw(state.state)
   if (cache) {
     const data = JSON.stringify(stateRaw)
-    await localforage.setItem('cache', data)
+    await writeCache(data)
     lastCacheTime.value = Date.now()
     return
   }
@@ -73,7 +83,7 @@ async function save(cache = false) {
   stateRaw.Mod2ImgForWeb = ''
 
   const data = JSON.stringify(stateRaw)
-  if (import.meta.env.MODE === 'ANDROID') {
+  if (isOnAndroid()) {
     window.Android.saveFile(data)
     return
   }
@@ -145,7 +155,7 @@ function fileLoadedFromAndroid(data: string) {
 }
 
 // 暴露此函数到全局变量，以便 Android 调用
-if (import.meta.env.MODE === 'ANDROID')
+if (isOnAndroid())
   window.Android.fileLoadedFromAndroid = fileLoadedFromAndroid
 
 function fileLoaded(data: string) {
@@ -175,11 +185,19 @@ function reset() {
   closeAlert()
 }
 
+async function readCache(): Promise<string> {
+  if (isOnAndroid())
+    return window.Android.readCache()
+
+  const cache = await localforage.getItem<string>('cache')
+  return cache || ''
+}
+
 // 每 5 秒缓存一次到 localStorage
 useIntervalFn(() => save(true), 5000)
 
 onMounted(async () => {
-  const cached = await localforage.getItem<string>('cache')
+  const cached = await readCache()
   // 缓存
   if (cached)
     state.state = JSON.parse(cached) as State

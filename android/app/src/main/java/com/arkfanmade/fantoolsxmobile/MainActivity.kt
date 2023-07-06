@@ -17,9 +17,17 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.webkit.WebViewAssetLoader
 import androidx.webkit.WebViewClientCompat
 import com.arkfanmade.fantoolsxmobile.databinding.ActivityMainBinding
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 
 class MainActivity : AppCompatActivity() {
     // create custom client
@@ -42,8 +50,11 @@ class MainActivity : AppCompatActivity() {
         private val loadFile: ActivityResultLauncher<Intent>,
         private val saveFile: ActivityResultLauncher<Intent>,
         private val setDataType: (String) -> Unit,
-        private val setDataToSave: (String) -> Unit
+        private val setDataToSave: (String) -> Unit,
+        private val dataStore: DataStore<Preferences>
     ) {
+        private val cacheKey = stringPreferencesKey("content")
+
         @JavascriptInterface
         fun loadFile(accept: String) {
             Log.d("JSInterface.loadFile", "request to load file, accept: $accept")
@@ -78,8 +89,33 @@ class MainActivity : AppCompatActivity() {
         fun log(text: String) {
             Log.d("JSInterface.log", text)
         }
+
+        @JavascriptInterface
+        fun writeCache(data: String) = runBlocking {
+            Log.d("JSInterface.writeCache", "data size: ${data.length / 1024 / 1024}MB")
+            launch {
+                dataStore.edit {
+                    it[cacheKey] = data
+                }
+            }.join()
+        }
+
+        @JavascriptInterface
+        fun readCache(): String {
+            var data = ""
+            runBlocking {
+                val dataFlow = dataStore.data.map {
+                    it[cacheKey] ?: ""
+                }
+                data = dataFlow.first()
+            }
+
+            Log.d("JSInterface.readCache", "data size: ${data.length / 1024 / 1024}MB")
+            return data
+        }
     }
 
+    private val dataStore by preferencesDataStore("cache")
     private lateinit var binding: ActivityMainBinding
     private var dataType = "*/*"
     private var dataToSave = ""
@@ -102,7 +138,7 @@ class MainActivity : AppCompatActivity() {
         val saveFile = registerForActivityResult(ActivityResultContracts.StartActivityForResult(), this::onSaveFileResult)
         // load
         binding.webView.settings.javaScriptEnabled = true
-        binding.webView.addJavascriptInterface(JSInterface(loadFile, saveFile, { dataType = it }, { dataToSave = it }), "Android")
+        binding.webView.addJavascriptInterface(JSInterface(loadFile, saveFile, { dataType = it }, { dataToSave = it }, dataStore), "Android")
         binding.webView.loadUrl("https://appassets.androidplatform.net/assets/index.html")
     }
 
