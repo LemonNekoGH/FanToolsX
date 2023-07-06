@@ -40,7 +40,7 @@ jobs:
       - name: Set version name
         run: |
           cd android
-          echo "${{ github.ref_name }}" > version.properties
+          echo "appVersion=${{ github.ref_name }}" > version.properties
 
       - name: Setup Java
         uses: actions/setup-java@v3
