@@ -18,5 +18,6 @@ android/app/src/main/assets/*
 .gradle
 local.properties
 # Android building
+version.properties
 keystore.properties
 tmpKeyStore

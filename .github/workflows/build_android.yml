@@ -1,4 +1,4 @@
-name: Azure Static Web Apps CI/CD
+name: Build Android APP
 
 on:
   push:
@@ -21,17 +21,41 @@ jobs:
             Url: https://github.com/LemonNekoGH/talk
             Trigger: `${{ github.ref_name }}` `${{ github.event.commits[0].id }}`
 
-  build_and_deploy_to_azure:
+  build:
     runs-on: ubuntu-latest
-    name: Build And Deploy To Azure
+    name: Build
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+
+      - name: Import KeyStore
+        run: |
+          cd android
+          echo "${{ secrets.KEYSTORE }}" > tmpKeyStoreBase64
+          base64 -d tempKeyStoreBase64 > tmpKeyStore
+          echo "storeFile=./tmpKeyStore" > keystore.properties
+          echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> keystore.properties
+          echo "storePassword=${{ secrets.STORE_PASSWORD }}" >> keystore.properties
+          echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> keystore.properties
+
+      - name: Set version name
+        run: |
+          cd android
+          echo "${{ github.ref_name }}" > version.properties
+
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '11'
+          cache: 'gradle'
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
           node-version: '16'
 
-      - uses: pnpm/action-setup@v2
-        name: Install pnpm
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
         id: pnpm-install
         with:
           version: 7
@@ -55,16 +79,15 @@ jobs:
         run: pnpm i
 
       - name: Build
-        run: pnpm build:web
+        run: |
+          pnpm build:android:release
+          mv ./android/app/build/outputs/apk/release/app-release.apk ./android/FanToolsX_${{ github.ref_name }}.apk
 
-      - name: Deploy
-        uses: Azure/static-web-apps-deploy@v1
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
         with:
-          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_BLACK_FIELD_07270FC00 }}
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          action: "upload"
-          app_location: "/dist" # APP 路径，但因为跳过构建所以会直接上传，所以直接使用构建输出的目录
-          skip_app_build: true # 跳过构建
+          generate_release_notes: true
+          files: ./android/FanToolsX_${{ github.ref_name }}.apk
 
       - name: Send end message to telegram
         uses: appleboy/telegram-action@master
