@@ -116,7 +116,7 @@ const skill3FireType = computed<SkillFireType>({
           to-load="Skill2PicB64ForWeb"
           class="mt-4"
           :img="state.Skill2PicB64ForWeb"
-          title="技能 1 图标"
+          title="技能 2 图标"
           @image-loaded="(data, base64) => { state.Skill2PicB64ForWeb = data; state.Skill2PicB64 = base64 }"
           @image-cleared="state.Skill2PicB64ForWeb = ''; state.Skill2PicB64 = ''"
         />
@@ -162,7 +162,7 @@ const skill3FireType = computed<SkillFireType>({
           to-load="Skill3PicB64ForWeb"
           class="mt-4"
           :img="state.Skill3PicB64ForWeb"
-          title="技能 1 图标"
+          title="技能 3 图标"
           @image-loaded="(data, base64) => { state.Skill3PicB64ForWeb = data; state.Skill3PicB64 = base64 }"
           @image-cleared="state.Skill3PicB64ForWeb = ''; state.Skill3PicB64 = ''"
         />
