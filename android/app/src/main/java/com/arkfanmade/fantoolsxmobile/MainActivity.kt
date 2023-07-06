@@ -137,7 +137,7 @@ class MainActivity : AppCompatActivity() {
         var readResult = bytes
         // check data type
         if (dataType == "image/*") {
-            readResult = Base64.encode(bytes, Base64.DEFAULT)
+            readResult = Base64.encode(bytes, Base64.NO_WRAP)
         }
         val resultStr = readResult.toString(Charsets.UTF_8)
         callFileLoadedInJS(resultStr)
