@@ -89,6 +89,7 @@ jobs:
           generate_release_notes: true
           files: ./android/FanToolsX_${{ github.ref_name }}.apk
           repository: LemonNekoGH/FanToolsXReleases
+          token: ${{ secrets.PAT }}
 
       - name: Send end message to telegram
         uses: appleboy/telegram-action@master
