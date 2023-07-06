@@ -11,27 +11,27 @@ const display = useDisplay()
 const buffItems = ['攻速', '攻击', '防御', '生命值'] as const
 const mod1BuffValue1 = computed<(typeof buffItems)[number]>({
   get: () => buffItems[state.value.Mod1AddiType.x],
-  set: val => buffItems.find(it => it === val)!,
+  set: val => state.value.Mod1AddiType.x = buffItems.findIndex(it => it === val),
 })
 const mod1BuffValue2 = computed<(typeof buffItems)[number]>({
-  get: () => buffItems[state.value.Mod1AddiType.x],
-  set: val => buffItems.find(it => it === val)!,
+  get: () => buffItems[state.value.Mod1AddiType.y],
+  set: val => state.value.Mod1AddiType.y = buffItems.findIndex(it => it === val),
 })
 const mod1BuffValue3 = computed<(typeof buffItems)[number]>({
-  get: () => buffItems[state.value.Mod1AddiType.x],
-  set: val => buffItems.find(it => it === val)!,
+  get: () => buffItems[state.value.Mod1AddiType.z],
+  set: val => state.value.Mod1AddiType.z = buffItems.findIndex(it => it === val),
 })
 const mod2BuffValue1 = computed<(typeof buffItems)[number]>({
-  get: () => buffItems[state.value.Mod1AddiType.x],
-  set: val => buffItems.find(it => it === val)!,
+  get: () => buffItems[state.value.Mod2AddiType.x],
+  set: val => state.value.Mod2AddiType.x = buffItems.findIndex(it => it === val),
 })
 const mod2BuffValue2 = computed<(typeof buffItems)[number]>({
-  get: () => buffItems[state.value.Mod1AddiType.x],
-  set: val => buffItems.find(it => it === val)!,
+  get: () => buffItems[state.value.Mod2AddiType.y],
+  set: val => state.value.Mod2AddiType.y = buffItems.findIndex(it => it === val),
 })
 const mod2BuffValue3 = computed<(typeof buffItems)[number]>({
-  get: () => buffItems[state.value.Mod1AddiType.x],
-  set: val => buffItems.find(it => it === val)!,
+  get: () => buffItems[state.value.Mod2AddiType.z],
+  set: val => state.value.Mod2AddiType.z = buffItems.findIndex(it => it === val),
 })
 </script>
 
