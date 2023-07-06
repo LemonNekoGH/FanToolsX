@@ -52,6 +52,7 @@ const mod2BuffValue3 = computed<(typeof buffItems)[number]>({
     >
       <div :class="[display.mobile.value ? '' : 'w-360px']">
         <SelectImage
+          to-load="AbilityImageForWeb"
           :img="state.AbilityImageForWeb"
           title="分支图标"
           @image-loaded="(data, base64) => { state.AbilityImageForWeb = data; state.AbilityData[7] = base64 }"
@@ -103,12 +104,14 @@ const mod2BuffValue3 = computed<(typeof buffItems)[number]>({
         }"
       >
         <SelectImage
+          to-load="Mod1ImgForWeb"
           :img="state.Mod1ImgForWeb"
           title="模组 1 图片"
           @image-loaded="(data, base64) => { state.Mod1ImgForWeb = data; state.Mod1[1] = base64 }"
           @image-cleared="state.Mod1ImgForWeb = ''; state.Mod1[1] = ''"
         />
         <SelectImage
+          to-load="Mod1IconForWeb"
           class="mt-4"
           :img="state.Mod1IconForWeb"
           title="模组 1 图标"
@@ -183,12 +186,14 @@ const mod2BuffValue3 = computed<(typeof buffItems)[number]>({
         }"
       >
         <SelectImage
+          to-load="Mod2ImgForWeb"
           :img="state.Mod2ImgForWeb"
           title="模组 2 图片"
           @image-loaded="(data, base64) => { state.Mod2ImgForWeb = data; state.Mod2[1] = base64 }"
           @image-cleared="state.Mod2ImgForWeb = ''; state.Mod2[1] = ''"
         />
         <SelectImage
+          to-load="Mod2IconForWeb"
           class="mt-4"
           :img="state.Mod2IconForWeb"
           title="模组 2 图标"

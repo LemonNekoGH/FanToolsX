@@ -53,6 +53,7 @@ const display = useDisplay()
       }"
     >
       <SelectImage
+        to-load="StoryImgForWeb"
         title="干员密录 1 蚀刻章"
         subtitle="请使用长宽比 1:1 并带有透明的的图片"
         :img="state.StoryImgForWeb"
@@ -64,6 +65,7 @@ const display = useDisplay()
         :class="{
           'mt-4': display.mobile.value,
         }"
+        to-load="StoryImg2ForWeb"
         title="干员密录 2 蚀刻章"
         subtitle="请使用长宽比 1:1 并带有透明的的图片"
         :img="state.StoryImg2ForWeb"
