@@ -135,8 +135,8 @@ const skill3FireType = computed<SkillFireType>({
           <div class="h-1px w-full bg-[#ddd]" />
           <div class="px-4 pt-4">
             <VTextField v-model="state.SKill2Name" color="primary" variant="outlined" label="名称" density="compact" />
-            <VSelect v-model="skill2FillType" :items="['自动回复', '攻击回复', '受击回复', '被动技能']" color="primary" variant="outlined" label="技力回复方式" density="compact" />
-            <VSelect v-model="skill2FireType" :items="['自动', '手动']" color="primary" variant="outlined" label="触发方式" density="compact" />
+            <VSelect v-model="skill2FillType" :items="skillFillType" color="primary" variant="outlined" label="技力回复方式" density="compact" />
+            <VSelect v-model="skill2FireType" :items="skillFireType" color="primary" variant="outlined" label="触发方式" density="compact" />
           </div>
           <template v-for="(_, i) in Array(10)" :key="i">
             <div class="h-1px w-full bg-[#ddd]" />
@@ -181,8 +181,8 @@ const skill3FireType = computed<SkillFireType>({
           <div class="h-1px w-full bg-[#ddd]" />
           <div class="px-4 pt-4">
             <VTextField v-model="state.SKill3Name" color="primary" variant="outlined" label="名称" density="compact" />
-            <VSelect v-model="skill3FillType" :items="['自动回复', '攻击回复', '受击回复', '被动技能']" color="primary" variant="outlined" label="技力回复方式" density="compact" />
-            <VSelect v-model="skill3FireType" :items="['自动', '手动']" color="primary" variant="outlined" label="触发方式" density="compact" />
+            <VSelect v-model="skill3FillType" :items="skillFillType" color="primary" variant="outlined" label="技力回复方式" density="compact" />
+            <VSelect v-model="skill3FireType" :items="skillFireType" color="primary" variant="outlined" label="触发方式" density="compact" />
           </div>
           <template v-for="(_, i) in Array(10)" :key="i">
             <div class="h-1px w-full bg-[#ddd]" />
