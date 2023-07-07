@@ -5,9 +5,10 @@
   "main": "./dist_electron/main/",
   "scripts": {
     "dev:web": "cd ./src/renderer/ && vite --host 0.0.0.0 --port 5678",
+    "dev:windows": "electron-vite dev",
     "build:web": "cd ./src/renderer/ && vite build",
-    "build:windows": "electron-vite build && electron-builder --win --config",
-    "build:mac": "electron-vite build && electron-builder --mac --config",
+    "build:windows": "electron-vite build --mode ELECTRON && electron-builder --win",
+    "build:mac": "electron-vite build && electron-builder --mac",
     "build:android:release": "pnpm build:web --mode ANDROID && cd android && ./gradlew :app:assembleRelease",
     "clean:android": "cd android && ./gradlew clean",
     "dev:android": "pnpm build:web --mode ANDROID && cd android && ./gradlew :app:installDebug",
@@ -37,5 +38,10 @@
     "unocss": "^0.53.4",
     "vite": "^4.3.9",
     "vite-plugin-pages": "^0.31.0"
+  },
+  "build": {
+    "appId": "com.arkfanmade.fantoolsx",
+    "productName": "FanToolsX",
+    "files": ["dist_electron"]
   }
 }

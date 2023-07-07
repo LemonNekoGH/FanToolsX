@@ -12,6 +12,7 @@ import './assets/css/style.less'
 import 'uno.css'
 import '@mdi/font/css/materialdesignicons.css'
 
+import { isOnAndroid, isOnElectron } from './utils/platform'
 import routes from '~pages'
 
 const router = createRouter({
@@ -45,7 +46,10 @@ createApp(App)
   .use(vuetify)
   .mount('#app')
 
-window.onbeforeunload = (e) => {
-  e.preventDefault()
-  return false
+// should not block window close event when platform is android or electron
+if (!isOnAndroid() && !isOnElectron()) {
+  window.onbeforeunload = (e) => {
+    e.preventDefault()
+    return false
+  }
 }

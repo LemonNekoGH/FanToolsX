@@ -6,8 +6,8 @@ import icon from '../renderer/src/assets/logo.png'
 function createWindow(): void {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 900,
-    height: 670,
+    width: 1280,
+    height: 720,
     show: false,
     autoHideMenuBar: true,
     ...(process.platform === 'linux' ? { icon } : {}),
@@ -32,7 +32,7 @@ function createWindow(): void {
     mainWindow.loadURL(process.env.ELECTRON_RENDERER_URL)
 
   else
-    mainWindow.loadFile(join(__dirname, '../../index.html'))
+    mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
 }
 
 // This method will be called when Electron has finished
@@ -40,7 +40,7 @@ function createWindow(): void {
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
   // Set app user model id for windows
-  electronApp.setAppUserModelId('com.electron')
+  electronApp.setAppUserModelId('com.arkfanmade')
 
   // Default open or close DevTools by F12 in development
   // and ignore CommandOrControl + R in production.
