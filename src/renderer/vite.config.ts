@@ -12,7 +12,7 @@ export default defineConfig(({ mode }) => {
     ],
     base: './',
     build: {
-      outDir: mode === 'ANDROID' ? 'android/app/src/main/assets' : 'dist',
+      outDir: mode === 'ANDROID' ? '../../android/app/src/main/assets' : '../../dist',
     },
   }
 })
