@@ -126,15 +126,15 @@ jobs:
           app_location: "/dist_web" # APP 路径，但因为跳过构建所以会直接上传，所以直接使用构建输出的目录
           skip_app_build: true # 跳过构建
 
+      # this action no docker container required
       - name: Upload to S3
-        uses: jakejarvis/s3-sync-action@master
+        uses: shallwefootball/s3-upload-action@master
         if: ${{ matrix.os != 'ubuntu-latest' }}
         with:
-          AWS_S3_BUCKET: fantoolsx-releases
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: 'ap-northeast-1'
-          SOURCE_DIR: './output'
+          aws_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
+          aws_bucket: ${{ secrets.AWS_BUCKET }}
+          source_dir: './output'
 
   end:
     needs: build
