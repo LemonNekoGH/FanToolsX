@@ -42,6 +42,9 @@
   "build": {
     "appId": "com.arkfanmade.fantoolsx",
     "productName": "FanToolsX",
-    "files": ["dist_electron"]
+    "files": ["dist_electron"],
+    "mac": {
+      "icon": "./public/mac/fantoolsx_mac.icns"
+    }
   }
 }
