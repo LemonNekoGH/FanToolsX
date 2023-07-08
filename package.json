@@ -8,7 +8,7 @@
     "dev:windows": "electron-vite dev",
     "build:web": "cd ./src/renderer/ && vite build",
     "build:windows": "electron-vite build --mode ELECTRON && electron-builder --win",
-    "build:mac": "electron-vite build --mode ELECTRON && electron-builder --mac -- publish never",
+    "build:mac": "electron-vite build --mode ELECTRON && electron-builder --mac --publish never",
     "build:android:release": "pnpm build:web --mode ANDROID && cd android && ./gradlew :app:assembleRelease",
     "clean:android": "cd android && ./gradlew clean",
     "dev:android": "pnpm build:web --mode ANDROID && cd android && ./gradlew :app:installDebug",
