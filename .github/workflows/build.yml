@@ -1,4 +1,4 @@
-name: Build Android APP
+name: Build
 
 on:
   push:
@@ -22,12 +22,17 @@ jobs:
             Trigger: `${{ github.ref_name }}` `${{ github.event.commits[0].id }}`
 
   build:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        # For web, android, macos-amd64, macos-arm64
+        os: [ubuntu-latest, 'ubuntu-22.04', macos-latest, self-hosted]
+    runs-on: ${{ matrix.os }}
     name: Build
     steps:
       - uses: actions/checkout@v3
 
       - name: Import KeyStore
+        if: ${{ matrix.os == 'ubuntu-22.04' }}
         run: |
           cd android
           echo "${{ secrets.KEYSTORE }}" > tmpKeyStoreBase64
@@ -37,22 +42,20 @@ jobs:
           echo "storePassword=${{ secrets.STORE_PASSWORD }}" >> keystore.properties
           echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> keystore.properties
 
-      - name: Set version name
+      - name: Set version name for android
+        if: ${{ matrix.os == 'ubuntu-22.04' }}
         run: |
           cd android
           echo "appVersion=${{ github.ref_name }}" > version.properties
-
-      - name: Setup Java
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'temurin'
-          java-version: '11'
-          cache: 'gradle'
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '16'
+
+      - name: Set version name for macos
+        run: node update_version.js '${{ github.ref_name }}'
+        if: ${{ matrix.os == 'macos-latest' || matrix.os == 'self-hosted' }}
 
       - name: Install pnpm
         uses: pnpm/action-setup@v2
@@ -78,10 +81,37 @@ jobs:
       - name: Install dependencies
         run: pnpm i --no-frozen-lockfile
 
-      - name: Build
+      - name: Setup Java for Android
+        if: ${{ matrix.os == 'ubuntu-22.04' }}
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '11'
+          cache: 'gradle'
+
+      - name: Build Android
+        if: ${{ matrix.os == 'ubuntu-22.04' }}
         run: |
           pnpm build:android:release
-          mv ./android/app/build/outputs/apk/release/app-release.apk ./android/FanToolsX_${{ github.ref_name }}.apk
+          mv ./android/app/build/outputs/apk/release/app-release.apk ./build/FanToolsX_${{ github.ref_name }}.apk
+
+      - name: Build macOS
+        if: ${{ matrix.os == 'macos-latest' || matrix.os == 'self-hosted' }}
+        run: pnpm build:macos
+
+      - name: Build Web
+        if: ${{ matrix.os == 'ubuntu-latest' }}
+        run: pnpm build:web
+
+      - name: Deploy for web
+        uses: Azure/static-web-apps-deploy@v1
+        if: ${{ matrix.os == 'ubuntu-latest' }}
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_BLACK_FIELD_07270FC00 }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          action: "upload"
+          app_location: "/dist_web" # APP 路径，但因为跳过构建所以会直接上传，所以直接使用构建输出的目录
+          skip_app_build: true # 跳过构建
 
       - name: Create Release
         uses: softprops/action-gh-release@v1
