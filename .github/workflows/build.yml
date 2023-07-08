@@ -89,15 +89,27 @@ jobs:
           java-version: '11'
           cache: 'gradle'
 
+      - name: Create output dir
+        run: |
+          mkdir -p output/${{ github.ref_name }}
+
       - name: Build Android
         if: ${{ matrix.os == 'ubuntu-22.04' }}
         run: |
           pnpm build:android:release
-          mv ./android/app/build/outputs/apk/release/app-release.apk ./build/FanToolsX_${{ github.ref_name }}.apk
+          mv ./android/app/build/outputs/apk/release/app-release.apk ./output/${{ github.ref_name }}/FanToolsX_${{ github.ref_name }}.apk
 
-      - name: Build macOS
-        if: ${{ matrix.os == 'macos-latest' || matrix.os == 'self-hosted' }}
-        run: pnpm build:macos
+      - name: Build macOS Arm64
+        if: ${{ matrix.os == 'self-hosted' }}
+        run: |
+          pnpm build:macos
+          mv ./dist/FanToolsX-${{ github.ref_name }}-arm64.dmg ./output/${{ github.ref_name }}/
+
+      - name: Build macOS Amd64
+        if: ${{ matrix.os == 'macos-latest' }}
+        run: |
+          pnpm build:macos
+          mv ./dist/FanToolsX-${{ github.ref_name }}-amd64.dmg ./output/${{ github.ref_name }}/
 
       - name: Build Web
         if: ${{ matrix.os == 'ubuntu-latest' }}
@@ -113,13 +125,14 @@ jobs:
           app_location: "/dist_web" # APP 路径，但因为跳过构建所以会直接上传，所以直接使用构建输出的目录
           skip_app_build: true # 跳过构建
 
-      - name: Create Release
-        uses: softprops/action-gh-release@v1
+      - name: Upload to S3
+        uses: jakejarvis/s3-sync-action@master
         with:
-          generate_release_notes: true
-          files: ./android/FanToolsX_${{ github.ref_name }}.apk
-          repository: LemonNekoGH/FanToolsXReleases
-          token: ${{ secrets.PAT }}
+          AWS_S3_BUCKET: fantoolsx-releases
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: 'ap-northeast-1'
+          SOURCE_DIR: './output'
 
       - name: Send end message to telegram
         uses: appleboy/telegram-action@master
