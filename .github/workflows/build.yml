@@ -110,7 +110,7 @@ jobs:
         if: ${{ matrix.os == 'macos-latest' }}
         run: |
           pnpm build:mac
-          mv ./dist/FanToolsX-${{ github.ref_name }}-amd64.dmg ./output/${{ github.ref_name }}/
+          mv ./dist/FanToolsX-${{ github.ref_name }}.dmg ./output/${{ github.ref_name }}/FanToolsX-${{ github.ref_name }}-amd64.dmg
 
       - name: Build Web
         if: ${{ matrix.os == 'ubuntu-latest' }}
@@ -135,6 +135,7 @@ jobs:
           aws_secret_access_key: ${{ secrets.AWS_ACCESS_KEY}}
           aws_bucket: fantoolsx-releases
           source_dir: './output'
+          destination_dir: '/'
 
   end:
     needs: build
