@@ -10,6 +10,7 @@ import NavMenu from './components/menu.vue'
 import { loadFile, saveFile } from './utils/file'
 import { useHelper, useState } from './store'
 import { isOnAndroid } from './utils/platform'
+import OperatorPreview from './components/operator-preview.vue'
 
 const state = useState()
 const helper = useHelper()
@@ -17,6 +18,7 @@ const lastCacheTime = ref(Date.now())
 const lastCacheTimeStr = computed(() => dayjs(lastCacheTime.value).format('YYYY-MM-DD HH:mm:ss'))
 const display = useDisplay()
 const showNav = ref(!display.mobile.value)
+const showOperatorPreview = ref(true)
 
 const dialogModel = ref<{
   type: 'reset' | 'load' | ''
@@ -228,7 +230,7 @@ onMounted(async () => {
               <VBtn icon="mdi-trash-can" @click="showResetAlert()" />
               <VBtn icon="mdi-folder-open" @click="showLoadAlert()" />
               <VBtn icon="mdi-download" @click="save()" />
-              <VBtn icon="mdi-camera" @click="helper.showSnackbar('施工中')" />
+              <VBtn icon="mdi-camera" @click="showOperatorPreview = true" />
             </div>
           </VToolbar>
         </VAppBar>
@@ -240,7 +242,7 @@ onMounted(async () => {
           @load="showLoadAlert()"
           @reset="showResetAlert"
           @save="save"
-          @preview="helper.showSnackbar('施工中')"
+          @preview="showOperatorPreview = true"
         />
 
         <VMain class="overflow-y-scroll">
@@ -271,6 +273,7 @@ onMounted(async () => {
       </VLayout>
     </VApp>
   </VThemeProvider>
+  <OperatorPreview :show="showOperatorPreview" @close="showOperatorPreview = false" />
 </template>
 
 <style>
