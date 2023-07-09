@@ -66,8 +66,8 @@ const scale = computed(() => {
           <div class="bg-[#313131] h-76px w-218px btn btn-back" @click="emit('close')" />
           <div class="bg-[#313131] h-76px w-313px btn btn-overview ml-5px" />
         </div>
-        <div class="flex btn-shadow bg-black">
-          <div class="bg-[#313131] h-76px w-200px btn btn-info ml-20px" />
+        <div class="flex btn-shadow bg-black ml-20px">
+          <div class="bg-[#313131] h-76px w-200px btn btn-info" />
           <div class="bg-[#313131] h-76px w-200px btn btn-screenshot ml-5px flex justify-around items-center p-20px">
             <div class="btn-screenshot-icon w-50px h-50px" />
             <div class="text-white text-30px pt-8px">
@@ -76,8 +76,88 @@ const scale = computed(() => {
           </div>
         </div>
       </div>
+      <!-- 属性 -->
+      <div class="absolute left-24px bottom-550px">
+        <!-- 法抗 -->
+        <div class="absolute w-196px h-36px">
+          <img src="../assets/img/operator-preview/icon_res.png" width="36" height="36">
+          <div class="w-160px h-36px absolute top-0 left-36px bg-white/80 rounded-5px overflow-hidden ml-3px">
+            <div class="bg-[#868686ee] w-30px h-full" />
+            <div class="absolute top-0 w-full h-full pl-5px text-30px leading-30px py-3px">
+              {{ state.BasedataB[3] }}
+            </div>
+          </div>
+        </div>
+        <!-- 攻击间隔 -->
+        <div class="absolute left-199px w-196px h-36px">
+          <img src="../assets/img/operator-preview/icon_attack_speed.png" width="36" height="36">
+          <div class="w-160px h-36px absolute top-0 left-36px bg-white/80 rounded-5px overflow-hidden ml-3px">
+            <div class="absolute top-0 w-full h-full pl-5px text-30px leading-30px py-3px">
+              {{ state.BasedataA[5] }}
+            </div>
+          </div>
+        </div>
+        <!-- 阻挡数 -->
+        <div class="absolute w-196px h-36px bottom-5px">
+          <img src="../assets/img/operator-preview/icon_def.png" width="36" height="36">
+          <div class="w-160px h-36px absolute top-0 left-36px bg-white/80 rounded-5px overflow-hidden ml-3px">
+            <div class="bg-[#868686ee] w-30px h-full" />
+            <div class="absolute top-0 w-full h-full pl-5px text-30px leading-30px py-3px">
+              {{ state.BasedataA[4] }}
+            </div>
+          </div>
+        </div>
+        <!-- 攻击力 -->
+        <div class="absolute w-196px h-36px bottom-46px">
+          <img src="../assets/img/operator-preview/icon_atk.png" width="36" height="36">
+          <div class="w-160px h-36px absolute top-0 left-36px bg-white/80 rounded-5px overflow-hidden ml-3px">
+            <div class="bg-[#868686ee] w-30px h-full" />
+            <div class="absolute top-0 w-full h-full pl-5px text-30px leading-30px py-3px">
+              {{ state.BasedataB[1] }}
+            </div>
+          </div>
+        </div>
+        <!-- 生命值 -->
+        <div class="absolute w-196px h-36px bottom-87px">
+          <img src="../assets/img/operator-preview/icon_hp.png" width="36" height="36">
+          <div class="w-160px h-36px absolute top-0 left-36px bg-white/80 rounded-5px overflow-hidden ml-3px">
+            <div class="bg-[#868686ee] w-30px h-full" />
+            <div class="absolute top-0 w-full h-full pl-5px text-30px leading-30px py-3px">
+              {{ state.BasedataB[0] }}
+            </div>
+          </div>
+        </div>
+      </div>
       <!-- 星级 -->
       <div class="w-240px h-60px !bg-left !bg-no-repeat !bg-contain absolute left-24px bottom-390px" :style="{ backgroundImage: `url(${stars[Number.parseInt(state.BasedataA[6])]})` }" />
+      <!-- 信赖值 -->
+      <div class="w-580px h-60px absolute left-24px bg-white/60 rounded-6px bottom-440px flex flex-col overflow-hidden">
+        <div class="flex-1 flex">
+          <div class="flex bg-white">
+            <div class="text-30px pl-10px leading-30px bg-white h-full flex items-end pb-5px font-500">
+              信赖值
+            </div>
+            <div class="flex items-end pb-5px bg-white pl-10px gap-x-2px">
+              <svg height="20px" width="10px">
+                <polygon points="0 0, 10 10,0 20" fill="#929292" />
+              </svg>
+              <svg height="20px" width="10px">
+                <polygon points="0 0, 10 10,0 20" fill="#929292" />
+              </svg>
+            </div>
+            <!-- 空白占位 -->
+            <div class="bg-white w-30px" />
+          </div>
+          <!-- 渐变 -->
+          <div class="white-transparent w-50px" />
+          <div class="text-right flex-1 text-30px pr-10px h-full pt-5px leading-30px font-700">
+            200%
+          </div>
+        </div>
+        <div class="bg-white w-full p-5px">
+          <div class="bg-[#ffa263] w-full h-10px rounded-3px" />
+        </div>
+      </div>
       <!-- 干员英文名 -->
       <div class="text-48px h-64px absolute bottom-350px w-1000px left-24px font-black font-serif">
         <svg stroke="rgba(0,0,0,0.5)" stroke-width="2px" width="1000px">
@@ -175,5 +255,9 @@ const scale = computed(() => {
 
 .btn-shadow {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.8);
+}
+
+.white-transparent {
+  background: linear-gradient(to right, white, transparent);
 }
 </style>
