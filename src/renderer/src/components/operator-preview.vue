@@ -67,9 +67,39 @@ const scale = computed(() => {
           </div>
         </div>
       </div>
+      <!-- 干员英文名 -->
+      <div class="text-48px h-64px absolute bottom-350px w-1000px left-24px font-black font-serif">
+        <svg stroke="rgba(0,0,0,0.5)" stroke-width="2px" width="1000px">
+          <text fill="white" y="60">{{ state.BasicdataText[2] }}</text>
+        </svg>
+      </div>
+      <!-- 干员名称 -->
+      <div class="text-140px h-160px absolute bottom-200px w-1000px left-24px font-black font-serif">
+        <svg stroke="rgba(0,0,0,0.5)" stroke-width="2px" width="1000px">
+          <text fill="white" y="120">{{ state.BasicdataText[1] }}</text>
+        </svg>
+      </div>
       <!-- 职业，攻击范围，图标 -->
-      <div class="absolute bottom-54px left-24px">
+      <div class="absolute bottom-54px left-24px flex items-center text-white text-24px">
         <div class="h-135px w-135px !bg-no-repeat !bg-center !bg-contain opacity-50 border-2px border-white border-solid" :style="{ backgroundImage: `url(${professionIcons[Number.parseInt(state.BasedataA[7])]})` }" />
+        <div class="h-131px w-214px bg-black/50 ml-12px flex flex-col justify-between pt-10px items-center rounded-6px">
+          <div class="grid grid-cols-10 gap-2px">
+            <div v-for="(isTrue, index) in state.AttackRangeBol" :key="index" class="w-10px h-10px" :class="[isTrue ? 'bg-white' : 'border-1px border-white/60 border-solid']" />
+          </div>
+          <div>
+            攻击范围
+          </div>
+        </div>
+        <div class="h-131px w-214px ml-12px flex flex-col justify-between">
+          <div class="bg-black/50 w-full h-40px rounded-6px flex justify-center items-center text-30px">
+            {{ state.BasedataA[1] }}
+          </div>
+          <div class="bg-black/50 w-full h-83px rounded-6px flex p-10px justify-center items-center flex-wrap">
+            <div v-for="(tag, index) in state.BasedataA[2].split(' ')" :key="index" class="flex-shrink-0 mr-10px">
+              {{ tag }}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

@@ -8,7 +8,9 @@ export default defineConfig(({ mode }) => {
     plugins: [
       vue(),
       pages(),
-      unocss(),
+      unocss({
+        configFile: './unocss.config.ts',
+      }),
     ],
     base: './',
     build: {

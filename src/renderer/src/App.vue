@@ -223,7 +223,7 @@ onMounted(async () => {
 
             <div v-if="!display.mobile.value" class="mr-4">
               <p>上次缓存</p>
-              <div>{{ dayjs(lastCacheTime).format('YYYY-MM-DD HH:mm:ss') }}</div>
+              <code>{{ dayjs(lastCacheTime).format('YYYY-MM-DD HH:mm:ss') }}</code>
             </div>
             <!-- 按钮 -->
             <div v-if="!display.mobile.value">

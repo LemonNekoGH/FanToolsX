@@ -84,7 +84,7 @@ function updateModelValue(val: boolean) {
       <div>当前编辑：{{ state.BasicdataText[1] || '新干员' }}</div>
       <div class="mr-4">
         <p>上次缓存</p>
-        <div>{{ lastCacheTime }}</div>
+        <code>{{ lastCacheTime }}</code>
       </div>
       <!-- 按钮 -->
       <div class="flex justify-between mt-4">
