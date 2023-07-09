@@ -13,6 +13,13 @@ import professionCaster from '../assets/img/operator-preview/icon_profession_cas
 import professionSupport from '../assets/img/operator-preview/icon_profession_support_large.png'
 import professionTank from '../assets/img/operator-preview/icon_profession_tank_large.png'
 
+import stars1 from '../assets/img/operator-preview/stars_1.png'
+import stars2 from '../assets/img/operator-preview/stars_2.png'
+import stars3 from '../assets/img/operator-preview/stars_3.png'
+import stars4 from '../assets/img/operator-preview/stars_4.png'
+import stars5 from '../assets/img/operator-preview/stars_5.png'
+import stars6 from '../assets/img/operator-preview/stars_6.png'
+
 defineProps<{
   show: boolean
 }>()
@@ -22,6 +29,8 @@ const emit = defineEmits<{
 
 // 职业图标
 const professionIcons = [professionWarrior, professionSniper, professionSpecial, professionPioneer, professionMedic, professionCaster, professionSupport, professionTank]
+// 星级图标
+const stars = [stars1, stars2, stars3, stars4, stars5, stars6]
 
 const { state } = storeToRefs(useState())
 const { width, height } = useWindowSize()
@@ -67,6 +76,8 @@ const scale = computed(() => {
           </div>
         </div>
       </div>
+      <!-- 星级 -->
+      <div class="w-240px h-60px !bg-left !bg-no-repeat !bg-contain absolute left-24px bottom-390px" :style="{ backgroundImage: `url(${stars[Number.parseInt(state.BasedataA[6])]})` }" />
       <!-- 干员英文名 -->
       <div class="text-48px h-64px absolute bottom-350px w-1000px left-24px font-black font-serif">
         <svg stroke="rgba(0,0,0,0.5)" stroke-width="2px" width="1000px">
