@@ -239,7 +239,7 @@ const scale = computed(() => {
       </div>
       <!-- 经验值 -->
       <div class="absolute font-black top-135px text-white right-60px">
-        <div class="w-392px h-78px flex items-center bg-[#313131] pr-10px pl-20px absolute top-40px right-0">
+        <div class="w-392px h-78px flex items-center bg-[#313131] pr-10px pl-20px absolute top-40px right-0 btn-shadow">
           <div class="flex-1">
             <div class="text-16px leading-16px">
               EXP
@@ -262,6 +262,27 @@ const scale = computed(() => {
         </div>
         <div class="absolute right-340px text-32px leading-32px top-125px">
           /90
+        </div>
+      </div>
+      <!-- 精英化，潜能 -->
+      <div class="absolute right-60px flex gap-x-15px top-375px font-black">
+        <img src="../assets/img/operator-preview/elite_2.png" width="145" class="absolute -top-35px left-5px">
+        <img src="../assets/img/operator-preview/potential_full.png" width="130" class="absolute -top-27px left-280px">
+        <div class="w-268px h-100px bg-[#313131] btn-shadow flex flex-col items-end pt-12px pr-12px">
+          <div class="text-[#a0a0a0] text-32px leading-32px">
+            精英化
+          </div>
+          <div class="bg-[#575757] text-[#313131] h-30px w-70px px-10px text-24px leading-24px flex justify-center items-center rounded-2px mr-2px mt-10px">
+            MAX
+          </div>
+        </div>
+        <div class="w-268px h-100px bg-[#313131] btn-shadow flex flex-col items-end pt-12px pr-12px">
+          <div class="text-[#a0a0a0] text-32px leading-32px">
+            潜能
+          </div>
+          <div class="bg-[#575757] text-[#313131] h-30px w-70px px-10px text-24px leading-24px flex justify-center items-center rounded-2px mr-2px mt-10px">
+            MAX
+          </div>
         </div>
       </div>
     </div>
