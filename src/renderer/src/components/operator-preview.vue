@@ -237,6 +237,33 @@ const scale = computed(() => {
           </div>
         </div>
       </div>
+      <!-- 经验值 -->
+      <div class="absolute font-black top-135px text-white right-60px">
+        <div class="w-392px h-78px flex items-center bg-[#313131] pr-10px pl-20px absolute top-40px right-0">
+          <div class="flex-1">
+            <div class="text-16px leading-16px">
+              EXP
+            </div>
+            <div class="text-24px leading-24px">
+              <span class="text-[#ffd900]">-</span>/-
+            </div>
+          </div>
+          <div class="bg-[#575757] text-[#313131] h-24px px-10px rounded-2px">
+            MAX
+          </div>
+        </div>
+        <div class="w-160px h-160px rounded-full border-8px border-solid border-[#ffd900] absolute top-0 right-383px flex flex-col justify-center items-center pb-20px">
+          <div class="text-24px leading-24px">
+            LV
+          </div>
+          <div class="text-80px leading-70px">
+            90
+          </div>
+        </div>
+        <div class="absolute right-340px text-32px leading-32px top-125px">
+          /90
+        </div>
+      </div>
     </div>
   </div>
 </template>
