@@ -97,13 +97,40 @@ const scale = computed(() => {
             </div>
           </div>
         </div>
-        <!-- 阻挡数 -->
+        <!-- 防御力 -->
         <div class="absolute w-196px h-36px bottom-5px">
           <img src="../assets/img/operator-preview/icon_def.png" width="36" height="36">
           <div class="w-160px h-36px absolute top-0 left-36px bg-white/80 rounded-5px overflow-hidden ml-3px">
             <div class="bg-[#868686ee] w-30px h-full" />
             <div class="absolute top-0 w-full h-full pl-5px text-30px leading-30px py-3px">
+              {{ state.BasedataB[2] }}
+            </div>
+          </div>
+        </div>
+        <!-- 阻挡数 -->
+        <div class="absolute left-199px w-196px h-36px bottom-5px">
+          <img src="../assets/img/operator-preview/icon_block.png" width="36" height="36">
+          <div class="w-160px h-36px absolute top-0 left-36px bg-white/80 rounded-5px overflow-hidden ml-3px">
+            <div class="absolute top-0 w-full h-full pl-5px text-30px leading-30px py-3px">
               {{ state.BasedataA[4] }}
+            </div>
+          </div>
+        </div>
+        <!-- 部署费用 -->
+        <div class="absolute w-196px left-199px h-36px bottom-46px">
+          <img src="../assets/img/operator-preview/icon_cost.png" width="36" height="36">
+          <div class="w-160px h-36px absolute top-0 left-36px bg-white/80 rounded-5px overflow-hidden ml-3px">
+            <div class="absolute top-0 w-full h-full pl-5px text-30px leading-30px py-3px">
+              {{ state.BasedataB[7] }}
+            </div>
+          </div>
+        </div>
+        <!-- 再部署 -->
+        <div class="absolute w-196px left-199px h-36px bottom-87px">
+          <img src="../assets/img/operator-preview/icon_time.png" width="36" height="36">
+          <div class="w-160px h-36px absolute top-0 left-36px bg-white/80 rounded-5px overflow-hidden ml-3px">
+            <div class="absolute top-0 w-full h-full pl-5px text-30px leading-30px py-3px">
+              {{ state.BasedataA[3] }}
             </div>
           </div>
         </div>
