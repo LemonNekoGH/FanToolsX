@@ -52,7 +52,8 @@ const scale = computed(() => {
 <template>
   <div v-if="show" class="absolute top-0 left-0 flex w-full h-full bg-black/50 justify-center items-center z-99999">
     <div
-      class="w-1920px h-1080px flex-shrink-0 bg-white pt-20px pl-24px pb-54px pr-60px bg-ark" :style="{
+      class="w-1920px h-1080px flex-shrink-0 bg-white pt-20px pl-24px pb-54px pr-60px bg-ark"
+      :style="{
         transform: `scale(${scale}) ${rotated ? 'rotate(90deg)' : ''}`,
       }"
     >
@@ -77,6 +78,23 @@ const scale = computed(() => {
         </div>
       </div>
       <!-- 属性 -->
+      <div class="absolute left-24px top-350px flex">
+        <div class="text-30px pl-10px leading-30px bg-white h-full flex font-500 py-5px rounded-5px">
+          属性
+        </div>
+        <div class="flex items-end pb-10px bg-white pl-10px gap-x-2px">
+          <svg height="20px" width="10px">
+            <polygon points="0 0, 10 10,0 20" fill="#929292" />
+          </svg>
+          <svg height="20px" width="10px">
+            <polygon points="0 0, 10 10,0 20" fill="#929292" />
+          </svg>
+        </div>
+        <!-- 空白占位 -->
+        <div class="bg-white w-30px" />
+        <!-- 渐变 -->
+        <div class="white-transparent w-50px" />
+      </div>
       <div class="absolute left-24px bottom-550px">
         <!-- 法抗 -->
         <div class="absolute w-196px h-36px">
