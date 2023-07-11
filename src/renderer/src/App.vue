@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed, onMounted, ref, toRaw } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import dayjs from 'dayjs'
 import { VApp, VAppBar, VBtn, VCard, VCardActions, VCardItem, VCardText, VCardTitle, VDialog, VLayout, VMain, VSnackbar, VSpacer, VThemeProvider, VToolbar, VToolbarTitle } from 'vuetify/components'
 import { useDisplay } from 'vuetify/lib/framework.mjs'
@@ -18,7 +18,7 @@ const lastCacheTime = ref(Date.now())
 const lastCacheTimeStr = computed(() => dayjs(lastCacheTime.value).format('YYYY-MM-DD HH:mm:ss'))
 const display = useDisplay()
 const showNav = ref(!display.mobile.value)
-const showOperatorPreview = ref(true)
+const showOperatorPreview = ref(false)
 
 const dialogModel = ref<{
   type: 'reset' | 'load' | ''
@@ -61,7 +61,7 @@ async function writeCache(data: string) {
 }
 
 async function save(cache = false) {
-  const stateRaw = toRaw(state.state)
+  const stateRaw = JSON.parse(JSON.stringify(state.state)) as State
   if (cache) {
     const data = JSON.stringify(stateRaw)
     await writeCache(data)
