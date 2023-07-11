@@ -60,6 +60,8 @@ const scale = computed(() => {
     >
       <!-- 立绘 -->
       <div class="absolute top-0 left-0 w-full h-full !bg-center !bg-contain !bg-no-repeat" :style="{ backgroundImage: `url(${state.BasicDataImgForWeb})` }" />
+      <!-- 阵营图标 -->
+      <div class="absolute top-20px left-24px w-420px h-420px !bg-center !bg-contain !bg-no-repeat" :style="{ backgroundImage: `url(${state.ProfLogoForWeb})` }" />
       <div class="absolute top-0 left-0 w-full h-full bg-around" />
       <div class="absolute top-0 left-0 w-full h-full bg-shadow" />
       <!-- 工具条 -->
@@ -303,6 +305,54 @@ const scale = computed(() => {
         <Skill class="absolute -top-15px right-428px" :img="state.Skill1PicB64ForWeb" :initial-sp="state.Skill1Start[9]" :total-sp="state.Skill1Sp[9]" />
         <Skill class="absolute -top-15px right-296px" :img="state.Skill2PicB64ForWeb" :initial-sp="state.Skill2Start[9]" :total-sp="state.Skill2Sp[9]" />
         <Skill class="absolute -top-15px right-164px" :img="state.Skill3PicB64ForWeb" :initial-sp="state.Skill3Start[9]" :total-sp="state.Skill3Sp[9]" />
+      </div>
+      <!-- 天赋与模组 -->
+      <div class="w-548px h-228px bg-[#313131] btn-shadow absolute bottom-54px right-60px">
+        <!-- 分支图标 -->
+        <div class="absolute top-18px left-18px w-88px h-88px bg-[#3b3b3b] !bg-center !bg-contain !bg-no-repeat" :style="{ backgroundImage: `url(${state.AbilityImageForWeb})` }" />
+        <div class="text-white text-30px leading-30px absolute top-45px left-120px">
+          {{ state.BasedataA[0] }}
+        </div>
+        <!-- 模组图标 -->
+        <div class="w-135px h-135px absolute -top-30px right-130px btn-shadow box-border border-5px border-white/20 border-solid bg-black/20">
+          <!-- 没有模组图标的情况下使用的默认图标 -->
+          <div v-if="!state.Mod1IconForWeb" class=" w-full h-full flex flex-col justify-center items-center gap-16px">
+            <div class="border-box border-8px border-white border-solid w-64px h-64px" />
+            <div class="text-20px leading-20px text-white">
+              ORIGINAL
+            </div>
+          </div>
+          <div v-else class=" w-full h-full flex flex-col justify-center items-center pb-10px">
+            <div class="!bg-center !bg-contain !bg-no-repeat flex-1 w-full" :style="{ backgroundImage: `url(${state.Mod1IconForWeb})` }" />
+            <div class="text-20px leading-20px text-white flex justify-center items-center">
+              <span class="mt-2px mr-5px">{{ state.Mod1[3] }}</span>
+              <span class="text-30px leading-30px">{{ state.Mod1[4] }}</span>
+            </div>
+          </div>
+        </div>
+        <!-- 分割线 -->
+        <div class="h-90px w-8px absolute right-300px top-20px flex">
+          <div class="flex-1 bg-[#454545]" />
+          <div class="flex-1 bg-[#1b1b1b]" />
+        </div>
+        <div class="text-[#a0a0a0] text-24px leading-24px font-900 absolute right-10px top-20px">
+          STAGE <span class="text-white">3</span>
+        </div>
+        <div class="text-white text-24px leading-24px absolute right-20px top-55px flex gap-10px h-40px items-end">
+          <div>管理</div>
+          <div class="text-white text-60px h-30px">
+            +
+          </div>
+        </div>
+        <!-- 天赋名称 -->
+        <div class="absolute flex gap-x-15px top-145px left-18px">
+          <div class="text-[#313131] bg-[#e5e5e5] text-24px leading-24px p-5px rounded-5px">
+            {{ state.AbilityData[2] }}
+          </div>
+          <div class="text-[#313131] bg-[#e5e5e5] text-24px leading-24px p-5px rounded-5px">
+            {{ state.AbilityData[4] }}
+          </div>
+        </div>
       </div>
     </div>
   </div>
