@@ -1,0 +1,41 @@
+<script lang="ts" setup>
+defineProps<{
+  img: string
+  initialSp: number
+  totalSp: number
+}>()
+</script>
+
+<template>
+  <div class="w-100px h-100px">
+    <div class="w-full h-full box-border border-5px border-white/10 border-solid absolute top-0 left-0">
+      <div class="bg-white/40 absolute bottom-20px left-20px w-4px h-70px transform rotate-45deg origin-bottom-left" />
+    </div>
+    <div v-if="img" class="w-full h-full absolute top-0 left-0 bg-white !bg-center !bg-contain !bg-no-repeat" :style="{ backgroundImage: `url(${img})` }" />
+    <div class="w-30px h-24px rank_3 absolute -top-14px -left-16px" />
+    <div class="h-32px flex gap-2px absolute left-5px -bottom-18px items-center text-white text-24px leading-24px">
+      <div class="btn-shadow bg-[#313131] bg-initial-sp flex items-center pl-5px">
+        <img class="h-16px" src="../assets/img/operator-preview/skill_initial_sp.png">
+        <div class="ml-2px">
+          {{ initialSp }}
+        </div>
+      </div>
+      <div class="btn-shadow bg-[#313131] bg-total-sp flex items-center pl-5px">
+        <img class="h-24px" src="../assets/img/operator-preview/skill_total_sp.png">
+        <div class="ml-2px">
+          {{ totalSp }}
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<style lang="less" scoped>
+.rank_3 {
+  background-color: black;
+  background-image: url('../assets/img/operator-preview/skill_rank_3.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+</style>

@@ -19,6 +19,7 @@ import stars3 from '../assets/img/operator-preview/stars_3.png'
 import stars4 from '../assets/img/operator-preview/stars_4.png'
 import stars5 from '../assets/img/operator-preview/stars_5.png'
 import stars6 from '../assets/img/operator-preview/stars_6.png'
+import Skill from './skill.vue'
 
 defineProps<{
   show: boolean
@@ -285,6 +286,24 @@ const scale = computed(() => {
           </div>
         </div>
       </div>
+      <!-- 技能 -->
+      <div class="w-548px h-140px absolute top-525px bg-[#313131] right-60px btn-shadow flex flex-col items-end pt-20px pr-20px font-900">
+        <div class="text-[#a0a0a0] text-24px leading-24px">
+          RANK <span class="text-white">7</span>
+        </div>
+        <div class="bg-[#575757] text-[#313131] h-30px w-70px px-10px text-24px leading-24px flex justify-center items-center rounded-2px mr-2px mt-20px">
+          MAX
+        </div>
+        <!-- 分割线 -->
+        <div class="h-90px w-8px absolute right-132px top-20px flex">
+          <div class="flex-1 bg-[#454545]" />
+          <div class="flex-1 bg-[#1b1b1b]" />
+        </div>
+        <!-- 技能 -->
+        <Skill class="absolute -top-15px right-428px" :img="state.Skill1PicB64ForWeb" :initial-sp="state.Skill1Start[9]" :total-sp="state.Skill1Sp[9]" />
+        <Skill class="absolute -top-15px right-296px" :img="state.Skill2PicB64ForWeb" :initial-sp="state.Skill2Start[9]" :total-sp="state.Skill2Sp[9]" />
+        <Skill class="absolute -top-15px right-164px" :img="state.Skill3PicB64ForWeb" :initial-sp="state.Skill3Start[9]" :total-sp="state.Skill3Sp[9]" />
+      </div>
     </div>
   </div>
 </template>
@@ -344,10 +363,6 @@ const scale = computed(() => {
   background-image: url('../assets/img/operator-preview/background_shadow.png');
   background-position: center;
   background-size: cover;
-}
-
-.btn-shadow {
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.8);
 }
 
 .white-transparent {
