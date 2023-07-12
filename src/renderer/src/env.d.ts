@@ -107,4 +107,9 @@ declare interface Window {
     fileLoadedFromAndroid(data: string) // Android 在加载完文件后会调用的回调
     loadingKey: LoadingKey // 回调会通过这里知道应该更新哪里的值
   }
+  VERSION: string
+}
+
+declare interface ImportMetaEnv {
+  VITE_APP_VERSION: string
 }

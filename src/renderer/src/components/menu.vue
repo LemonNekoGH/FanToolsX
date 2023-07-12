@@ -3,6 +3,7 @@ import { VBtn, VDivider, VList, VListItem, VNavigationDrawer } from 'vuetify/com
 import { useDisplay } from 'vuetify/framework'
 import { storeToRefs } from 'pinia'
 import { useState } from '../store'
+import { getVersionName } from '../utils/platform'
 
 defineProps<{
   showNav: boolean
@@ -94,10 +95,22 @@ function updateModelValue(val: boolean) {
         <VBtn icon="mdi-camera" variant="outlined" color="primary" @click="emit('preview')" />
       </div>
     </div>
+    <div v-if="display.mobile.value">
+      <VDivider />
+      <div class="text-gray text-12px p-8px">
+        <code>版本：{{ getVersionName() }}</code>
+      </div>
+    </div>
     <VDivider />
     <VList nav color="primary">
       <VListItem v-for="item in nav" :key="item.id" nav :title="item.name" :to="item.path" density="compact" prepend-icon="mdi-star-outline" />
     </VList>
+    <div v-if="!display.mobile.value">
+      <VDivider />
+      <div class="text-gray text-12px p-8px">
+        <code>版本：{{ getVersionName() }}</code>
+      </div>
+    </div>
   </VNavigationDrawer>
 </template>
 

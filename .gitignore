@@ -10,6 +10,8 @@ node_modules
 
 # Web
 dist_web
+.env
+.env.*
 # Android
 android/build
 android/captures

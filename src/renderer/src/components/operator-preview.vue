@@ -19,6 +19,7 @@ import stars3 from '../assets/img/operator-preview/stars_3.png'
 import stars4 from '../assets/img/operator-preview/stars_4.png'
 import stars5 from '../assets/img/operator-preview/stars_5.png'
 import stars6 from '../assets/img/operator-preview/stars_6.png'
+import { getVersionName } from '../utils/platform'
 import Skill from './skill.vue'
 
 defineProps<{
@@ -353,6 +354,10 @@ const scale = computed(() => {
             {{ state.AbilityData[4] }}
           </div>
         </div>
+      </div>
+      <!-- 版本水印 -->
+      <div class="text-[#575757] absolute bottom-34px right-60px text-16px leading-16px font-black">
+        ARKFANMADETOOL VER {{ getVersionName() }}
       </div>
     </div>
   </div>
