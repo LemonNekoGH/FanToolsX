@@ -25,8 +25,8 @@ jobs:
     needs: start
     strategy:
       matrix:
-        # For web, android, macos-amd64, macos-arm64
-        os: [ubuntu-latest, 'ubuntu-20.04', macos-latest, self-hosted]
+        # For web, android, macos-universal
+        os: [ubuntu-latest, 'ubuntu-20.04', macos-latest]
     runs-on: ${{ matrix.os }}
     name: Build
     steps:
@@ -53,10 +53,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '16'
-
-      - name: Set version name for macos
-        run: node update_version.js '${{ github.ref_name }}'
-        if: ${{ matrix.os == 'macos-latest' || matrix.os == 'self-hosted' }}
 
       - name: Install pnpm
         uses: pnpm/action-setup@v2
@@ -100,17 +96,11 @@ jobs:
           pnpm build:android:release
           mv ./android/app/build/outputs/apk/release/app-release.apk ./output/${{ github.ref_name }}/FanToolsX_${{ github.ref_name }}.apk
 
-      - name: Build macOS Arm64
-        if: ${{ matrix.os == 'self-hosted' }}
-        run: |
-          pnpm build:mac
-          mv ./dist/FanToolsX-${{ github.ref_name }}-arm64.dmg ./output/${{ github.ref_name }}/
-
-      - name: Build macOS Amd64
+      - name: Build macOS universal
         if: ${{ matrix.os == 'macos-latest' }}
         run: |
           pnpm build:mac
-          mv ./dist/FanToolsX-${{ github.ref_name }}.dmg ./output/${{ github.ref_name }}/FanToolsX-${{ github.ref_name }}-amd64.dmg
+          mv ./dist/FanToolsX-${{ github.ref_name }}-universal.dmg ./output/${{ github.ref_name }}/FanToolsX-${{ github.ref_name }}.dmg
 
       - name: Build Web
         if: ${{ matrix.os == 'ubuntu-latest' }}

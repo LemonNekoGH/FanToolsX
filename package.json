@@ -44,7 +44,15 @@
     "productName": "FanToolsX",
     "files": ["dist_electron"],
     "mac": {
-      "icon": "./public/mac/fantoolsx_mac.icns"
+      "icon": "./public/mac/fantoolsx_mac.icns",
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "universal"
+          ]
+        }
+      ]
     }
   }
 }
