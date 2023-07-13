@@ -25,6 +25,9 @@ import androidx.datastore.preferences.preferencesDataStore
 import androidx.webkit.WebViewAssetLoader
 import androidx.webkit.WebViewClientCompat
 import com.arkfanmade.fantoolsxmobile.databinding.ActivityMainBinding
+import io.sentry.Sentry
+import io.sentry.SentryEvent
+import io.sentry.SentryLevel
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -37,10 +40,9 @@ class MainActivity : AppCompatActivity() {
             request: WebResourceRequest?
         ): WebResourceResponse? {
             if (view == null || request == null) {
-                Log.e("LocalContentWebViewClient.shouldInterceptRequest", "view or request is null")
+                Sentry.captureMessage("LocalContentWebViewClient.shouldInterceptRequest: view or request is null", SentryLevel.ERROR)
                 return null
             }
-            Log.d("LocalContentWebViewClient.shouldInterceptRequest", "invoking asset loader")
             return loader.shouldInterceptRequest(request.url)
         }
     }
@@ -57,7 +59,7 @@ class MainActivity : AppCompatActivity() {
 
         @JavascriptInterface
         fun loadFile(accept: String) {
-            Log.d("JSInterface.loadFile", "request to load file, accept: $accept")
+            Sentry.captureMessage("request to load file, accept: $accept", SentryLevel.INFO)
             loadFile.launch(Intent(
                 Intent.ACTION_OPEN_DOCUMENT
             ).apply {
@@ -77,7 +79,7 @@ class MainActivity : AppCompatActivity() {
         @JavascriptInterface
         fun saveFile(data: String) {
             setDataToSave(data)
-            Log.d("JSInterface.saveFile", "data: $data")
+            Sentry.captureMessage("request to save file", SentryLevel.INFO)
             saveFile.launch(Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
                 addCategory(Intent.CATEGORY_OPENABLE)
                 type = "*/*"
@@ -87,12 +89,12 @@ class MainActivity : AppCompatActivity() {
 
         @JavascriptInterface
         fun log(text: String) {
-            Log.d("JSInterface.log", text)
+            Sentry.captureMessage("log from web content: $text", SentryLevel.INFO)
         }
 
         @JavascriptInterface
         fun writeCache(data: String) = runBlocking {
-            Log.d("JSInterface.writeCache", "data size: ${data.length / 1024 / 1024}MB")
+            Sentry.captureMessage("writing cache, data size: ${data.length / 1024 / 1024}MB", SentryLevel.DEBUG)
             launch {
                 dataStore.edit {
                     it[cacheKey] = data
@@ -110,7 +112,7 @@ class MainActivity : AppCompatActivity() {
                 data = dataFlow.first()
             }
 
-            Log.d("JSInterface.readCache", "data size: ${data.length / 1024 / 1024}MB")
+            Sentry.captureMessage("reading cache, data size: ${data.length / 1024 / 1024}MB", SentryLevel.DEBUG)
             return data
         }
     }
@@ -153,17 +155,19 @@ class MainActivity : AppCompatActivity() {
     private fun onLoadFileResult(result: ActivityResult) {
         if (result.resultCode != Activity.RESULT_OK) {
             Toast.makeText(this, "文件加载失败", Toast.LENGTH_SHORT).show()
+            Sentry.captureMessage("file load failed: activity result code is not ok", SentryLevel.INFO)
             return
         }
         val (ok, dataUri) = requireDataUriNotNull(result.data)
         if (!ok) {
             Toast.makeText(this, "文件加载失败", Toast.LENGTH_SHORT).show()
+            Sentry.captureMessage("file load failed: activity result data is null", SentryLevel.INFO)
             return
         }
         // read uri
         val input = contentResolver.openInputStream(dataUri!!)
         if (input == null) {
-            Log.e("onLoadFileResult", "input stream is null")
+            Sentry.captureMessage("file load failed: input stream is null", SentryLevel.ERROR)
             Toast.makeText(this, "文件加载失败", Toast.LENGTH_SHORT).show()
             return
         }
@@ -176,6 +180,7 @@ class MainActivity : AppCompatActivity() {
             readResult = Base64.encode(bytes, Base64.NO_WRAP)
         }
         val resultStr = readResult.toString(Charsets.UTF_8)
+        Toast.makeText(this, "文件加载成功", Toast.LENGTH_SHORT).show()
         callFileLoadedInJS(resultStr)
     }
 
@@ -195,12 +200,14 @@ class MainActivity : AppCompatActivity() {
 
     private fun onSaveFileResult(result: ActivityResult) {
         if (result.resultCode != Activity.RESULT_OK) {
+            Sentry.captureMessage("file save failed: activity result is not ok", SentryLevel.INFO)
             Toast.makeText(this, "文件保存失败", Toast.LENGTH_SHORT).show()
             return
         }
 
         val (ok, dataUri) = requireDataUriNotNull(result.data)
         if (!ok) {
+            Sentry.captureMessage("file save failed: activity result data is null", SentryLevel.INFO)
             Toast.makeText(this, "文件保存失败", Toast.LENGTH_SHORT).show()
             return
         }
@@ -208,13 +215,13 @@ class MainActivity : AppCompatActivity() {
         // read uri
         val output = contentResolver.openOutputStream(dataUri!!)
         if (output == null) {
-            Log.e("onLoadFileResult", "input stream is null")
+            Sentry.captureMessage("file save failed: input stream is null", SentryLevel.ERROR)
             Toast.makeText(this, "文件保存失败", Toast.LENGTH_SHORT).show()
             return
         }
         output.write(dataToSave.toByteArray(Charsets.UTF_8))
         output.close()
 
-        Toast.makeText(this, "文件加载成功", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "文件保存成功", Toast.LENGTH_SHORT).show()
     }
 }

@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("io.sentry.android.gradle") version "3.11.1"
 }
 
 // 根据日期获取版本号，日期位置是上海，这样生成版本号的方法可以一直用 24 年
@@ -59,8 +60,6 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = true
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             signingConfig = signingConfigs.getByName("release")
         }
     }
