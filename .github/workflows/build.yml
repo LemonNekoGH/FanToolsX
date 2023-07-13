@@ -54,6 +54,9 @@ jobs:
         with:
           node-version: '16'
 
+      - name: Set version name for app access
+        run: node update_version.js ${{ github.ref_name }}
+
       - name: Install pnpm
         uses: pnpm/action-setup@v2
         id: pnpm-install
