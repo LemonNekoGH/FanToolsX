@@ -12,7 +12,6 @@ export function saveFile(file: Blob, fileName: string) {
  * 在 Android 上调用时并不会马上返回值，而是调用回调，所以无法直接通过 emit 来提醒父组件图片更新了，只能用全局变量来告诉回调，应该更新哪个值
  */
 export function loadFileFromAndroid(accept: 'image/*' | '*.akf,*.json', key: LoadingKey): string {
-  window.Android.log(`keyToLoad: ${key}`)
   window.Android.loadingKey = key
   return window.Android.loadFile(accept)
 }

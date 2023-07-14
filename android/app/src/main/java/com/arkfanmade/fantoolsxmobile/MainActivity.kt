@@ -56,6 +56,7 @@ class MainActivity : AppCompatActivity() {
         private val dataStore: DataStore<Preferences>
     ) {
         private val cacheKey = stringPreferencesKey("content")
+        private val logLevel = arrayOf(SentryLevel.DEBUG, SentryLevel.INFO, SentryLevel.WARNING, SentryLevel.ERROR)
 
         @JavascriptInterface
         fun loadFile(accept: String) {
@@ -88,8 +89,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         @JavascriptInterface
-        fun log(text: String) {
-            Sentry.captureMessage("log from web content: $text", SentryLevel.INFO)
+        fun log(text: String, level: Int) {
+            Sentry.captureMessage("log from web content: $text", logLevel[level])
         }
 
         @JavascriptInterface
@@ -180,6 +181,10 @@ class MainActivity : AppCompatActivity() {
             readResult = Base64.encode(bytes, Base64.NO_WRAP)
         }
         val resultStr = readResult.toString(Charsets.UTF_8)
+        // send file content
+        Sentry.captureMessage(if (dataType == "image/*") "image loaded" else "file loaded") {
+            it.setExtra("Loaded file content", resultStr)
+        }
         Toast.makeText(this, "文件加载成功", Toast.LENGTH_SHORT).show()
         callFileLoadedInJS(resultStr)
     }

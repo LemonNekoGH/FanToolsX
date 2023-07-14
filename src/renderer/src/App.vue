@@ -11,6 +11,7 @@ import { loadFile, saveFile } from './utils/file'
 import { useHelper, useState } from './store'
 import { isOnAndroid } from './utils/platform'
 import OperatorPreview from './components/operator-preview.vue'
+import { logger } from './utils/logger'
 
 const state = useState()
 const helper = useHelper()
@@ -103,7 +104,6 @@ async function load() {
 }
 
 function fileLoadedFromAndroid(data: string) {
-  window.Android.log(`file loaded, key: ${window.Android.loadingKey}`)
   if (window.Android.loadingKey === '')
     return
   if (window.Android.loadingKey === 'entire') {
@@ -161,22 +161,27 @@ if (isOnAndroid())
   window.Android.fileLoadedFromAndroid = fileLoadedFromAndroid
 
 function fileLoaded(data: string) {
-  const parsedData = JSON.parse(data) as State
-  state.state = JSON.parse(data) as State
-  // Unity 中没有 Data URL, 导入时需要为图片加上前缀
-  state.state.AbilityImageForWeb = `data:image/*;base64,${parsedData.AbilityData[7]}`
-  state.state.BasicDataImgForWeb = `data:image/*;base64,${parsedData.BasicdataText[0]}`
-  state.state.ProfLogoForWeb = `data:image/*;base64,${parsedData.ProfDat[0]}`
-  state.state.ProfAvatarForWeb = `data:image/*;base64,${parsedData.ProfDat[1]}`
-  state.state.StoryImgForWeb = `data:image/*;base64,${parsedData.Story[0]}`
-  state.state.StoryImg2ForWeb = `data:image/*;base64,${parsedData.Story[1]}`
-  state.state.Skill1PicB64ForWeb = `data:image/*;base64,${parsedData.Skill1PicB64}`
-  state.state.Skill2PicB64ForWeb = `data:image/*;base64,${parsedData.Skill2PicB64}`
-  state.state.Skill3PicB64ForWeb = `data:image/*;base64,${parsedData.Skill3PicB64}`
-  state.state.Mod1IconForWeb = `data:image/*;base64,${parsedData.Mod1[0]}`
-  state.state.Mod1ImgForWeb = `data:image/*;base64,${parsedData.Mod1[1]}`
-  state.state.Mod2IconForWeb = `data:image/*;base64,${parsedData.Mod2[0]}`
-  state.state.Mod2ImgForWeb = `data:image/*;base64,${parsedData.Mod2[1]}`
+  try {
+    const parsedData = JSON.parse(data) as State
+    state.state = parsedData
+    // Unity 中没有 Data URL, 导入时需要为图片加上前缀
+    state.state.AbilityImageForWeb = `data:image/*;base64,${parsedData.AbilityData[7]}`
+    state.state.BasicDataImgForWeb = `data:image/*;base64,${parsedData.BasicdataText[0]}`
+    state.state.ProfLogoForWeb = `data:image/*;base64,${parsedData.ProfDat[0]}`
+    state.state.ProfAvatarForWeb = `data:image/*;base64,${parsedData.ProfDat[1]}`
+    state.state.StoryImgForWeb = `data:image/*;base64,${parsedData.Story[0]}`
+    state.state.StoryImg2ForWeb = `data:image/*;base64,${parsedData.Story[1]}`
+    state.state.Skill1PicB64ForWeb = `data:image/*;base64,${parsedData.Skill1PicB64}`
+    state.state.Skill2PicB64ForWeb = `data:image/*;base64,${parsedData.Skill2PicB64}`
+    state.state.Skill3PicB64ForWeb = `data:image/*;base64,${parsedData.Skill3PicB64}`
+    state.state.Mod1IconForWeb = `data:image/*;base64,${parsedData.Mod1[0]}`
+    state.state.Mod1ImgForWeb = `data:image/*;base64,${parsedData.Mod1[1]}`
+    state.state.Mod2IconForWeb = `data:image/*;base64,${parsedData.Mod2[0]}`
+    state.state.Mod2ImgForWeb = `data:image/*;base64,${parsedData.Mod2[1]}`
+  }
+  catch (e) {
+    logger.error(`error in fileLoaded: ${(e as Error).message}, at App.vue`)
+  }
 
   // 关闭警告框
   closeAlert()
