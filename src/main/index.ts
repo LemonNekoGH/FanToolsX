@@ -1,7 +1,10 @@
 import { join } from 'node:path'
-import { BrowserWindow, app, shell } from 'electron'
+import { BrowserWindow, app, ipcMain, shell } from 'electron'
 import { electronApp, is, optimizer } from '@electron-toolkit/utils'
+import * as Sentry from '@sentry/electron'
 import icon from '../renderer/src/assets/logo.svg'
+
+Sentry.init({ dsn: 'https://98561ce0f3904f3b88db131bf863e3fe@o4505521960714240.ingest.sentry.io/4505527302291456' })
 
 function createWindow(): void {
   // Create the browser window.
@@ -21,10 +24,7 @@ function createWindow(): void {
     mainWindow.show()
   })
 
-  mainWindow.webContents.setWindowOpenHandler((details) => {
-    shell.openExternal(details.url)
-    return { action: 'deny' }
-  })
+  mainWindow.webContents.openDevTools()
 
   // HMR for renderer base on electron-vite cli.
   // Load the remote URL for development or the local html file for production.
@@ -39,6 +39,16 @@ function createWindow(): void {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
+  ipcMain.on('open-in-browser', (_, url) => {
+    Sentry.captureMessage(`request to open url: ${url}`, 'debug')
+    shell.openExternal(url).catch((e) => {
+      Sentry.captureException(e, (ctx) => {
+        ctx.setExtra('url', url)
+        return ctx
+      })
+    })
+  })
+
   // Set app user model id for windows
   electronApp.setAppUserModelId('com.arkfanmade')
 

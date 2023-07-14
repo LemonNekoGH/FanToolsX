@@ -9,9 +9,10 @@ import NavMenu from './components/menu.vue'
 
 import { loadFile, saveFile } from './utils/file'
 import { useHelper, useState } from './store'
-import { isOnAndroid } from './utils/platform'
+import { isOnAndroid, isOnElectron } from './utils/platform'
 import OperatorPreview from './components/operator-preview.vue'
 import { logger } from './utils/logger'
+import { checkUpdates } from './utils/update-checker'
 
 const state = useState()
 const helper = useHelper()
@@ -200,6 +201,36 @@ async function readCache(): Promise<string> {
   return cache || ''
 }
 
+const versionToUpdate = ref('')
+const versionToUpdateUrl = ref('')
+
+async function tryCheckUpdate() {
+  if (!isOnAndroid() && !isOnElectron() && !window.VERSION)
+    return
+
+  try {
+    const result = await checkUpdates()
+    if (!result)
+      return
+
+    versionToUpdate.value = result[0]
+    versionToUpdateUrl.value = result[1]
+  }
+  catch (e) {
+    helper.showSnackbar('检查更新时出错')
+    logger.error(`failed to check update: ${(e as Error).message}`)
+  }
+}
+
+async function goUpdatePage(url: string) {
+  if (isOnElectron()) {
+    window.ElectronAPI.openInBrowser(url)
+    return
+  }
+  if (isOnAndroid())
+    window.Android.openInBrowser(url)
+}
+
 // 每 5 秒缓存一次到 localStorage
 useIntervalFn(() => save(true), 5000)
 
@@ -208,6 +239,8 @@ onMounted(async () => {
   // 缓存
   if (cached)
     state.state = JSON.parse(cached) as State
+  // 检查更新
+  tryCheckUpdate()
 })
 </script>
 
@@ -266,6 +299,24 @@ onMounted(async () => {
                 取消
               </VBtn>
               <VBtn color="error" @click="dialogModel.type === 'load' ? load() : reset()">
+                确认
+              </VBtn>
+            </VCardActions>
+          </VCard>
+        </VDialog>
+        <!-- 加载和清空数据警告框 -->
+        <VDialog :model-value="!!versionToUpdate" max-width="600px">
+          <VCard>
+            <VCardItem>
+              <VCardTitle>更新</VCardTitle>
+            </VCardItem>
+            <VCardText>检查到新版本 <code>{{ versionToUpdate }}</code>，是否要下载？</VCardText>
+            <VCardActions>
+              <VSpacer />
+              <VBtn color="primary" @click="versionToUpdate = '';versionToUpdateUrl = ''">
+                取消
+              </VBtn>
+              <VBtn color="error" @click="goUpdatePage(versionToUpdateUrl)">
                 确认
               </VBtn>
             </VCardActions>

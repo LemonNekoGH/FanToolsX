@@ -47,7 +47,7 @@ createApp(App)
   .mount('#app')
 
 // should not block window close event when platform is android or electron
-if (!isOnAndroid() && !isOnElectron()) {
+if (!isOnAndroid() && !isOnElectron() && !window.VERSION) {
   window.onbeforeunload = (e) => {
     e.preventDefault()
     return false

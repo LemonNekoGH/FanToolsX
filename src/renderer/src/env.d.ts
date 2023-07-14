@@ -112,9 +112,13 @@ declare interface Window {
     readCache(): string // 读取 DataStore 中的缓存
     log(text: string, level: LogLevel) // 用来在 Android 上打日志
     fileLoadedFromAndroid(data: string) // Android 在加载完文件后会调用的回调
+    openInBrowser(url: string) // 在浏览器中打开链接
     loadingKey: LoadingKey // 回调会通过这里知道应该更新哪里的值
   }
   VERSION: string
+  ElectronAPI: {
+    openInBrowser(url: string)
+  }
 }
 
 declare interface ImportMetaEnv {

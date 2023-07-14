@@ -1,23 +1,27 @@
 {
   "name": "FanToolsX",
-  "version": "0.1.0",
+  "version": "0.0.0",
   "private": true,
   "main": "./dist_electron/main/",
   "scripts": {
     "dev:web": "cd ./src/renderer/ && vite --host 0.0.0.0 --port 5678",
-    "dev:windows": "electron-vite dev",
+    "dev:android": "pnpm build:web --mode ANDROID && cd android && ./gradlew :app:installDebug",
+    "dev:electron": "electron-vite dev",
     "build:web": "cd ./src/renderer/ && vite build",
-    "build:windows": "electron-vite build --mode ELECTRON && electron-builder --win",
+    "build:windows": "electron-vite build --mode ELECTRON && electron-builder --win --publish never",
     "build:mac": "electron-vite build --mode ELECTRON && electron-builder --mac --publish never",
     "build:android:release": "pnpm build:web --mode ANDROID && cd android && ./gradlew :app:assembleRelease",
     "clean:android": "cd android && ./gradlew clean",
-    "dev:android": "pnpm build:web --mode ANDROID && cd android && ./gradlew :app:installDebug",
     "dev:android:for_windows": "pnpm build:web --mode ANDROID && cd android && gradlew :app:installDebug"
   },
   "dependencies": {
     "@electron-toolkit/utils": "^1.0.2",
+    "@sentry/electron": "^4.8.0",
     "@vueuse/core": "^10.2.1",
+    "axios": "^1.4.0",
+    "compare-versions": "^6.0.0",
     "dayjs": "^1.11.8",
+    "fast-xml-parser": "^4.2.5",
     "localforage": "^1.10.0",
     "pinia": "^2.1.4",
     "vue": "^3.3.4",
@@ -37,12 +41,15 @@
     "typescript": "^5.1.5",
     "unocss": "^0.53.4",
     "vite": "^4.3.9",
-    "vite-plugin-pages": "^0.31.0"
+    "vite-plugin-pages": "^0.31.0",
+    "vitest": "^0.33.0"
   },
   "build": {
     "appId": "com.arkfanmade.fantoolsx",
     "productName": "FanToolsX",
-    "files": ["dist_electron"],
+    "files": [
+      "dist_electron"
+    ],
     "mac": {
       "icon": "./public/mac/fantoolsx_mac.icns",
       "target": [

@@ -2,6 +2,7 @@ package com.arkfanmade.fantoolsxmobile
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -53,7 +54,8 @@ class MainActivity : AppCompatActivity() {
         private val saveFile: ActivityResultLauncher<Intent>,
         private val setDataType: (String) -> Unit,
         private val setDataToSave: (String) -> Unit,
-        private val dataStore: DataStore<Preferences>
+        private val dataStore: DataStore<Preferences>,
+        private val ctx: Context,
     ) {
         private val cacheKey = stringPreferencesKey("content")
         private val logLevel = arrayOf(SentryLevel.DEBUG, SentryLevel.INFO, SentryLevel.WARNING, SentryLevel.ERROR)
@@ -116,6 +118,12 @@ class MainActivity : AppCompatActivity() {
             Sentry.captureMessage("reading cache, data size: ${data.length / 1024 / 1024}MB", SentryLevel.DEBUG)
             return data
         }
+
+        @JavascriptInterface
+        fun openInBrowser(url: String) {
+            Sentry.captureMessage("request to open url: $url", SentryLevel.DEBUG)
+            ctx.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+        }
     }
 
     private val dataStore by preferencesDataStore("cache")
@@ -141,7 +149,7 @@ class MainActivity : AppCompatActivity() {
         val saveFile = registerForActivityResult(ActivityResultContracts.StartActivityForResult(), this::onSaveFileResult)
         // load
         binding.webView.settings.javaScriptEnabled = true
-        binding.webView.addJavascriptInterface(JSInterface(loadFile, saveFile, { dataType = it }, { dataToSave = it }, dataStore), "Android")
+        binding.webView.addJavascriptInterface(JSInterface(loadFile, saveFile, { dataType = it }, { dataToSave = it }, dataStore, this), "Android")
         binding.webView.loadUrl("https://appassets.androidplatform.net/assets/index.html")
     }
 
