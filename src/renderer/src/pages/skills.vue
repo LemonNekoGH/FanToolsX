@@ -18,7 +18,7 @@ function levelName(level: number) {
 
 const display = useDisplay()
 const skillFillType = ['自动回复', '攻击回复', '受击回复', '被动'] as const
-const skillFireType = ['自动', '手动'] as const
+const skillFireType = ['手动', '自动'] as const
 type SkillFillType = (typeof skillFillType)[number]
 type SkillFireType = (typeof skillFireType)[number]
 
