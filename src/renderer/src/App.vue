@@ -323,8 +323,13 @@ onMounted(async () => {
           </VCard>
         </VDialog>
         <!-- 提示消息 -->
-        <VSnackbar :model-value="helper.snackbar.show" color="primary" @update:model-value="helper.closeSnackbar">
+        <VSnackbar :model-value="helper.snackbar.show" absolute color="primary" @update:model-value="helper.snackbarModelValueUpdate">
           {{ helper.snackbar.text }}
+          <template #actions>
+            <VBtn @click="helper.snackbarModelValueUpdate(false)">
+              关闭
+            </VBtn>
+          </template>
         </VSnackbar>
       </VLayout>
     </VApp>

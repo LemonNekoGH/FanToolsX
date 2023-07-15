@@ -334,7 +334,7 @@ export const useHelper = defineStore('helper', () => {
     text: '',
   })
 
-  const closeSnackbar = (val: boolean) => {
+  const snackbarModelValueUpdate = (val: boolean) => {
     snackbar.value.show = val
   }
 
@@ -348,6 +348,6 @@ export const useHelper = defineStore('helper', () => {
   return {
     snackbar,
     showSnackbar,
-    closeSnackbar,
+    snackbarModelValueUpdate,
   }
 })
