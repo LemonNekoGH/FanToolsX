@@ -1,5 +1,12 @@
 import { isOnAndroid } from './platform'
 
+enum LogLevel {
+  DEBUG,
+  INFO,
+  WARN,
+  ERROR,
+}
+
 class Logger {
   debug(msg: string) {
     this.log(msg, LogLevel.DEBUG)

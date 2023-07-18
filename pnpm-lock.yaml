@@ -3,6 +3,7 @@ lockfileVersion: 5.4
 specifiers:
   '@antfu/eslint-config': ^0.39.6
   '@electron-toolkit/utils': ^1.0.2
+  '@lemonneko/crop-empty-pixels': 0.1.0-rc.3
   '@mdi/font': ^7.2.96
   '@sentry/electron': ^4.8.0
   '@types/node': ^20.3.3
@@ -16,6 +17,7 @@ specifiers:
   electron-vite: ^1.0.24
   eslint: ^8.43.0
   fast-xml-parser: ^4.2.5
+  html-to-image: ^1.11.11
   less: ^4.1.3
   localforage: ^1.10.0
   pinia: ^2.1.4
@@ -30,12 +32,14 @@ specifiers:
 
 dependencies:
   '@electron-toolkit/utils': 1.0.2_electron@25.2.0
+  '@lemonneko/crop-empty-pixels': 0.1.0-rc.3
   '@sentry/electron': 4.8.0
   '@vueuse/core': 10.2.1_vue@3.3.4
   axios: 1.4.0
   compare-versions: 6.0.0
   dayjs: 1.11.8
   fast-xml-parser: 4.2.5
+  html-to-image: 1.11.11
   localforage: 1.10.0
   pinia: 2.1.4_typescript@5.1.5+vue@3.3.4
   vue: 3.3.4
@@ -827,6 +831,10 @@ packages:
       '@jridgewell/resolve-uri': 3.1.0
       '@jridgewell/sourcemap-codec': 1.4.14
     dev: true
+
+  /@lemonneko/crop-empty-pixels/0.1.0-rc.3:
+    resolution: {integrity: sha512-4+ilguyNi41o3a9xTood461r1anZ82QrrS1a5irUdz9M1v3aXDQADvv3eP4MEeILr7cpTxx5wKor5s3fPAYABg==}
+    dev: false
 
   /@malept/cross-spawn-promise/1.1.1:
     resolution: {integrity: sha512-RTBGWL5FWQcg9orDOCcp4LvItNzUPcyEU9bwaeJX0rJ1IQxzucC48Y0/sQLp/g6t99IQgAlGIaesJS+gTn7tVQ==}
@@ -3626,6 +3634,10 @@ packages:
     dependencies:
       lru-cache: 6.0.0
     dev: true
+
+  /html-to-image/1.11.11:
+    resolution: {integrity: sha512-9gux8QhvjRO/erSnDPv28noDZcPZmYE7e1vFsBLKLlRlKDSqNJYebj6Qz1TGd5lsRV+X+xYyjCKjuZdABinWjA==}
+    dev: false
 
   /htmlparser2/8.0.2:
     resolution: {integrity: sha512-GYdjWKDkbRLkZ5geuHs5NY1puJ+PXwP7+fHPRz06Eirsb9ugf6d8kkXav6ADhcODhFFPMIXyxkxSuMf3D6NCFA==}
