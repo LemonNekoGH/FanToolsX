@@ -92,7 +92,7 @@ async function save(cache = false) {
     return
   }
 
-  const blob = new Blob([data], { type: 'application/json' })
+  const blob = new Blob([data], { type: 'application/octet-stream' })
   const fileName = 'operator.akf'
   saveFile(blob, fileName)
 }
