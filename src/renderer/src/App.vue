@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { computed, onMounted, ref } from 'vue'
 import dayjs from 'dayjs'
-import { VApp, VAppBar, VBtn, VCard, VCardActions, VCardItem, VCardText, VCardTitle, VDialog, VLayout, VMain, VSnackbar, VSpacer, VThemeProvider, VToolbar, VToolbarTitle } from 'vuetify/components'
+import { VApp, VAppBar, VBtn, VCard, VCardActions, VCardItem, VCardText, VCardTitle, VDialog, VLayout, VMain, VSnackbar, VSpacer, VThemeProvider, VToolbar, VToolbarTitle, VTooltip } from 'vuetify/components'
 import { useDisplay } from 'vuetify/lib/framework.mjs'
 import { useIntervalFn } from '@vueuse/core'
 import * as localforage from 'localforage'
@@ -271,10 +271,26 @@ onMounted(async () => {
             </div>
             <!-- 按钮 -->
             <div v-if="!display.mobile.value">
-              <VBtn icon="mdi-trash-can" @click="showResetAlert()" />
-              <VBtn icon="mdi-folder-open" @click="showLoadAlert()" />
-              <VBtn icon="mdi-download" @click="save()" />
-              <VBtn icon="mdi-camera" @click="showOperatorPreview = true" />
+              <VTooltip text="清空" location="bottom">
+                <template #activator="{ props }">
+                  <VBtn v-bind="props" icon="mdi-trash-can" @click="showResetAlert()" />
+                </template>
+              </VTooltip>
+              <VTooltip text="导入" location="bottom">
+                <template #activator="{ props }">
+                  <VBtn v-bind="props" icon="mdi-folder-open" @click="showLoadAlert()" />
+                </template>
+              </VTooltip>
+              <VTooltip text="导出" location="bottom">
+                <template #activator="{ props }">
+                  <VBtn v-bind="props" icon="mdi-download" @click="save()" />
+                </template>
+              </VTooltip>
+              <VTooltip text="预览" location="bottom">
+                <template #activator="{ props }">
+                  <VBtn v-bind="props" icon="mdi-camera" @click="showOperatorPreview = true" />
+                </template>
+              </VTooltip>
             </div>
           </VToolbar>
         </VAppBar>

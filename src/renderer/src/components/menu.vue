@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { VBtn, VDivider, VList, VListItem, VNavigationDrawer } from 'vuetify/components'
+import { VDivider, VList, VListItem, VNavigationDrawer } from 'vuetify/components'
 import { useDisplay } from 'vuetify/framework'
 import { storeToRefs } from 'pinia'
 import { useState } from '../store'
@@ -87,14 +87,16 @@ function updateModelValue(val: boolean) {
         <p>上次缓存</p>
         <code>{{ lastCacheTime }}</code>
       </div>
-      <!-- 按钮 -->
-      <div class="flex justify-between mt-4">
-        <VBtn icon="mdi-trash-can" variant="outlined" color="primary" @click="emit('reset')" />
-        <VBtn icon="mdi-folder-open" variant="outlined" color="primary" @click="emit('load')" />
-        <VBtn icon="mdi-download" variant="outlined" color="primary" @click="emit('save')" />
-        <VBtn icon="mdi-camera" variant="outlined" color="primary" @click="emit('preview')" />
-      </div>
     </div>
+    <template v-if="display.mobile.value">
+      <VDivider />
+      <VList nav color="primary">
+        <VListItem prepend-icon="mdi-trash-can" title="清空" density="compact" @click="emit('reset')" />
+        <VListItem prepend-icon="mdi-folder-open" title="导入" density="compact" @click="emit('load')" />
+        <VListItem prepend-icon="mdi-download" title="导出" density="compact" @click="emit('save')" />
+        <VListItem prepend-icon="mdi-camera" title="预览" density="compact" @click="emit('preview')" />
+      </VList>
+    </template>
     <div v-if="display.mobile.value">
       <VDivider />
       <div class="text-gray text-12px p-8px">
