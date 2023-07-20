@@ -114,6 +114,7 @@ declare interface Window {
     fileLoadedFromAndroid(data: string) // Android 在加载完文件后会调用的回调
     openInBrowser(url: string) // 在浏览器中打开链接
     loadingKey: LoadingKey // 回调会通过这里知道应该更新哪里的值
+    onWebContentLoad(): string // 当页面加载完成时调用，如果得到返回值不为空，就设置进去
   }
   VERSION: string
   ElectronAPI: {

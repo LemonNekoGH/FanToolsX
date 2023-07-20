@@ -241,6 +241,12 @@ onMounted(async () => {
     state.state = JSON.parse(cached) as State
   // 检查更新
   tryCheckUpdate()
+  // 告诉安卓那边自己加载好了
+  if (isOnAndroid()) {
+    const result = window.Android.onWebContentLoad()
+    if (result)
+      fileLoaded(result)
+  }
 })
 </script>
 
