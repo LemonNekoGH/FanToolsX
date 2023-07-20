@@ -4,12 +4,12 @@ import { storeToRefs } from 'pinia'
 import { computed, ref } from 'vue'
 import * as htmlToImage from 'html-to-image'
 import dayjs from 'dayjs'
-import crop from '@lemonneko/crop-empty-pixels'
-import { useHelper, useState } from '../store'
-import { getVersionName } from '../utils/platform'
+import { useState } from '../store'
+import { getVersionName, isOnAndroid } from '../utils/platform'
 import { logger } from '../utils/logger'
 import { saveFile } from '../utils/file'
 import Main from './operator-preview-main.vue'
+import crop from '@lemonneko/crop-empty-pixels'
 
 defineProps<{
   show: boolean
@@ -18,7 +18,6 @@ const emit = defineEmits<{
   (e: 'close'): void
 }>()
 
-const helper = useHelper()
 const { state } = storeToRefs(useState())
 const { width, height } = useWindowSize()
 const rotated = computed(() => width.value / height.value < 1)
@@ -48,16 +47,29 @@ async function doScreenShot() {
   try {
     const rawCanvas = await htmlToImage.toCanvas(root.value!)
     const croppedCanvas = crop(rawCanvas)
-    const resultBlobNew = await new Promise<Blob | null>((resolve) => {
-      croppedCanvas.toBlob((b) => {
-        resolve(b)
-      }, 'image/png')
-    })
-    await saveFile(resultBlobNew!, `${state.value.BasicdataText[1]}_screenshot_${dayjs(Date.now()).format('YYYYMMDD_HHmmss')}.png`)
+    if (!isOnAndroid()) {
+      const resultBlobNew = await new Promise<Blob | null>((resolve) => {
+        croppedCanvas.toBlob((b) => {
+          resolve(b)
+        }, 'image/png')
+      })
+      await saveFile(resultBlobNew!, `${state.value.BasicdataText[1]}_screenshot_${dayjs(Date.now()).format('YYYYMMDD_HHmmss')}.png`)
+      return
+    }
+    const resultDataUrl = croppedCanvas.toDataURL().split(',')[1]
+    window.Android.saveImage(resultDataUrl)
   }
   catch (e) {
     logger.error(`screenshot failed: ${(e as Error).message}`)
   }
+}
+
+function back() {
+  if (nowShowing.value !== NowShowing.MAIN) {
+    nowShowing.value = NowShowing.MAIN
+    return
+  }
+  emit('close')
 }
 </script>
 
@@ -80,11 +92,11 @@ async function doScreenShot() {
       <!-- 工具条 -->
       <div class="flex absolute top-20px left-24px">
         <div class="flex btn-shadow bg-black">
-          <div class="bg-[#313131] h-76px w-218px btn btn-back" @click="nowShowing = NowShowing.MAIN;emit('close')" />
+          <div class="bg-[#313131] h-76px w-218px btn btn-back" @click="back" />
           <div class="bg-[#313131] h-76px w-313px btn btn-overview ml-5px" />
         </div>
         <div class="flex btn-shadow bg-black ml-20px">
-          <div class="bg-[#313131] h-76px w-200px btn btn-info" @click="helper.showSnackbar('🚧 施工中')" />
+          <div class="bg-[#313131] h-76px w-200px btn btn-info" @click="nowShowing = NowShowing.DETAILS" />
           <div class="bg-[#313131] h-76px w-200px btn btn-screenshot ml-5px flex justify-around items-center p-20px" @click="doScreenShot">
             <div class="btn-screenshot-icon w-50px h-50px" />
             <div class="text-white text-30px pt-8px">

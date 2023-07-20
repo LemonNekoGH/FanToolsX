@@ -108,6 +108,7 @@ declare interface Window {
   Android: {
     loadFile(accept: 'image/*' | '*.akf,*.json'): string
     saveFile(data: string)
+    saveImage(data: string)
     writeCache(data: String) // 把缓存写入 Android 的 DataStore，避开 localStorage 的存储限制
     readCache(): string // 读取 DataStore 中的缓存
     log(text: string, level: LogLevel) // 用来在 Android 上打日志

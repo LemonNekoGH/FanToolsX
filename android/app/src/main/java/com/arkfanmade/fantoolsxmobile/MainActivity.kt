@@ -67,6 +67,7 @@ class MainActivity : AppCompatActivity() {
         private val saveFile: ActivityResultLauncher<Intent>,
         private val setDataType: (String) -> Unit,
         private val setDataToSave: (String) -> Unit,
+        private val setImageToSave: (ByteArray) -> Unit,
         private val onFileContentNotSupport: () -> Unit,
         private val dataStore: DataStore<Preferences>,
         private val ctx: Context,
@@ -103,6 +104,17 @@ class MainActivity : AppCompatActivity() {
                 addCategory(Intent.CATEGORY_OPENABLE)
                 type = "*/*"
                 putExtra(Intent.EXTRA_TITLE, "operator.akf")
+            })
+        }
+
+        @JavascriptInterface
+        fun saveImage(data: String) {
+            setImageToSave(Base64.decode(data, Base64.NO_WRAP))
+            Sentry.captureMessage("request to save file", SentryLevel.INFO)
+            saveFile.launch(Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+                addCategory(Intent.CATEGORY_OPENABLE)
+                type = "image/png"
+                putExtra(Intent.EXTRA_TITLE, "screenshot.png")
             })
         }
 
@@ -169,8 +181,14 @@ class MainActivity : AppCompatActivity() {
             }
 
             if (data == "") {
-                Log.w("onWebContentLoad", "Application started, but data is empty, launcher: ${intent.`package`}")
-                Sentry.captureMessage("Application started, but data is empty, launcher: ${intent.`package`}", SentryLevel.WARNING)
+                Log.w(
+                    "onWebContentLoad",
+                    "Application started, but data is empty, launcher: ${intent.`package`}"
+                )
+                Sentry.captureMessage(
+                    "Application started, but data is empty, launcher: ${intent.`package`}",
+                    SentryLevel.WARNING
+                )
                 Toast.makeText(ctx, "意外的被其它应用启动了", Toast.LENGTH_SHORT).show()
                 onFileContentNotSupport()
                 return ""
@@ -185,6 +203,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private var dataType = "*/*"
     private var dataToSave = ""
+    private var imageToSave: ByteArray? = null
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -216,6 +235,7 @@ class MainActivity : AppCompatActivity() {
                 saveFile,
                 { dataType = it },
                 { dataToSave = it },
+                { imageToSave = it },
                 { finishAffinity() },
                 dataStore,
                 this,
@@ -313,7 +333,12 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, "文件保存失败", Toast.LENGTH_SHORT).show()
             return
         }
-        output.write(dataToSave.toByteArray(Charsets.UTF_8))
+
+        if (imageToSave != null) {
+            output.write(imageToSave) // write image
+        } else {
+            output.write(dataToSave.toByteArray(Charsets.UTF_8)) // write data
+        }
         output.close()
 
         Toast.makeText(this, "文件保存成功", Toast.LENGTH_SHORT).show()
