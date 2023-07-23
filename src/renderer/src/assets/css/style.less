@@ -60,3 +60,11 @@ a {
 * {
   cursor: url(../img/cur.png), auto !important;
 }
+
+.no-scroll-bar {
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

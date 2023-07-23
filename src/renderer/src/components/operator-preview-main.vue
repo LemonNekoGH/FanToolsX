@@ -2,28 +2,18 @@
 import { storeToRefs } from 'pinia'
 import { useHelper, useState } from '../store'
 
-import professionWarrior from '../assets/img/operator-preview/icon_profession_warrior_large.png'
-import professionSniper from '../assets/img/operator-preview/icon_profession_sniper_large.png'
-import professionSpecial from '../assets/img/operator-preview/icon_profession_special_large.png'
-import professionPioneer from '../assets/img/operator-preview/icon_profession_pioneer_large.png'
-import professionMedic from '../assets/img/operator-preview/icon_profession_medic_large.png'
-import professionCaster from '../assets/img/operator-preview/icon_profession_caster_large.png'
-import professionSupport from '../assets/img/operator-preview/icon_profession_support_large.png'
-import professionTank from '../assets/img/operator-preview/icon_profession_tank_large.png'
-
 import stars1 from '../assets/img/operator-preview/stars_1.png'
 import stars2 from '../assets/img/operator-preview/stars_2.png'
 import stars3 from '../assets/img/operator-preview/stars_3.png'
 import stars4 from '../assets/img/operator-preview/stars_4.png'
 import stars5 from '../assets/img/operator-preview/stars_5.png'
 import stars6 from '../assets/img/operator-preview/stars_6.png'
+import { professionIcons } from '../utils/static-data'
 import Skill from './skill.vue'
 
 const { state } = storeToRefs(useState())
 const helper = useHelper()
 
-// 职业图标
-const professionIcons = [professionWarrior, professionSniper, professionSpecial, professionPioneer, professionMedic, professionCaster, professionSupport, professionTank]
 // 星级图标
 const stars = [stars1, stars2, stars3, stars4, stars5, stars6]
 </script>
@@ -173,7 +163,7 @@ const stars = [stars1, stars2, stars3, stars4, stars5, stars6]
       <div class="h-135px w-135px !bg-no-repeat !bg-center !bg-contain opacity-50 border-2px border-white border-solid" :style="{ backgroundImage: `url(${professionIcons[Number.parseInt(state.BasedataA[7])]})` }" />
       <div class="h-131px w-214px bg-black/50 ml-12px flex flex-col justify-between pt-10px items-center rounded-6px">
         <div class="grid grid-cols-10 gap-2px">
-          <div v-for="(isTrue, index) in state.AttackRangeBol" :key="index" class="w-10px h-10px" :class="[isTrue ? 'bg-white' : 'border-1px border-white/60 border-solid']" />
+          <div v-for="(isTrue, index) in state.AttackRangeBol" :key="index" class="w-10px h-10px" :class="[isTrue ? 'bg-white' : 'border-1px border-white/20 border-solid']" />
         </div>
         <div>
           攻击范围

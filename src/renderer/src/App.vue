@@ -251,7 +251,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <VThemeProvider theme="default">
+  <VThemeProvider v-if="!showOperatorPreview" theme="default">
     <VApp full-height>
       <VLayout>
         <VAppBar class="w-full" elevation="0">
