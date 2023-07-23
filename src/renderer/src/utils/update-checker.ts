@@ -3,7 +3,7 @@ import { XMLParser } from 'fast-xml-parser'
 import axios from 'axios'
 import { isOnAndroid, isOnElectron } from './platform'
 
-export const s3BucketBase = 'https://fantoolsx-releases.s3.ap-northeast-1.amazonaws.com/'
+export const s3BucketBase = 'http://fantoolsx.releases.lemonneko.moe/'
 
 export type Versions = string[]
 

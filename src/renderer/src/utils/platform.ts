@@ -3,7 +3,7 @@ export function isOnAndroid() {
 }
 
 export function isOnElectron() {
-  return import.meta.env.MODE === 'ELECTRON'
+  return import.meta.env.MODE === 'ELECTRON' || window.ElectronAPI
 }
 
 export function getVersionName() {

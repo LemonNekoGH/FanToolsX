@@ -47,8 +47,8 @@ async function doScreenShot() {
   await new Promise(resolve => setTimeout(resolve, 250))
   try {
     const rawCanvas = await htmlToImage.toCanvas(root.value!)
-    const width = 1920 * scale.value * window.devicePixelRatio
-    const height = 1080 * scale.value * window.devicePixelRatio
+    const width = rotated.value ? 1080 * scale.value * window.devicePixelRatio : 1920 * scale.value * window.devicePixelRatio
+    const height = rotated.value ? 1920 * scale.value * window.devicePixelRatio : 1080 * scale.value * window.devicePixelRatio
     const top = (rawCanvas.height - height) / 2
     const left = (rawCanvas.width - width) / 2
     const croppedCanvas = document.createElement('canvas')
