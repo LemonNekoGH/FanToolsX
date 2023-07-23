@@ -126,7 +126,7 @@ jobs:
         with:
           aws_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.AWS_ACCESS_KEY}}
-          aws_bucket: fantoolsx-releases
+          aws_bucket: fantoolsx.releases.lemonneko.moe
           source_dir: './output'
           destination_dir: 'releases'
 
