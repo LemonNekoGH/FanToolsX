@@ -120,6 +120,12 @@ const professionsEn = ['GUARD', 'SNIPPER', 'SPECIALIST', '先锋', 'MEDIC', 'CAS
         <div class="w-full px-25px text-32px leading-54px text-black/90 mt-5px">
           {{ state.CompRec[6] }}
         </div>
+        <div v-if="state.CompRec[7]" class="w-full h-45px bg-[#313131] opacity-60 text-32px leading-40px text-white pl-25px mt-5px">
+          临床诊断分析
+        </div>
+        <div v-if="state.CompRec[7]" class="w-full px-25px text-32px leading-54px text-black/90 mt-5px">
+          {{ state.CompRec[7] }}
+        </div>
         <div v-if="state.ProfDat[2]" class="w-full h-45px bg-[#313131] opacity-60 text-32px leading-40px text-white pl-25px mt-5px">
           档案资料一
         </div>
