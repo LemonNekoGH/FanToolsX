@@ -3,7 +3,7 @@ import { computed, onMounted, ref } from 'vue'
 import dayjs from 'dayjs'
 import { VApp, VAppBar, VBtn, VCard, VCardActions, VCardItem, VCardText, VCardTitle, VDialog, VLayout, VMain, VSnackbar, VSpacer, VThemeProvider, VToolbar, VToolbarTitle, VTooltip } from 'vuetify/components'
 import { useDisplay } from 'vuetify/lib/framework.mjs'
-import { useIntervalFn } from '@vueuse/core'
+import { useEventListener, useIntervalFn } from '@vueuse/core'
 import * as localforage from 'localforage'
 import NavMenu from './components/menu.vue'
 
@@ -13,6 +13,7 @@ import { isOnAndroid, isOnElectron } from './utils/platform'
 import OperatorPreview from './components/operator-preview.vue'
 import { logger } from './utils/logger'
 import { checkUpdates } from './utils/update-checker'
+import { useBtnClickSound } from './utils/audio-player'
 
 const state = useState()
 const helper = useHelper()
@@ -21,6 +22,7 @@ const lastCacheTimeStr = computed(() => dayjs(lastCacheTime.value).format('YYYY-
 const display = useDisplay()
 const showNav = ref(!display.mobile.value)
 const showOperatorPreview = ref(false)
+const { playNormalClickSound, playConfirmClick, playBackClickSound } = useBtnClickSound()
 
 const dialogModel = ref<{
   type: 'reset' | 'load' | ''
@@ -248,6 +250,8 @@ onMounted(async () => {
       fileLoaded(result)
   }
 })
+
+useEventListener('click', playNormalClickSound)
 </script>
 
 <template>
@@ -317,10 +321,10 @@ onMounted(async () => {
             <VCardText>这会{{ dialogModel.type === 'load' ? '覆盖' : '清空' }}已有的数据，是否继续？</VCardText>
             <VCardActions>
               <VSpacer />
-              <VBtn color="primary" @click="closeAlert()">
+              <VBtn color="primary" @click.prevent="closeAlert();playBackClickSound()">
                 取消
               </VBtn>
-              <VBtn color="error" @click="dialogModel.type === 'load' ? load() : reset()">
+              <VBtn color="error" @click.prevent="dialogModel.type === 'load' ? load() : reset();playConfirmClick()">
                 确认
               </VBtn>
             </VCardActions>
@@ -335,10 +339,10 @@ onMounted(async () => {
             <VCardText>检查到新版本 <code>{{ versionToUpdate }}</code>，是否要下载？</VCardText>
             <VCardActions>
               <VSpacer />
-              <VBtn color="primary" @click="versionToUpdate = '';versionToUpdateUrl = ''">
+              <VBtn color="primary" @click.prevent="versionToUpdate = '';versionToUpdateUrl = '';playBackClickSound()">
                 取消
               </VBtn>
-              <VBtn color="error" @click="goUpdatePage(versionToUpdateUrl)">
+              <VBtn color="error" @click.prevent="goUpdatePage(versionToUpdateUrl);playConfirmClick()">
                 确认
               </VBtn>
             </VCardActions>

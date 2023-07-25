@@ -9,6 +9,7 @@ import { useState } from '../store'
 import { getVersionName, isOnAndroid } from '../utils/platform'
 import { logger } from '../utils/logger'
 import { saveFile } from '../utils/file'
+import { useBtnClickSound } from '../utils/audio-player'
 import Main from './operator-preview-main.vue'
 import Info from './operator-preview-info.vue'
 
@@ -21,6 +22,7 @@ const emit = defineEmits<{
 
 const { state } = storeToRefs(useState())
 const { width, height } = useWindowSize()
+const { playBackClickSound } = useBtnClickSound()
 const rotated = computed(() => width.value / height.value < 1)
 const scale = computed(() => {
   if (width.value > height.value) {
@@ -108,8 +110,8 @@ function back() {
       <!-- 工具条 -->
       <div class="flex absolute top-20px left-24px">
         <div class="flex btn-shadow bg-black">
-          <div class="bg-[#313131] h-76px w-218px btn btn-back" @click="back" />
-          <div class="bg-[#313131] h-76px w-313px btn btn-overview ml-5px" />
+          <div class="bg-[#313131] h-76px w-218px btn btn-back" @click.prevent="back();playBackClickSound()" />
+          <div class="bg-[#313131] h-76px w-313px btn btn-overview ml-5px" @click.prevent="nowShowing = NowShowing.MAIN;back();playBackClickSound()" />
         </div>
         <VFadeTransition>
           <div v-if="nowShowing === NowShowing.MAIN" class="flex btn-shadow bg-black ml-20px">
