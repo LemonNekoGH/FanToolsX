@@ -150,6 +150,12 @@ const professionsEn = ['GUARD', 'SNIPPER', 'SPECIALIST', '先锋', 'MEDIC', 'CAS
         <div v-if="state.ProfDat[5]" class="w-full px-25px text-32px leading-54px text-black/90 mt-5px">
           {{ state.ProfDat[5] }}
         </div>
+        <div v-if="state.EliteRec" class="w-full h-45px bg-[#313131] opacity-60 text-32px leading-40px text-white pl-25px mt-5px">
+          晋升记录
+        </div>
+        <div v-if="state.EliteRec" class="w-full px-25px text-32px leading-54px text-black/90 mt-5px">
+          {{ state.EliteRec }}
+        </div>
         <div v-if="state.ProfDat[6]" class="w-full h-45px bg-[#313131] opacity-60 text-32px leading-40px text-white pl-25px mt-5px">
           附加资料
         </div>
