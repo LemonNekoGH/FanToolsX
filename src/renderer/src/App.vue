@@ -255,7 +255,7 @@ useEventListener('click', playNormalClickSound)
 </script>
 
 <template>
-  <VThemeProvider v-if="!showOperatorPreview" theme="default">
+  <VThemeProvider theme="default">
     <VApp full-height>
       <VLayout>
         <VAppBar class="w-full" elevation="0">

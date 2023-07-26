@@ -17,6 +17,7 @@
   "dependencies": {
     "@electron-toolkit/utils": "^1.0.2",
     "@lemonneko/crop-empty-pixels": "0.1.0-rc.4",
+    "@lemonneko/unity-rich-text-converter": "^0.1.8",
     "@sentry/electron": "^4.8.0",
     "@vueuse/core": "^10.2.1",
     "axios": "^1.4.0",

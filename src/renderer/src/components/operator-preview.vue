@@ -140,18 +140,6 @@ function back() {
   background-size: cover;
 }
 
-.btn {
-  transition: all 250ms ease;
-
-  &:hover {
-    filter: brightness(0.6);
-  }
-
-  &:active {
-    filter: brightness(0.3);
-  }
-}
-
 .btn-back {
   background-image: url('../assets/img/operator-preview/back_btn_bg.png');
   background-position: center;

@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
+import { computed, ref } from 'vue'
+import Converter from '@lemonneko/unity-rich-text-converter'
 import { useHelper, useState } from '../store'
 
 import stars1 from '../assets/img/operator-preview/stars_1.png'
@@ -16,6 +18,30 @@ const helper = useHelper()
 
 // 星级图标
 const stars = [stars1, stars2, stars3, stars4, stars5, stars6]
+// 技能相关
+const skillFillType = ['自动回复', '攻击回复', '受击回复', '被动'] as const
+const skillFireType = ['手动', '自动'] as const
+const skillFillTypeColor = ['#8ec21f', '#eb804d', '#f2b53f', '#737373']
+const showingSkills = ref(false)
+const showingSkillLevel = ref(9)
+const skillsNames = [state.value.SKill1Name, state.value.SKill2Name, state.value.SKill3Name]
+const skillsDes = [state.value.SKill1Des, state.value.SKill2Des, state.value.SKill3Des]
+const skillDur = [state.value.Skill1Durat, state.value.Skill2Durat, state.value.Skill3Durat]
+const skillTypes = [state.value.Skill1Type, state.value.Skill2Type, state.value.Skill3Type]
+const showingSkill = ref(0)
+const converter = new Converter()
+
+function onSkillSelected(name: string) {
+  showingSkill.value = skillsNames.findIndex(it => it === name) || 0
+}
+
+const levelName = computed(() => {
+  const levelInt = showingSkillLevel.value + 1
+  if (levelInt < 8)
+    return `等级 ${levelInt}`
+
+  return `专精 ${levelInt - 7}`
+})
 </script>
 
 <template>
@@ -181,7 +207,7 @@ const stars = [stars1, stars2, stars3, stars4, stars5, stars6]
       </div>
     </div>
     <!-- 经验值 -->
-    <div class="absolute font-black top-135px text-white right-60px">
+    <div class="absolute font-black text-white transition-all transition duration-500ms right-60px" :class="[showingSkills ? '-top-360px' : 'top-135px']">
       <div class="w-392px h-78px flex items-center bg-[#313131] pr-10px pl-20px absolute top-40px right-0 btn-shadow">
         <div class="flex-1">
           <div class="text-16px leading-16px">
@@ -208,7 +234,7 @@ const stars = [stars1, stars2, stars3, stars4, stars5, stars6]
       </div>
     </div>
     <!-- 精英化，潜能 -->
-    <div class="absolute right-60px flex gap-x-15px top-375px font-black">
+    <div class="absolute right-60px flex gap-x-15px transition-all transition duration-500ms font-black" :class="[showingSkills ? '-top-120px' : 'top-375px']">
       <img src="../assets/img/operator-preview/elite_2.png" width="145" class="absolute -top-35px left-5px">
       <img src="../assets/img/operator-preview/potential_full.png" width="130" class="absolute -top-27px left-280px">
       <div class="w-268px h-100px bg-[#313131] btn-shadow flex flex-col items-end pt-12px pr-12px">
@@ -228,26 +254,74 @@ const stars = [stars1, stars2, stars3, stars4, stars5, stars6]
         </div>
       </div>
     </div>
+    <!-- 技能展开之后的背景 -->
+    <div class="w-548px h-700px transition btn-shadow transition-all duration-500ms absolute right-60px transform-origin-top" :class="showingSkills ? 'top-85px' : 'top-660px scale-y-0'">
+      <div class="w-full h-full opacity-80 bg-[#313131]" />
+      <div v-if="showingSkills" class="w-full absolute top-230px flex px-32px">
+        <div v-for="i in skillsNames" :key="i" class="flex-1 text-white text-center text-32px leading-32px">
+          {{ i }}
+        </div>
+      </div>
+      <div v-if="showingSkills" class="w-full h-40px top-285px flex text-white text-24px leading-24px absolute left-30px">
+        <div class="flex justify-center items-center h-40px rounded-5px px-10px" :style="{ 'background-color': skillFillTypeColor[skillTypes[showingSkill].x] }">
+          {{ skillFillType[skillTypes[showingSkill].x] }}
+        </div>
+        <!-- 如果是被动就不显示 -->
+        <div v-if="skillTypes[showingSkill].x !== 3" class="flex justify-center items-center h-40px bg-#737373 rounded-5px px-10px">
+          {{ skillFireType[skillTypes[showingSkill].y] }}触发
+        </div>
+        <!-- 技能时间 -->
+        <div v-if="skillDur[showingSkill][showingSkillLevel]" class="flex justify-center items-center h-40px bg-#535353 rounded-5px px-10px">
+          <div class="bg-timer" />
+          <div class="ml-10px">
+            {{ skillDur[showingSkill][showingSkillLevel] }}秒
+          </div>
+        </div>
+      </div>
+      <div
+        v-if="showingSkills" class="text-white text-24px absolute px-30px w-full top-335px"
+        v-html="converter.unity2html(skillsDes[showingSkill][showingSkillLevel])"
+      />
+      <div v-if="showingSkills" class="flex w-full px-30px h-80px gap-24px top-585px absolute text-white text-32px">
+        <div v-if="showingSkillLevel > 0" class="flex-1 h-full btn btn-shadow bg-#313131 justify-center items-center flex" @click="showingSkillLevel -= 1">
+          上一等级
+        </div>
+        <div v-if="showingSkillLevel < 9" class="flex-1 h-full btn btn-shadow bg-#313131 justify-center items-center flex" @click="showingSkillLevel += 1">
+          下一等级
+        </div>
+      </div>
+    </div>
     <!-- 技能 -->
-    <div class="w-548px h-140px absolute top-525px bg-[#313131] right-60px btn-shadow flex flex-col items-end pt-20px pr-20px font-900">
-      <div class="text-[#a0a0a0] text-24px leading-24px">
+    <div class="w-548px absolute bg-[#313131] transition-all transition duration-500ms right-60px btn-shadow flex flex-col items-end pt-20px pr-20px font-900" :class="showingSkills ? 'top-32px h-55px' : 'top-525px h-140px'" @click="showingSkills = !showingSkills">
+      <div v-if="showingSkills" class="top-15px right-505px absolute">
+        <svg height="8px" width="18px">
+          <polygon points="0 8, 9 0, 18 8" fill="white" />
+        </svg>
+      </div>
+      <div v-if="showingSkills" class="text-[#a0a0a0] text-28px leading-28px absolute right-430px top-12px">
+        技能
+      </div>
+      <div v-if="showingSkills" class="text-[#a0a0a0] text-28px leading-28px absolute right-30px top-12px">
+        {{ levelName }}
+      </div>
+      <div v-if="!showingSkills" class="text-[#a0a0a0] text-24px leading-24px">
         RANK <span class="text-white">7</span>
       </div>
-      <div class="bg-[#575757] text-[#313131] h-30px w-70px px-10px text-24px leading-24px flex justify-center items-center rounded-2px mr-2px mt-20px">
+      <div v-if="!showingSkills" class="bg-[#575757] text-[#313131] h-30px w-70px px-10px text-24px leading-24px flex justify-center items-center rounded-2px mr-2px mt-20px">
         MAX
       </div>
       <!-- 分割线 -->
-      <div class="h-90px w-8px absolute right-132px top-20px flex">
+      <div v-if="!showingSkills" class="h-90px w-8px absolute right-132px top-20px flex">
         <div class="flex-1 bg-[#454545]" />
         <div class="flex-1 bg-[#1b1b1b]" />
       </div>
       <!-- 技能 -->
-      <Skill class="absolute -top-15px right-428px" :img="state.Skill1PicB64ForWeb" :initial-sp="state.Skill1Start[9]" :total-sp="state.Skill1Sp[9]" />
-      <Skill class="absolute -top-15px right-296px" :img="state.Skill2PicB64ForWeb" :initial-sp="state.Skill2Start[9]" :total-sp="state.Skill2Sp[9]" />
-      <Skill class="absolute -top-15px right-164px" :img="state.Skill3PicB64ForWeb" :initial-sp="state.Skill3Start[9]" :total-sp="state.Skill3Sp[9]" />
+      <Skill :name="state.SKill1Name" :selected="skillsNames[showingSkill]" :expanded="showingSkills" class="absolute" :class="[showingSkills ? 'top-105px right-375px' : '-top-15px right-428px']" :img="state.Skill1PicB64ForWeb" :initial-sp="state.Skill1Start[showingSkillLevel]" :total-sp="state.Skill1Sp[showingSkillLevel]" @selected="onSkillSelected" />
+      <Skill :name="state.SKill2Name" :selected="skillsNames[showingSkill]" :expanded="showingSkills" class="absolute" :class="[showingSkills ? 'top-105px right-205px' : '-top-15px right-296px']" :img="state.Skill2PicB64ForWeb" :initial-sp="state.Skill2Start[showingSkillLevel]" :total-sp="state.Skill2Sp[showingSkillLevel]" @selected="onSkillSelected" />
+      <Skill :name="state.SKill3Name" :selected="skillsNames[showingSkill]" :expanded="showingSkills" class="absolute" :class="[showingSkills ? 'top-105px right-35px' : '-top-15px right-164px']" :img="state.Skill3PicB64ForWeb" :initial-sp="state.Skill3Start[showingSkillLevel]" :total-sp="state.Skill3Sp[showingSkillLevel]" @selected="onSkillSelected" />
     </div>
     <!-- 天赋与模组 -->
-    <div class="w-548px h-228px bg-[#313131] btn-shadow absolute bottom-54px right-60px" @click="helper.showSnackbar('🚧 施工中')">
+    <div class="w-548px h-228px bg-[#313131] btn-shadow absolute transition transition-all right-60px duration-500ms" :class="[showingSkills ? 'bottom-10px' : 'bottom-54px']" @click="helper.showSnackbar('🚧 施工中')">
       <!-- 分支图标 -->
       <div class="absolute top-18px left-18px w-88px h-88px bg-[#3b3b3b] !bg-center !bg-contain !bg-no-repeat" :style="{ backgroundImage: `url(${state.AbilityImageForWeb})` }" />
       <div class="text-white text-30px leading-30px absolute top-45px left-120px">
@@ -296,3 +370,14 @@ const stars = [stars1, stars2, stars3, stars4, stars5, stars6]
     </div>
   </div>
 </template>
+
+<style lang="less" scoped>
+.bg-timer {
+  background-image: url(../assets/img/operator-preview/icon_skill_duration.png);
+  background-size: 30px 30px;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 40px;
+  height: 40px;
+}
+</style>
