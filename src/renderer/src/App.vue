@@ -255,8 +255,8 @@ useEventListener('click', playNormalClickSound)
 </script>
 
 <template>
-  <VThemeProvider theme="default">
-    <VApp full-height>
+  <VThemeProvider v-if="!showOperatorPreview" theme="default">
+    <VApp full-height class="!font-default">
       <VLayout>
         <VAppBar class="w-full" elevation="0">
           <VToolbar color="primary">
@@ -360,7 +360,7 @@ useEventListener('click', playNormalClickSound)
       </VLayout>
     </VApp>
   </VThemeProvider>
-  <OperatorPreview :show="showOperatorPreview" @close="showOperatorPreview = false" />
+  <OperatorPreview :show="showOperatorPreview" class="font-default" @close="showOperatorPreview = false" />
 </template>
 
 <style>

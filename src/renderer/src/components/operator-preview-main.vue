@@ -221,15 +221,15 @@ const levelName = computed(() => {
           MAX
         </div>
       </div>
-      <div class="w-160px h-160px rounded-full border-8px border-solid border-[#ffd900] absolute top-0 right-383px flex flex-col justify-center items-center pb-20px">
-        <div class="text-24px leading-24px">
+      <div class="w-160px h-160px rounded-full border-8px border-solid border-[#ffd900] absolute top-0 right-383px flex flex-col justify-center items-center pb-40px">
+        <div class="text-24px leading-24px font-novecentowide font-bold">
           LV
         </div>
-        <div class="text-80px leading-70px">
+        <div class="text-90px leading-70px font-novecentowide font-bold">
           90
         </div>
       </div>
-      <div class="absolute right-340px text-32px leading-32px top-125px">
+      <div class="absolute right-340px text-32px leading-32px top-125px font-novecentowide font-bold">
         /90
       </div>
     </div>
@@ -332,13 +332,13 @@ const levelName = computed(() => {
         <!-- 没有模组图标的情况下使用的默认图标 -->
         <div v-if="!state.Mod1IconForWeb" class=" w-full h-full flex flex-col justify-center items-center gap-16px">
           <div class="border-box border-8px border-white border-solid w-64px h-64px" />
-          <div class="text-20px leading-20px text-white">
+          <div class="text-20px leading-20px text-white font-ark">
             ORIGINAL
           </div>
         </div>
         <div v-else class=" w-full h-full flex flex-col justify-center items-center pb-10px">
           <div class="!bg-center !bg-contain !bg-no-repeat flex-1 w-full" :style="{ backgroundImage: `url(${state.Mod1IconForWeb})` }" />
-          <div class="text-20px leading-20px text-white flex justify-center items-center">
+          <div class="text-20px leading-20px text-white flex justify-center items-center font-ark">
             <span class="mt-2px mr-5px">{{ state.Mod1[3] }}</span>
             <span class="text-30px leading-30px">{{ state.Mod1[4] }}</span>
           </div>
