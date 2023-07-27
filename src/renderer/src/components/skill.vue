@@ -24,7 +24,7 @@ function onSelected(e: MouseEvent) {
 <template>
   <div :class="[expanded ? 'w-135px h-135px' : 'w-100px h-100px', expanded && selected === name ? 'outline-#01a0e9 outline-10px outline-solid' : '']" class="transition transition-all duration-500ms" @click="onSelected">
     <div class="w-full h-full box-border border-5px border-white/10 border-solid absolute top-0 left-0">
-      <div class="bg-white/40 absolute bottom-20px left-20px w-4px h-70px transform rotate-45deg origin-bottom-left" />
+      <div class="bg-white/40 absolute bottom-20px left-20px w-4px transform rotate-45deg origin-bottom-left transition transition-height duration-500ms" :class="[expanded ? 'h-110px' : 'h-70px']" />
     </div>
     <div v-if="img" class="w-full h-full absolute top-0 left-0 bg-white !bg-center !bg-contain !bg-no-repeat" :style="{ backgroundImage: `url(${img})` }" />
     <div class="w-30px h-24px rank_3 absolute -top-14px -left-16px" />
