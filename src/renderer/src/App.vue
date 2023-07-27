@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { computed, onMounted, ref } from 'vue'
 import dayjs from 'dayjs'
-import { VApp, VAppBar, VBtn, VCard, VCardActions, VCardItem, VCardText, VCardTitle, VDialog, VLayout, VMain, VSnackbar, VSpacer, VThemeProvider, VToolbar, VToolbarTitle, VTooltip } from 'vuetify/components'
+import { VApp, VAppBar, VBtn, VCard, VCardActions, VCardItem, VCardText, VCardTitle, VDialog, VMain, VSnackbar, VSpacer, VThemeProvider, VToolbar, VToolbarTitle, VTooltip } from 'vuetify/components'
 import { useDisplay } from 'vuetify/lib/framework.mjs'
 import { useEventListener, useIntervalFn } from '@vueuse/core'
 import * as localforage from 'localforage'
@@ -257,107 +257,105 @@ useEventListener('click', playNormalClickSound)
 <template>
   <VThemeProvider v-if="!showOperatorPreview" theme="default">
     <VApp full-height class="!font-default">
-      <VLayout>
-        <VAppBar class="w-full" elevation="0">
-          <VToolbar color="primary">
-            <VBtn v-if="display.mobile.value" icon="mdi-menu" @click="showNav = !showNav" />
-            <div class="flex justify-center items-center ml-4">
-              <img src="./assets/img/logo.png" width="159" height="49" alt="" class="">
-            </div>
-            <VToolbarTitle v-if="!display.mobile.value" class="ml-4">
-              当前编辑：{{ state.state.BasicdataText[1] || '新干员' }}
-            </VToolbarTitle>
+      <VAppBar class="w-full" elevation="0">
+        <VToolbar color="primary">
+          <VBtn v-if="display.mobile.value" icon="mdi-menu" @click="showNav = !showNav" />
+          <div class="flex justify-center items-center ml-4">
+            <img src="./assets/img/logo.png" width="159" height="49" alt="" class="">
+          </div>
+          <VToolbarTitle v-if="!display.mobile.value" class="ml-4">
+            当前编辑：{{ state.state.BasicdataText[1] || '新干员' }}
+          </VToolbarTitle>
+          <VSpacer />
+
+          <div v-if="!display.mobile.value" class="mr-4">
+            <p>上次缓存</p>
+            <code>{{ dayjs(lastCacheTime).format('YYYY-MM-DD HH:mm:ss') }}</code>
+          </div>
+          <!-- 按钮 -->
+          <div v-if="!display.mobile.value">
+            <VTooltip text="清空" location="bottom">
+              <template #activator="{ props }">
+                <VBtn v-bind="props" icon="mdi-trash-can" @click="showResetAlert()" />
+              </template>
+            </VTooltip>
+            <VTooltip text="导入" location="bottom">
+              <template #activator="{ props }">
+                <VBtn v-bind="props" icon="mdi-folder-open" @click="showLoadAlert()" />
+              </template>
+            </VTooltip>
+            <VTooltip text="导出" location="bottom">
+              <template #activator="{ props }">
+                <VBtn v-bind="props" icon="mdi-download" @click="save()" />
+              </template>
+            </VTooltip>
+            <VTooltip text="预览" location="bottom">
+              <template #activator="{ props }">
+                <VBtn v-bind="props" icon="mdi-camera" @click="showOperatorPreview = true" />
+              </template>
+            </VTooltip>
+          </div>
+        </VToolbar>
+      </VAppBar>
+
+      <NavMenu
+        :show-nav="showNav"
+        :last-cache-time="lastCacheTimeStr"
+        @state-changed="(newVal) => { showNav = newVal }"
+        @load="showLoadAlert()"
+        @reset="showResetAlert"
+        @save="save"
+        @preview="showOperatorPreview = true"
+      />
+
+      <VMain class="overflow-y-scroll">
+        <router-view />
+      </VMain>
+      <!-- 加载和清空数据警告框 -->
+      <VDialog v-model="dialogModel.show" max-width="600px">
+        <VCard>
+          <VCardItem>
+            <VCardTitle>警告</VCardTitle>
+          </VCardItem>
+          <VCardText>这会{{ dialogModel.type === 'load' ? '覆盖' : '清空' }}已有的数据，是否继续？</VCardText>
+          <VCardActions>
             <VSpacer />
-
-            <div v-if="!display.mobile.value" class="mr-4">
-              <p>上次缓存</p>
-              <code>{{ dayjs(lastCacheTime).format('YYYY-MM-DD HH:mm:ss') }}</code>
-            </div>
-            <!-- 按钮 -->
-            <div v-if="!display.mobile.value">
-              <VTooltip text="清空" location="bottom">
-                <template #activator="{ props }">
-                  <VBtn v-bind="props" icon="mdi-trash-can" @click="showResetAlert()" />
-                </template>
-              </VTooltip>
-              <VTooltip text="导入" location="bottom">
-                <template #activator="{ props }">
-                  <VBtn v-bind="props" icon="mdi-folder-open" @click="showLoadAlert()" />
-                </template>
-              </VTooltip>
-              <VTooltip text="导出" location="bottom">
-                <template #activator="{ props }">
-                  <VBtn v-bind="props" icon="mdi-download" @click="save()" />
-                </template>
-              </VTooltip>
-              <VTooltip text="预览" location="bottom">
-                <template #activator="{ props }">
-                  <VBtn v-bind="props" icon="mdi-camera" @click="showOperatorPreview = true" />
-                </template>
-              </VTooltip>
-            </div>
-          </VToolbar>
-        </VAppBar>
-
-        <NavMenu
-          :show-nav="showNav"
-          :last-cache-time="lastCacheTimeStr"
-          @state-changed="(newVal) => { showNav = newVal }"
-          @load="showLoadAlert()"
-          @reset="showResetAlert"
-          @save="save"
-          @preview="showOperatorPreview = true"
-        />
-
-        <VMain class="overflow-y-scroll">
-          <router-view />
-        </VMain>
-        <!-- 加载和清空数据警告框 -->
-        <VDialog v-model="dialogModel.show" max-width="600px">
-          <VCard>
-            <VCardItem>
-              <VCardTitle>警告</VCardTitle>
-            </VCardItem>
-            <VCardText>这会{{ dialogModel.type === 'load' ? '覆盖' : '清空' }}已有的数据，是否继续？</VCardText>
-            <VCardActions>
-              <VSpacer />
-              <VBtn color="primary" @click.prevent="closeAlert();playBackClickSound()">
-                取消
-              </VBtn>
-              <VBtn color="error" @click.prevent="dialogModel.type === 'load' ? load() : reset();playConfirmClick()">
-                确认
-              </VBtn>
-            </VCardActions>
-          </VCard>
-        </VDialog>
-        <!-- 加载和清空数据警告框 -->
-        <VDialog :model-value="!!versionToUpdate" max-width="600px">
-          <VCard>
-            <VCardItem>
-              <VCardTitle>更新</VCardTitle>
-            </VCardItem>
-            <VCardText>检查到新版本 <code>{{ versionToUpdate }}</code>，是否要下载？</VCardText>
-            <VCardActions>
-              <VSpacer />
-              <VBtn color="primary" @click.prevent="versionToUpdate = '';versionToUpdateUrl = '';playBackClickSound()">
-                取消
-              </VBtn>
-              <VBtn color="error" @click.prevent="goUpdatePage(versionToUpdateUrl);playConfirmClick()">
-                确认
-              </VBtn>
-            </VCardActions>
-          </VCard>
-        </VDialog>
-        <!-- 提示消息 -->
-        <VSnackbar :model-value="helper.snackbar.show" absolute color="primary" @update:model-value="helper.snackbarModelValueUpdate">
-          {{ helper.snackbar.text }}
-          <template #actions>
-            <VBtn @click="helper.snackbarModelValueUpdate(false)">
-              关闭
+            <VBtn color="primary" @click.prevent="closeAlert();playBackClickSound()">
+              取消
             </VBtn>
-          </template>
-        </VSnackbar>
-      </VLayout>
+            <VBtn color="error" @click.prevent="dialogModel.type === 'load' ? load() : reset();playConfirmClick()">
+              确认
+            </VBtn>
+          </VCardActions>
+        </VCard>
+      </VDialog>
+      <!-- 加载和清空数据警告框 -->
+      <VDialog :model-value="!!versionToUpdate" max-width="600px">
+        <VCard>
+          <VCardItem>
+            <VCardTitle>更新</VCardTitle>
+          </VCardItem>
+          <VCardText>检查到新版本 <code>{{ versionToUpdate }}</code>，是否要下载？</VCardText>
+          <VCardActions>
+            <VSpacer />
+            <VBtn color="primary" @click.prevent="versionToUpdate = '';versionToUpdateUrl = '';playBackClickSound()">
+              取消
+            </VBtn>
+            <VBtn color="error" @click.prevent="goUpdatePage(versionToUpdateUrl);playConfirmClick()">
+              确认
+            </VBtn>
+          </VCardActions>
+        </VCard>
+      </VDialog>
+      <!-- 提示消息 -->
+      <VSnackbar :model-value="helper.snackbar.show" absolute color="primary" @update:model-value="helper.snackbarModelValueUpdate">
+        {{ helper.snackbar.text }}
+        <template #actions>
+          <VBtn @click="helper.snackbarModelValueUpdate(false)">
+            关闭
+          </VBtn>
+        </template>
+      </VSnackbar>
     </VApp>
   </VThemeProvider>
   <OperatorPreview :show="showOperatorPreview" class="font-default" @close="showOperatorPreview = false" />
