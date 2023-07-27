@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { VCard, VCardItem, VCardSubtitle, VCardTitle, VSelect, VSwitch, VTextField } from 'vuetify/components'
+import { VCard, VCardItem, VCardSubtitle, VCardTitle, VSelect, VTextField } from 'vuetify/components'
 import { storeToRefs } from 'pinia'
 import { useDisplay } from 'vuetify/lib/framework.mjs'
 import { computed } from 'vue'
@@ -59,13 +59,12 @@ const skill3FireType = computed<SkillFireType>({
       </div>
     </div>
     <div
-      class="flex gap-x-16px mt-4" :class="{
+      class="flex gap-x-16px" :class="{
         'flex-col': display.mobile.value,
       }"
     >
       <!-- 技能 1 -->
       <div :class="display.mobile.value ? '' : 'flex-1'">
-        <VSwitch v-model="state.Skill1Exists" inset color="primary" label="启用技能 1" messages="不启用时不会显示在展示页面" density="compact" />
         <SelectImage
           class="mt-4"
           to-load="Skill1PicB64ForWeb"
@@ -111,7 +110,6 @@ const skill3FireType = computed<SkillFireType>({
       </div>
       <!-- 技能 2 -->
       <div :class="display.mobile.value ? 'mt-4' : 'flex-1'">
-        <VSwitch v-model="state.Skill2Exists" inset color="primary" label="启用技能 1" messages="不启用时不会显示在展示页面" density="compact" />
         <SelectImage
           to-load="Skill2PicB64ForWeb"
           class="mt-4"
@@ -157,7 +155,6 @@ const skill3FireType = computed<SkillFireType>({
       </div>
       <!-- 技能 3 -->
       <div :class="display.mobile.value ? 'mt-4' : 'flex-1'">
-        <VSwitch v-model="state.Skill3Exists" inset color="primary" label="启用技能 1" messages="不启用时不会显示在展示页面" density="compact" />
         <SelectImage
           to-load="Skill3PicB64ForWeb"
           class="mt-4"
