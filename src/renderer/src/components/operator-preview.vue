@@ -84,7 +84,7 @@ function back() {
 </script>
 
 <template>
-  <div v-if="show" class="absolute top-0 left-0 flex w-full h-full bg-black justify-center items-center z-998">
+  <div v-if="show" class="absolute top-0 left-0 flex w-full h-full bg-black justify-center items-center z-9999">
     <div
       ref="root"
       class="w-1920px h-1080px flex-shrink-0 bg-white pt-20px pl-24px pb-54px pr-60px select-none overflow-hidden"

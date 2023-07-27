@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import { VCard, VCardItem, VCardSubtitle, VCardTitle, VSelect, VTextField } from 'vuetify/components'
+import { VCard, VCardItem, VCardSubtitle, VCardTitle, VSelect, VTextField, VTextarea } from 'vuetify/components'
 import { storeToRefs } from 'pinia'
 import { useDisplay } from 'vuetify/lib/framework.mjs'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import SelectImage from '../components/select-image.vue'
 import { useState } from '../store'
 
@@ -46,6 +46,8 @@ const skill3FireType = computed<SkillFireType>({
   get: () => skillFireType[state.value.Skill3Type.y],
   set: val => state.value.Skill3Type.y = skillFireType.findIndex(it => it === val)!,
 })
+
+const editing = ref('技能 1')
 </script>
 
 <template>
@@ -58,15 +60,12 @@ const skill3FireType = computed<SkillFireType>({
         <span>///Skill Data</span>
       </div>
     </div>
-    <div
-      class="flex gap-x-16px" :class="{
-        'flex-col': display.mobile.value,
-      }"
-    >
+    <VSelect v-if="display.mobile.value" v-model="editing" class="mt-4" label="正在编辑" :items="['技能 1', '技能 2', '技能 3']" variant="outlined" density="compact" color="primary" />
+    <div class="flex gap-x-16px">
       <!-- 技能 1 -->
-      <div :class="display.mobile.value ? '' : 'flex-1'">
+      <div v-if="display.mobile.value && editing === '技能 1' || !display.mobile.value" class="flex-1">
         <SelectImage
-          class="mt-4"
+          :class="display.mobile.value ? '' : 'mt-4'"
           to-load="Skill1PicB64ForWeb"
           :img="state.Skill1PicB64ForWeb"
           title="技能 1 图标"
@@ -100,19 +99,19 @@ const skill3FireType = computed<SkillFireType>({
             </VCardItem>
             <div class="h-1px w-full bg-[#ddd]" />
             <div class="px-4 pt-4">
-              <VTextField v-model="state.SKill1Des[i]" color="primary" variant="outlined" label="描述" density="compact" />
               <VTextField v-model="state.Skill1Sp[i]" color="primary" variant="outlined" label="总技力" density="compact" />
               <VTextField v-model="state.Skill1Start[i]" color="primary" variant="outlined" label="初始技力" density="compact" />
               <VTextField v-model="state.Skill1Durat[i]" color="primary" variant="outlined" label="持续时间" density="compact" />
+              <VTextarea v-model="state.SKill1Des[i]" color="primary" variant="outlined" label="描述" density="compact" />
             </div>
           </template>
         </VCard>
       </div>
       <!-- 技能 2 -->
-      <div :class="display.mobile.value ? 'mt-4' : 'flex-1'">
+      <div v-if="display.mobile.value && editing === '技能 2' || !display.mobile.value" class="flex-1">
         <SelectImage
           to-load="Skill2PicB64ForWeb"
-          class="mt-4"
+          :class="display.mobile.value ? '' : 'mt-4'"
           :img="state.Skill2PicB64ForWeb"
           title="技能 2 图标"
           @image-loaded="(data, base64) => { state.Skill2PicB64ForWeb = data; state.Skill2PicB64 = base64 }"
@@ -145,19 +144,19 @@ const skill3FireType = computed<SkillFireType>({
             </VCardItem>
             <div class="h-1px w-full bg-[#ddd]" />
             <div class="px-4 pt-4">
-              <VTextField v-model="state.SKill2Des[i]" color="primary" variant="outlined" label="描述" density="compact" />
               <VTextField v-model="state.Skill2Sp[i]" color="primary" variant="outlined" label="总技力" density="compact" />
               <VTextField v-model="state.Skill2Start[i]" color="primary" variant="outlined" label="初始技力" density="compact" />
               <VTextField v-model="state.Skill2Durat[i]" color="primary" variant="outlined" label="持续时间" density="compact" />
+              <VTextarea v-model="state.SKill2Des[i]" color="primary" variant="outlined" label="描述" density="compact" />
             </div>
           </template>
         </VCard>
       </div>
       <!-- 技能 3 -->
-      <div :class="display.mobile.value ? 'mt-4' : 'flex-1'">
+      <div v-if="display.mobile.value && editing === '技能 3' || !display.mobile.value" class="flex-1">
         <SelectImage
           to-load="Skill3PicB64ForWeb"
-          class="mt-4"
+          :class="display.mobile.value ? '' : 'mt-4'"
           :img="state.Skill3PicB64ForWeb"
           title="技能 3 图标"
           @image-loaded="(data, base64) => { state.Skill3PicB64ForWeb = data; state.Skill3PicB64 = base64 }"
@@ -190,10 +189,10 @@ const skill3FireType = computed<SkillFireType>({
             </VCardItem>
             <div class="h-1px w-full bg-[#ddd]" />
             <div class="px-4 pt-4">
-              <VTextField v-model="state.SKill3Des[i]" color="primary" variant="outlined" label="描述" density="compact" />
               <VTextField v-model="state.Skill3Sp[i]" color="primary" variant="outlined" label="总技力" density="compact" />
               <VTextField v-model="state.Skill3Start[i]" color="primary" variant="outlined" label="初始技力" density="compact" />
               <VTextField v-model="state.Skill3Durat[i]" color="primary" variant="outlined" label="持续时间" density="compact" />
+              <VTextarea v-model="state.SKill3Des[i]" color="primary" variant="outlined" label="描述" density="compact" />
             </div>
           </template>
         </VCard>

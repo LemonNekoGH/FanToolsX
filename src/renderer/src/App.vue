@@ -255,7 +255,7 @@ useEventListener('click', playNormalClickSound)
 </script>
 
 <template>
-  <VThemeProvider v-if="!showOperatorPreview" theme="default">
+  <VThemeProvider theme="default">
     <VApp full-height class="!font-default">
       <VAppBar class="w-full" elevation="0">
         <VToolbar color="primary">
@@ -308,7 +308,7 @@ useEventListener('click', playNormalClickSound)
         @preview="showOperatorPreview = true"
       />
 
-      <VMain class="overflow-y-scroll">
+      <VMain v-if="!showOperatorPreview" class="overflow-y-scroll">
         <router-view />
       </VMain>
       <!-- 加载和清空数据警告框 -->
@@ -348,7 +348,7 @@ useEventListener('click', playNormalClickSound)
         </VCard>
       </VDialog>
       <!-- 提示消息 -->
-      <VSnackbar :model-value="helper.snackbar.show" absolute color="primary" @update:model-value="helper.snackbarModelValueUpdate">
+      <VSnackbar :model-value="helper.snackbar.show" z-index="10000" color="primary" @update:model-value="helper.snackbarModelValueUpdate">
         {{ helper.snackbar.text }}
         <template #actions>
           <VBtn @click="helper.snackbarModelValueUpdate(false)">
